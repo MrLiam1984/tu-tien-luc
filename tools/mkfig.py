@@ -29,7 +29,10 @@ for k,v in plan.items():
     arr=np.asarray(img)[:,:,3]
     cen=arr[:,int(896*.3):int(896*.62)];ys=np.where(cen.max(1)>40)[0];top=int(ys[0])
     band=arr[top:top+90,int(896*.3):int(896*.62)];xs=np.where(band.max(0)>40)[0];cx=int(896*.3)+int((xs[0]+xs[-1])/2)
-    dx,dy=HEADX-cx,HEADTOP-top
+    OF=f'/home/claude/gen/off_{pose}.json'
+    if k=='base' or not os.path.exists(OF):
+        dx,dy=HEADX-cx,HEADTOP-top;json.dump([dx,dy],open(OF,'w'))
+    else:dx,dy=json.load(open(OF))
     can=Image.new('RGBA',(896,1200),(0,0,0,0));can.paste(img,(dx,dy),img)
     c,bb=B.crop(can)
     fn=f'{pose}_outfit_{k}.webp';B.save(c,os.path.join(OUT,fn),q=90)
