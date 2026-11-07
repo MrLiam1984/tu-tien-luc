@@ -199,9 +199,10 @@ function setBar(sel,v,m){const b=document.querySelector('#modal '+sel);if(!b)ret
 window.cSkillFx=function(){};// thay bằng hiệu ứng mới
 const _ca=window.combatAct;
 window.combatAct=async function(a,arg){if(!C||C.done||C._busy)return _ca.apply(this,arguments);const e=C.e;const eh=e.hp,ph=S.hp;
- let he=null;if(a==='sk'){const m=[S.eq.vo[0],S.eq.vo[1],S.eq.tuyet][arg];he=m&&(m.he||S.he)}
+ let he=null,M=null;if(a==='sk'){M=[S.eq.vo[0],S.eq.vo[1],S.eq.tuyet][arg];he=M&&(M.he||S.he)}
  const atk=['atk','sk','weak'].includes(a);
- if(atk)await pkAttack(true,he||'Kim',a==='sk'?'skill':'atk');
+ if(atk){if(window.__fx)try{await window.__fx.player(a==='sk'?'sk':'atk',M,he||S.he||'Kim')}catch(er){console.error(er);await pkAttack(true,he||'Kim',a==='sk'?'skill':'atk')}else await pkAttack(true,he||'Kim',a==='sk'?'skill':'atk')}
+ else if(window.__fx&&['def','item','flee','pbUse'].includes(a))try{window.__fx.misc(a==='pbUse'?'item':a,arg)}catch(er){}
  await _ca.apply(this,arguments);
  try{if(!document.querySelector('#modal .cstage'))return;
   const ehp=C&&C.e?C.e.hp:e.hp;
@@ -211,7 +212,7 @@ window.combatAct=async function(a,arg){if(!C||C.done||C._busy)return _ca.apply(t
   if(ehp<eh){setBar('.foehp',ehp,e.hpMax);pkDmg(false,Math.round(eh-ehp));const msg=(document.getElementById('cmsg')||{}).innerHTML||'';
    if(/Bạo kích|crit/.test(msg))pkBanner('Chí mạng!');else if(he&&KHAC[he]===e.he)pkBanner('Hiệu quả rất lớn!');else if(he&&KHAC[e.he]===he)pkBanner('Không hiệu quả lắm…');await sleep2(650)}
   else if(atk){pkBanner('Trượt rồi!');await sleep2(500)}
-  if(S.hp<ph&&ehp>0){await pkAttack(false,e.he,e.kind==='beast'?'claw':'skill');setBar('.mehp',S.hp,S.hpMax);if(n)n.textContent=Math.max(0,Math.round(S.hp));pkDmg(true,Math.round(ph-S.hp));if(KHAC[e.he]===S.he)setTimeout(()=>pkBanner('Đòn khắc chế!'),100)}
+  if(S.hp<ph&&ehp>0){if(window.__fx)try{await window.__fx.enemy(e)}catch(er){await pkAttack(false,e.he,e.kind==='beast'?'claw':'skill')}else await pkAttack(false,e.he,e.kind==='beast'?'claw':'skill');setBar('.mehp',S.hp,S.hpMax);if(n)n.textContent=Math.max(0,Math.round(S.hp));pkDmg(true,Math.round(ph-S.hp));if(KHAC[e.he]===S.he)setTimeout(()=>pkBanner('Đòn khắc chế!'),100)}
   else{setBar('.mehp',S.hp,S.hpMax);if(n)n.textContent=Math.max(0,Math.round(S.hp))}}catch(err){console.error(err)}};
 
 try{PATCH_NOTES.unshift(['v7.7 · 07/11/2026 · Đi mượt, hái thuốc đào khoáng, chiến đấu kiểu Pokémon',[
