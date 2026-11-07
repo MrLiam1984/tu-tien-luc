@@ -69,7 +69,7 @@ function decorate(){const el=document.getElementById('ctown');if(!el||!el.classL
  const p=el.querySelector('.cmtop p');if(p)p.textContent=timeStr()+' · bấm vào tranh để vào bên trong';
  body.querySelectorAll('.vcard').forEach(c=>c.onclick=()=>venue(c.dataset.k))}
 // ---- cảnh bên trong ----
-let V={k:null};
+let V={k:null};window.__favCap=window.__favCap||{thu:30,talk:50,gift:70};
 function vEl(){let e=document.getElementById('vscn');if(!e){e=document.createElement('div');e.id='vscn';document.body.appendChild(e)}return e}
 function venue(k){const T=(typeof TOWN_B!=='undefined'?TOWN_B:{});if(busy)return;const n=vNpcAny(k);V.k=k;
  if(k==='nha'&&typeof bountyHere==='function'&&!bountyHere()&&false)return;
@@ -77,22 +77,23 @@ function venue(k){const T=(typeof TOWN_B!=='undefined'?TOWN_B:{});if(busy)return
 function closeV(){const e=document.getElementById('vscn');if(e)e.classList.remove('on');V.k=null;try{const el=document.getElementById('ctown');if(el&&el.classList.contains('on'))decorate()}catch(e){}}
 window.__closeVenue=closeV;
 function paint(k,n,say){const T=(typeof TOWN_B!=='undefined'?TOWN_B:{});const e=vEl();const f=n?n.fav:0;const t=tierOf(f);const d=disc(f);
- const line=say||pick(LINES[t]);const chat=(n&&n.vTalk&&n.vTalk.d===S.day+':'+nowM())?n.vTalk.c:0;
+ const line=say||pick(LINES[t]);const chat=(n&&typeof canAct==='function'&&!canAct(n,'talk'))?3:0;
  const hasSecret=n&&f>=60&&!(n.vSec);
  e.innerHTML=`<button class="vs-x" aria-label="Rời quầy">✕ Rời quầy</button><div class="vs-stage">${imgTag(VIMG[k]||['ev_gapgo'])}<div class="vs-cap">${esc((T[k]&&T[k].ic)||'')} ${esc((T[k]&&T[k].n)||k)} · ${esc((typeof TW!=='undefined'&&TW.nm)||'')}</div></div>
  <div class="vs-pan"><div class="vs-who"><b>${n?esc(n.name):''}</b><small>${esc(ROLE[k]||'')} · ${TIERN[t]} · thiện cảm ${f}${d?` · giảm giá ${Math.round(d*100)}% ở chợ`:''}</small><div class="vs-fav"><i style="width:${clamp(f,0,100)}%"></i></div></div>
  <div class="vs-say">“${esc(line)}”</div>
- <div class="vs-btns"><button class="primary" data-a="svc">${esc((T[k]&&T[k].ic)||'')} ${esc((T[k]&&T[k].n)||'Vào')}: ${esc((T[k]&&T[k].d)||'')}</button><button data-a="talk" ${chat>=3?'disabled':''}>💬 Trò chuyện${chat>=3?' (hôm nay đã nói nhiều)':''}</button><button data-a="gift">🎁 Biếu chút quà · ${giftCost()} LS</button>${f>=20?'<button data-a="rumor">🗣 Hỏi tin đồn</button>':''}${hasSecret?'<button data-a="secret">📜 Nhiệm vụ ẩn</button>':''}${(window.__wpnShop&&window.__wpnShop.has(k))?'<button data-a="wshop">💎 Bảo khí hiếm</button>':''}</div></div>`;
+ <div class="vs-btns"><button class="primary" data-a="svc">${esc((T[k]&&T[k].ic)||'')} ${esc((T[k]&&T[k].n)||'Vào')}: ${esc((T[k]&&T[k].d)||'')}</button><button data-a="talk" ${chat>=3?'disabled':''}>💬 Trò chuyện${chat>=3?' (tháng này đã trò chuyện)':''}</button><button data-a="gift" ${(n&&typeof canAct==='function'&&!canAct(n,'gift'))?'disabled':''}>🎁 Biếu chút quà · ${giftCost()} LS${(n&&typeof canAct==='function'&&!canAct(n,'gift'))?' (tháng này đã biếu)':''}</button>${f>=20?'<button data-a="rumor">🗣 Hỏi tin đồn</button>':''}${hasSecret?'<button data-a="secret">📜 Nhiệm vụ ẩn</button>':''}${(window.__wpnShop&&window.__wpnShop.has(k))?'<button data-a="wshop">💎 Bảo khí hiếm</button>':''}</div></div>`;
  e.querySelector('.vs-x').onclick=closeV;
  e.querySelectorAll('.vs-btns button').forEach(b=>b.onclick=()=>act(b.dataset.a,k,n))}
 const giftCost=()=>Math.max(5,Math.round(tierPrice(12,S.realm+1)));
 async function act(a,k,n){const T=(typeof TOWN_B!=='undefined'?TOWN_B:{});if(!n)return;
  if(a==='wshop'){try{await window.__wpnShop.open(n)}catch(e){console.error(e)}try{render()}catch(e){}paint(k,n,null);return}
  if(a==='svc'){try{T[k].f(TW.lv,TW.nm)}catch(e){console.error(e)}setTimeout(()=>{const el=document.getElementById('ctown');if(!el||!el.classList.contains('on'))closeV()},500);return}
- if(a==='talk'){const key=S.day+':'+nowM();const c=(n.vTalk&&n.vTalk.d===key?n.vTalk.c:0);if(c>=3)return;try{passDays(0.1)}catch(e){}n.vTalk={d:key,c:c+1};
-  const gain=Math.max(1,Math.round(2+(eff('me')-50)/25+(n.like?0:0)+(chance(25)?2:0)));n.fav=clamp(n.fav+gain,-100,100);
-  paint(k,n,pick(TALK)+` (thiện cảm +${gain})`);return}
- if(a==='gift'){const g=giftCost();if(S.linhThach<g){paint(k,n,'Ngài hào phóng quá, nhưng túi ngài chưa đủ linh thạch.');return}S.linhThach-=g;const gain=ri(4,8);n.fav=clamp(n.fav+gain,-100,100);try{render()}catch(e){}paint(k,n,`Ôi, ngài chu đáo quá! (thiện cảm +${gain})`);return}
+ if(a==='talk'){if(!canAct(n,'talk')){paint(k,n,'Hôm nay nói đủ rồi, tháng sau hãy tới.');return}markAct(n,'talk');try{passDays(0.1)}catch(e){}
+  const cap=(window.__favCap||{talk:50}).talk;const gain=Math.max(1,Math.round(2+(eff('me')-50)/25+(chance(25)?2:0)));const before=n.fav;n.fav=clamp(Math.max(before,Math.min(before+gain,cap)),-100,100);const got=n.fav-before;
+  paint(k,n,pick(TALK)+(got>0?` (thiện cảm +${got})`:' (đã thân quen, chỉ nói chuyện thôi không thân thêm được nữa; cần cùng trải qua việc gì đó)'));return}
+ if(a==='gift'){if(!canAct(n,'gift')){paint(k,n,'Ngài đã biếu tháng này rồi, đừng khách sáo quá.');return}const g=giftCost();if(S.linhThach<g){paint(k,n,'Ngài hào phóng quá, nhưng túi ngài chưa đủ linh thạch.');return}S.linhThach-=g;markAct(n,'gift');
+  const cap=(window.__favCap||{gift:70}).gift;const gain=ri(4,8);const before=n.fav;n.fav=clamp(Math.max(before,Math.min(before+gain,cap)),-100,100);const got=n.fav-before;try{render()}catch(e){}paint(k,n,got>0?`Ôi, ngài chu đáo quá! (thiện cảm +${got})`:'Ngài tốt với ta quá rồi, quà biếu thêm cũng không thân hơn được nữa.');return}
  if(a==='rumor'){try{passDays(0.1)}catch(e){}const g=typeof GOSSIP!=='undefined'?pick(GOSSIP):'Dạo này chẳng có tin gì lạ.';paint(k,n,g);return}
  if(a==='secret'){const q=pick(SECRET);n.vSec=q.id;paint(k,n,q.txt);
   await choose(`📜 ${q.t}`,`${n.name} hạ giọng: "${q.txt}"`,[{t:'🤝 Nhận lời',desc:'Giúp một lần, đổi lấy cái tình và hậu tạ.',run:async()=>{try{await q.go(n)}catch(e){console.error(e)}}},{t:'🙏 Xin từ chối',desc:'Giữ nguyên quan hệ, nhưng cơ hội này sẽ không còn.',run:async()=>{addEntry(`Ngươi từ chối nhiệm vụ của ${esc(n.name)}.`,'system','Nhiệm vụ ẩn')}}]);
