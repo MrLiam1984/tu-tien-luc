@@ -795,7 +795,7 @@ function spriteGear(it){const k='g'+it.id;if(PX[k])return PX[k];const col=['#9a9
   giap:['............','..##....##..','.##########.','.##########.','..########..','..##.##.##..','..########..','..########..','..##.##.##..','..########..','...######...','............'],
   phu:['............','....####....','...#....#...','..#..##..#..','..#.####.#..','..#.####.#..','..#..##..#..','...#....#...','....####....','.....##.....','.....##.....','............']}[it.slot];
  PX[k]=canvasURL(12,12,x=>{art.forEach((row,Y)=>[...row].forEach((ch,X)=>{if(ch==='#')px(x,X,Y,col)}))});return PX[k]}
-const pimg=(src,size=48,extra='')=>src?`<img src="${src}" width="${size}" height="${size}" alt="" style="vertical-align:middle;object-fit:contain;${src.startsWith('data:image/svg')?'':'image-rendering:pixelated;'}${extra}">`:'';
+var pimg=(src,size=48,extra='')=>src?`<img src="${src}" width="${size}" height="${size}" alt="" style="vertical-align:middle;object-fit:contain;${src.startsWith('data:image/svg')?'':'image-rendering:pixelated;'}${extra}">`:'';
 function myPortrait(){return spritePerson(S.name,S.gender,S.sect,S.path==='ma')}
 
 /* ===================== CÔNG PHÁP ===================== */
@@ -2083,7 +2083,7 @@ async function npcActBase(id,act){const n=npcById(id);if(!n||!n.alive)return;clo
   if(act==='dao'){markAct(n,'dao');const c=chk('ngo',Math.round((n.stats.ngo+50)/2));const r=resolve(c.p);addEntry(oddsHtml('Luận đạo',c.p,r.ok,r.flipped),'system');if(r.ok){statUp(pick(['ngo','thanthuc']),2);n.fav=clamp(n.fav+6,-100,100)}else{n.fav=clamp(n.fav+1,-100,100);addEntry('Hai bên bất đồng, nhưng vẫn vui vẻ.','system')}passDays(1);return}
   if(act==='spar'){markAct(n,'spar');const e=enemyFromNPC(n,{noMercy:true,spar:true});const w=await startCombat(e,`Tỷ thí với ${n.name}.`);passCa(2);n.fav=clamp(n.fav+(w==='win'?4:2)+persMod(n,'spar'),-100,100);S.sparGain=S.sparGain||{};const sg=S.sparGain;if(sg.y!==S.year){sg.y=S.year;sg.n=0}if(w==='win'&&e.realm>=S.realm&&sg.n<2){sg.n++;statUp('than',1,true);addEntry('Tỷ thí với người ngang tầm: Thân pháp +1 (tối đa 2 lần mỗi năm).','system')}return}
   if(act==='rob'){const e=enemyFromNPC(n,{npcRob:true});const w=await startCombat(e,`Ngươi ra tay cướp đoạt ${n.name}.`);n.fav=-100;if(!n.evil){daoDuc(-2);addTamMa(6)}
-   if(w==='win'){const ls=Math.round(n.ls*0.7);n.ls-=ls;gainLS(ls);const it=genGear(pick(['vu','vu','phong','phong','trang']),clamp(n.realm+1,1,9),rollGrade(n.isSect?15:0));giveGear(it,'cướp từ '+n.name);addEntry(`Cướp được ${ls} linh thạch.`,'system');
+   if(w==='win'){const ls=Math.round(n.ls*0.7);n.ls-=ls;gainLS(ls);const it=v7Rob(n,()=>genGear(pick(['vu','vu','phong','phong','trang']),clamp(n.realm+1,1,9),rollGrade(n.isSect?15:0)));giveGear(it,'cướp từ '+n.name);addEntry(`Cướp được ${ls} linh thạch.`,'system');
     await choose('Xử trí',`${esc(n.name)} quỳ dưới đất.`,[{t:'Giết diệt khẩu',desc:n.evil?'Kẻ ác, không ai thương tiếc':'Đạo đức −2, tâm ma +8',run:async()=>{if(!n.evil){daoDuc(-2);addTamMa(8)}killNPC(n,`bị ${S.name} giết`)}},{t:'Tha',desc:'Hắn sẽ nhớ mối thù này',run:async()=>{sched('baothu','s1',ri(12,24),{name:n.name})}}]);
     if(n.isSect&&n.sect===S.sect){S.congHien=0;addEntry('Cướp đồng môn: bị phạt sạch cống hiến.','system danger')}}
    return}
@@ -5650,7 +5650,7 @@ async function cultivateV512a(pi,days){await cultivateV511(pi,days);tlFull();S.n
 async function tinhTam(...a){const r=await tinhTamV50(...a);tlFull();return r}
 /* trộm đồ NPC bằng niệm lực */
 async function npcSteal(id){const n=npcById(id);if(!n||busy||niem()<20)return;closeModal();await withBusy(async()=>{niemUse(20);const p=clamp(Math.round(35+(niem()+20-n.stats.thanthuc)/2+(S.realm-n.realm)*10),5,90);const r=resolve(p);addEntry(oddsHtml(`Trộm đồ của ${n.name}`,p,r.ok,r.flipped),'system');
- if(r.ok){const ls=Math.round(n.ls*.25);n.ls-=ls;gainLS(ls);if(chance(35)){const it=genGear(pick(['vu','phong','trang']),clamp(n.realm+1,1,9),rollGrade(0));giveGear(it,'trộm của '+n.name)}addEntry(`🫳 Trộm được ${ls} linh thạch của ${esc(n.name)} mà không ai hay.`,'system');daoDuc(-1)}
+ if(r.ok){const ls=Math.round(n.ls*.25);n.ls-=ls;gainLS(ls);if(chance(35)){const it=v7Rob(n,()=>genGear(pick(['vu','phong','trang']),clamp(n.realm+1,1,9),rollGrade(0)));giveGear(it,'trộm của '+n.name)}addEntry(`🫳 Trộm được ${ls} linh thạch của ${esc(n.name)} mà không ai hay.`,'system');daoDuc(-1)}
  else{n.fav=clamp(n.fav-35,-100,100);addEntry(`${esc(n.name)} tóm được tay ngươi!`,'system danger');await startCombat(enemyFromNPC(n,{}),`${n.name} nổi giận vì bị trộm.`)}});if(!S.dead)openNPC(id)}
 function openNPCV512k(id){openNPCV510f(id);try{const n=npcById(id);if(n&&n.alive&&n.loc===S.loc&&n.id!==S.partner&&n.id!==S.master){const b=[...document.querySelectorAll('#modal .btns')].pop();if(b)b.insertAdjacentHTML('beforebegin',`<button class="choice ${niem()<20?'locked':''}" ${niem()<20?'disabled':''} onclick="npcSteal('${id}')"><b>🫳 Trộm đồ</b><small>Tốn 20 niệm lực (có ${niem()}). Thành công lấy linh thạch, có khi cả trang bị; bị bắt thì đánh nhau, đạo đức −1.</small></button>`)}}catch(e){console.error(e)}}
 
@@ -9099,6 +9099,196 @@ window.NARR_X=function(summary,fallback){return fallback};
 try{PATCH_NOTES.unshift(['v8.0 · 07/11/2026 · Game thuần, không còn AI',[
  'Bỏ hoàn toàn Quản Trò AI: không còn gọi Claude, OpenAI hay Gemini, không còn ô nhập API key, không còn nút Cài đặt AI. Game chạy 100% bằng code và lời kể có sẵn, chơi offline được.',
  'Ô "hành động tự do" giờ tự hiểu ý theo từ khóa (tu luyện, đọc, rèn thân, lẻn, trò chuyện, hái tìm, giúp đỡ, lừa gạt, nghỉ ngơi, đánh nhau…). Mỗi việc tốn 1 ngày, thành bại vẫn là ẩn số.']])}catch(e){}
+})();
+
+/* ===== v8.1 · Thân phận phải xứng với của cải: NPC, quà, tuổi, trang bị, công pháp ===== */
+(function(){
+const gcap=r=>{let m=0;for(let g=0;g<7;g++)if(gReq(g)<=r)m=g;return m};      // phẩm cao nhất một người ở cảnh giới r tự nắm giữ
+window.v7NpcCap=n=>Math.min(3,gcap(n.realm)+((n.heir&&n.realm>=1)?1:0)+(n.isSect&&n.rk&&n.realm>=1?1:0));
+const MINAGE=[16,24,40,70,120,250,450,700,1000];
+// Thân phận: ai mới có quyền giữ đồ tốt. r: khoảng cảnh giới hợp lệ, rk: bậc, heir: đồ do tổ tiên/sư môn để lại (cho phép cao hơn cảnh giới 1 phẩm)
+const ID=[
+ {n:'Hậu duệ Kiếm Thánh',role:'Hậu duệ Kiếm Thánh',r:[0,3],rk:1,heir:1,gs:['vu'],mt:'vo',why:'Gia tộc sa sút, trong tay chỉ còn thanh kiếm tổ truyền và vài trang kiếm phổ cũ.'},
+ {n:'Con cháu thế gia sa cơ',role:'Thiếu chủ thế gia sa cơ',r:[0,3],rk:1,heir:1,gs:['ao','boi'],mt:'than',why:'Thế gia bị diệt môn, nàng/chàng mang theo vài món gia bảo chạy nạn.'},
+ {n:'Di dân Thượng Cổ tông',role:'Di dân Thượng Cổ tông',r:[0,3],rk:1,heir:1,mt:'tuyet',why:'Sống sót sau khi tông môn bị tiêu diệt, giấu trong người một quyển công pháp tàn.'},
+ {n:'Dược đồng của Đan Tiên',role:'Đệ tử cuối của Đan Tiên',r:[0,4],rk:1,it:'Tẩy Tủy đan',mt:'tam',why:'Sư phụ bị truy sát, để lại cho vài lọ đan quý.'},
+ {n:'Phú thương ẩn mình',role:'Phú thương',r:[0,5],rk:1,ls:true,mt:'than',why:'Buôn bán khắp châu, của cải giấu ở nhiều nơi.'},
+ {n:'Trận đạo kỳ tài',role:'Trận sư',r:[1,5],rk:1,it:'Tụ Linh Trận (cấp 3)',mt:'tam',why:'Chuyên bày trận cho các thương hội, được trả công hậu.'},
+ {n:'Chuyển thế trùng tu',role:'Chuyển thế trùng tu',r:[0,8],rk:1,mt:'tam',why:'Mang ký ức một đời trước, nên tuổi còn trẻ mà đã hiểu đạo sâu.'},
+ {n:'Thánh tử / Thánh nữ một phương',role:g=>g==='Nữ'?'Thánh nữ một phương':'Thánh tử một phương',r:[2,6],rk:2,heir:1,gs:['boi','day'],mt:'tam',why:'Do một thế lực lớn một phương nuôi dưỡng, được ban nhiều bảo vật hộ thân.'},
+ {n:'Đệ nhất thiên kiêu một châu',role:'Đệ nhất thiên kiêu một châu',r:[2,6],rk:2,heir:1,gs:['vu','choang'],mt:'vo',why:'Danh tiếng vang khắp châu, các thế lực tranh nhau tặng đồ để kết giao.'},
+ {n:'Dược vương cốc chủ',role:'Cốc chủ Dược Vương Cốc',r:[4,8],rk:2,it:'Diên Thọ đan',mt:'tam',why:'Một cốc đầy kỳ dược nằm trong tay, đan phương lưu truyền mấy đời.'},
+ {n:'Mang huyết mạch Chân Long',role:'Hậu duệ Chân Long',r:[3,7],rk:2,heir:1,gs:['giap','ao'],mt:'than',why:'Trong người có huyết mạch Chân Long, trời sinh thân thể phi phàm.'},
+ {n:'Ẩn thế cao nhân',role:'Ẩn thế cao nhân',r:[4,8],rk:2,mt:'tuyet',why:'Lui về ẩn cư đã lâu, chẳng ai biết lai lịch thật.'},
+ {n:'Cửu U ma tôn chuyển kiếp',role:'Ma tôn chuyển kiếp',r:[4,8],rk:2,evil:true,mt:'tuyet',why:'Một đời ma đầu trở lại, vẫn giữ nhiều ma công cũ.'},
+ {n:'Lão quái nhiều đời',role:'Lão quái ẩn tu',r:[5,8],rk:2,mt:'tuyet',why:'Sống qua mấy kỷ nguyên, góp nhặt bảo vật của nhiều đời.'}
+];
+window.V7ID=ID;
+function pickId(n){const pool=ID.filter(d=>n.realm>=d.r[0]&&n.realm<=d.r[1]&&(!d.evil||n.evil));return pool.length?pick(pool):null}
+function idChance(r){return r<=1?.04:r<=3?.08:r<=5?.30:.70}
+const RK_MIN_REALM=[0,0,3];
+window.npcEnsure=function(n){if(!n||n.rk!==undefined)return n;
+ // tuổi hợp với cảnh giới
+ const life=REALMS[n.realm].life,mn=MINAGE[n.realm]||16;
+ if(!n.heir&&n.age<mn&&!(n.dau&&/Chuyển thế/.test(n.dau)))n.age=mn+ri(0,Math.max(2,Math.round(mn*.4)));
+ if(n.age>life*.85)n.age=Math.round(life*(.4+rnd()*.35));
+ let rk=0,d=null;
+ if(n.isSect){ // chức vụ trong tông: bậc theo chức, thân phận chính là chức vụ
+  rk=n.role==='Tông chủ'?2:n.role==='Đại trưởng lão'?1:n.role==='Trưởng lão'?(chance(40)?1:0):0;
+  if(rk){n.dau=`${n.role} ${SECTS[n.sect].name}`;n.why=n.role==='Tông chủ'?'Đứng đầu một tông, toàn bộ bảo khố nằm trong tay.':'Có quyền mở bảo khố của tông môn.'}
+ }else if(n.v7role){ // người giữ chức vụ trong châu
+  rk=n.realm>=3?1:0;if(rk){n.dau=n.role;n.why='Giữ chức vụ nên được cấp đồ tốt từ kho công.'}
+ }else if(rnd()<idChance(n.realm)){
+  d=pickId(n);
+  if(d){rk=Math.min(d.rk,n.realm>=RK_MIN_REALM[2]?2:1);n.dau=d.n;n.dauK=ID.indexOf(d);n.why=d.why;n.heir=!!d.heir;
+   if(n.role==='Tán tu'||!n.role)n.role=typeof d.role==='function'?d.role(n.g):d.role}}
+ n.rk=rk;n.gifts=npcGenGifts(n);return n};
+window.npcGenGifts=function(n){const rk=n.rk;const cap=v7NpcCap(n);const d=ID[n.dauK]||{};
+ const gt=clamp(Math.min(n.realm+1+(n.heir?1:0),Math.max(S.realm+1,1)),1,9);
+ const he=ORB_HE.includes(n.he)?n.he:pick(ORB_HE);const mt=d.mt||pick(['tam','vo','than','tuyet']);const gs=()=>pick(d.gs||['vu','phong','trang']);
+ const GG=g=>Math.max(0,Math.min(g,cap));
+ const P={item:(k,q)=>({k:'item',n:k,q}),ls:v=>({k:'ls',v}),man:(g,t)=>({k:'man',m:genManual(t||mt,GG(g),n.he)}),gear:(g)=>({k:'gear',g:genGear(gs(),gt,GG(g))}),orb:(pf,q=1)=>({k:'item',n:orbName(he,pf&&n.realm>=2),q})};
+ const brk=()=>d.it||BT_PILLS[clamp(gt-1,0,8)];
+ let T;
+ if(rk===2)T=[[P.orb(true,1),P.item('Đột phá đan',2)],[P.man(2)],[P.gear(3)],[P.man(3),P.item(d.it||pick(['Diên Thọ đan','Tụ Linh Trận (cấp 3)','Tẩy Tủy đan']),1)]];
+ else if(rk===1)T=[[P.item('Đột phá đan',n.realm>=1?2:1)],[P.gear(ri(1,2))],[P.man(2)],[P.orb(true,1),P.item(brk(),1)]];
+ else T=[[chance(50)?P.item('Hồi khí đan',3):P.ls(tierPrice(60,gt))],[{k:'item',n:matName(pick(['thao','khoang','yeudan','thu']),gt),q:3}],[chance(50)?P.gear(ri(0,1)):P.man(0)],[chance(50)?P.orb(false,1):P.item('Đột phá đan',1)]];
+ if(d.ls&&rk)T[0].push(P.ls(tierPrice(300,gt)));
+ return T.map((parts,i)=>({th:GIFT_TH[i],parts:parts.filter(p=>p.k!=='item'||ITEMS[p.n]),got:false}))};
+// hiện lai lịch trong thẻ NPC
+const _on=window.openNPC;
+window.openNPC=function(id){const r=_on.apply(this,arguments);try{const n=npcById(id);if(n&&n.why){const m=document.getElementById('modal');const h=[...m.querySelectorAll('.crbox')].find(x=>/Quà thiện cảm/.test(x.textContent));if(h&&!h.querySelector('.v7why'))h.querySelector('.small')?.insertAdjacentHTML('beforebegin',`<div class="small v7why">📖 <b>Lai lịch:</b> ${esc(n.why)}${n.heir?' <i>(đồ do người trước để lại, không phải tự mình có được)</i>':''}</div>`)}}catch(e){}return r};
+// đồ cướp / trộm được từ NPC không thể cao hơn thứ NPC đó có thể nắm giữ
+const _gg=window.genGear;let _capNow=null;
+window.v7Rob=function(n,f){const old=window._v7cap;window._v7cap=v7NpcCap(n);try{return f()}finally{window._v7cap=old}};
+window.genGear=function(slot,t,g){if(window._v7cap!=null)g=Math.min(g,window._v7cap);return _gg.call(this,slot,t,g)};
+try{PATCH_NOTES.unshift(['v8.1 · 07/11/2026 · Thân phận phải xứng với của cải',[
+ 'Không còn NPC "Huyền thoại" chỉ vì may rủi. Muốn giữ đồ tốt, NPC phải có thân phận rõ ràng (hậu duệ Kiếm Thánh, thánh nữ một phương, cốc chủ Dược Vương Cốc, ẩn thế cao nhân…) và thân phận đó thay chữ "Tán tu" ngay trên thẻ. Mỗi thân phận có "Lai lịch" giải thích vì sao họ có đồ.',
+ 'Mỗi thân phận chỉ hợp với một khoảng cảnh giới. Cốc chủ, ma tôn, ẩn thế cao nhân, lão quái phải từ Nguyên Anh trở lên; Luyện Khí chỉ có thể là hậu duệ sa cơ, dược đồng, di dân, phú thương hay người chuyển thế.',
+ 'Quà thiện cảm bị chặn theo cảnh giới người tặng: Luyện Khí chỉ có đồ phẩm Phàm. Riêng người thừa kế di vật được hơn một phẩm và thẻ ghi rõ đó là đồ người trước để lại. Tông chủ, trưởng lão, người giữ chức vụ có thể lấy từ bảo khố.',
+ 'Tuổi NPC phải hợp cảnh giới (trừ người chuyển thế). Đồ cướp hoặc trộm từ NPC cũng không thể cao phẩm hơn thứ NPC đó có thể giữ.']])}catch(e){}
+})();
+
+/* ===== v8.2 · Nhân vật ghép lớp (paper-doll): chọn riêng khuôn mặt, tóc, trang phục, phụ kiện, hiệu ứng ===== */
+(function(){
+const MAN={"nu1":{"W":896,"H":1200,"pose":{},"items":[{"kind":"outfit","id":"base","name":"Áo lụa trắng","file":"nu1_outfit_base.webp","x":276,"y":83,"w":347,"h":1056,"tags":["poor","plain"]},{"kind":"outfit","id":"phuong","name":"Phượng hoàng đỏ","file":"nu1_outfit_phuong.webp","x":233,"y":83,"w":462,"h":1059,"tags":["evil","noble","charm"]},{"kind":"outfit","id":"tien","name":"Tiên nữ lam","file":"nu1_outfit_tien.webp","x":139,"y":96,"w":723,"h":1045,"tags":["good","immortal","gentle"]},{"kind":"face","id":"lanh","name":"Lạnh sắc","file":"nu1_face_lanh.webp","x":405,"y":134,"w":93,"h":125,"tags":["evil","cold","high"]},{"kind":"face","id":"diu","name":"Dịu dàng","file":"nu1_face_diu.webp","x":405,"y":134,"w":93,"h":125,"tags":["good","gentle","young"]},{"kind":"face","id":"quyen","name":"Quyến rũ","file":"nu1_face_quyen.webp","x":405,"y":134,"w":93,"h":125,"tags":["evil","charm"]},{"kind":"face","id":"anhkhi","name":"Anh khí","file":"nu1_face_anhkhi.webp","x":405,"y":134,"w":93,"h":125,"tags":["good","brave"]},{"kind":"hair","id":"bun","name":"Búi phượng quý phái","file":"nu1_hair_bun.webp","x":328,"y":16,"w":237,"h":574,"tags":["noble","high"],"er":"nu1_hairer_bun.png","ex":373,"ey":104},{"kind":"hair","id":"xoa","name":"Xõa dài","file":"nu1_hair_xoa.webp","x":237,"y":92,"w":427,"h":998,"tags":["plain","free"],"er":"nu1_hairer_xoa.png","ex":317,"ey":79},{"kind":"hair","id":"ngua","name":"Đuôi ngựa kiếm khách","file":"nu1_hair_ngua.webp","x":218,"y":68,"w":372,"h":1058,"tags":["brave","young","good"],"er":"nu1_hairer_ngua.png","ex":272,"ey":89},{"kind":"hair","id":"haibui","name":"Hai búi hoa đào","file":"nu1_hair_haibui.webp","x":314,"y":87,"w":234,"h":399,"tags":["young","gentle"],"er":"nu1_hairer_haibui.png","ex":419,"ey":79},{"kind":"hair","id":"bac","name":"Tóc bạc tiên nhân","file":"nu1_hair_bac.webp","x":178,"y":78,"w":626,"h":525,"tags":["immortal","high"],"er":"nu1_hairer_bac.png","ex":331,"ey":96},{"kind":"hair","id":"do","name":"Tóc đỏ ma mị","file":"nu1_hair_do.webp","x":364,"y":40,"w":213,"h":836,"tags":["evil","charm"],"er":"nu1_hairer_do.png","ex":363,"ey":105}]}};
+const BASE='doll/';
+const D={ready:false,bad:false,man:MAN,img:{},memo:new Map(),fulls:new Map(),listeners:[]};
+window.DOLL=D;
+const BUST=[196,20,510,680],HEAD=[311,45,280,280]; // vùng cắt chân dung (x,y,w,h) trên ảnh 896x1200
+const items=(pose,kind)=>MAN[pose]?MAN[pose].items.filter(i=>i.kind===kind):[];
+const get=(pose,kind,id)=>items(pose,kind).find(i=>i.id===id);
+const POSE_OF={'Nữ':'nu1'};
+D.pose=g=>POSE_OF[g]&&MAN[POSE_OF[g]]?POSE_OF[g]:null;
+D.opts=(kind,pose)=>items(pose||'nu1',kind);
+D.KINDS=[['face','Khuôn mặt',0],['hair','Kiểu tóc',0],['outfit','Trang phục',0],['acc','Phụ kiện',1],['fxb','Sau lưng',1],['fxf','Hiệu ứng trước',1]];
+// ---- nạp ảnh các lớp ----
+D.load=function(){const L=[];for(const p in MAN)for(const it of MAN[p].items){L.push(it.file);if(it.er)L.push(it.er)}
+ let done=0;const tot=L.length;if(!tot)return;
+ L.forEach(f=>{const im=new Image();const fin=()=>{if(++done===tot){D.ready=Object.keys(D.img).length>0&&!D.bad;D.memo.clear();D.listeners.forEach(fn=>{try{fn()}catch(e){console.error(e)}})}};
+  im.onload=()=>{D.img[f]=im;fin()};im.onerror=()=>{console.warn('doll: thiếu ảnh',f);fin()};im.src=BASE+f})};
+// ---- vẽ ghép ----
+D.draw=function(look,mode){const pose=look.pose||'nu1';const M=MAN[pose];if(!M)return null;
+ const mk=()=>{const c=document.createElement('canvas');c.width=M.W;c.height=M.H;return c};
+ const put=(x,it)=>{const im=it&&D.img[it.file];if(im)x.drawImage(im,it.x,it.y)};
+ const body=mk(),bx=body.getContext('2d');
+ put(bx,get(pose,'outfit',look.outfit)||get(pose,'outfit','base'));
+ const h=get(pose,'hair',look.hair);
+ if(h&&h.er&&D.img[h.er]){bx.save();bx.globalCompositeOperation='destination-out';bx.drawImage(D.img[h.er],h.ex,h.ey);bx.restore()}
+ put(bx,get(pose,'face',look.face));put(bx,h);
+ for(const a of (look.acc||[]))put(bx,get(pose,'acc',a));
+ const out=mk(),ox=out.getContext('2d');
+ put(ox,look.fxb&&get(pose,'fxb',look.fxb));ox.drawImage(body,0,0);put(ox,look.fxf&&get(pose,'fxf',look.fxf));
+ const c2=document.createElement('canvas');let sx=0,sy=0,sw=M.W,sh=M.H,ow=448,oh=600;
+ if(mode==='bust'){[sx,sy,sw,sh]=BUST;ow=340;oh=Math.round(340*sh/sw)}
+ else if(mode==='head'){[sx,sy,sw,sh]=HEAD;ow=oh=200}
+ c2.width=ow;c2.height=oh;const cx=c2.getContext('2d');cx.imageSmoothingQuality='high';cx.drawImage(out,sx,sy,sw,sh,0,0,ow,oh);
+ return c2};
+D.url=function(look,mode){if(!D.ready||!look)return null;const k=JSON.stringify([look,mode]);let v=D.memo.get(k);if(v!==undefined)return v;
+ try{const c=D.draw(look,mode);v=c?c.toDataURL('image/webp',0.92)+'#doll':null;if(v&&mode==='full'){if(D.fulls.size>600)D.fulls.clear();D.fulls.set(v,JSON.parse(JSON.stringify(look)))}}catch(e){v=null;if(/tainted|insecure|security/i.test(String(e))){D.bad=true;D.ready=false}console.warn('doll:',e)}
+ if(D.memo.size>400)D.memo.clear();D.memo.set(k,v);return v};
+D.bustOf=(src,mode)=>{const L=D.fulls.get(src);return L?D.url(L,mode||'bust'):null};
+// ---- chọn diện mạo ngẫu nhiên có thiên hướng (NPC, nút xúc xắc) ----
+function score(it,hint){let s=0;for(const t of (it.tags||[]))if(hint.includes(t))s++;return s}
+function pickTagged(list,hint,h){if(!list.length)return null;const sc=list.map(i=>score(i,hint));const mx=Math.max(...sc);const top=list.filter((i,n)=>sc[n]>=mx-(mx>0?0:0));
+ const pool=mx>0?top:list;return pool[h%pool.length]}
+D.npcLook=function(key,o){o=o||{};const pose=D.pose('Nữ');if(!pose)return null;const h=hashStr(String(key));const hint=[];
+ if(o.evil)hint.push('evil','charm');else hint.push('good');
+ if(o.realm>=3)hint.push('high','noble','immortal');else if(o.realm<=0)hint.push('plain','poor','young');
+ const L={pose};
+ L.face=(pickTagged(items(pose,'face'),hint,h)||{}).id;
+ L.hair=(pickTagged(items(pose,'hair'),hint,h>>3)||{}).id;
+ L.outfit=(pickTagged(items(pose,'outfit'),hint,h>>6)||{}).id;
+ return L};
+D.rollLook=function(g){const pose=D.pose(g);if(!pose)return null;const r=a=>a.length?a[Math.floor(Math.random()*a.length)].id:'';
+ return {pose,face:r(items(pose,'face')),hair:r(items(pose,'hair')),outfit:r(items(pose,'outfit')),acc:[],fxb:'',fxf:''}};
+D.fixLook=function(L,g){const pose=D.pose(g);if(!pose)return null;L=L||{};L.pose=pose;
+ for(const [k] of D.KINDS){const key=k==='acc'?null:k;if(!key)continue;if(k==='face'||k==='hair'||k==='outfit'){if(!get(pose,k,L[k])){const f=items(pose,k)[0];L[k]=f?f.id:''}}else if(L[k]&&!get(pose,k,L[k]))L[k]=''}
+ if(!Array.isArray(L.acc))L.acc=[];L.acc=L.acc.filter(a=>get(pose,'acc',a));return L};
+// ---- khung chọn ----
+const ctxLook=(ctx)=>{if(ctx==='cr'){if(!CR.doll)CR.doll=D.rollLook(CR.gender);return CR.doll=D.fixLook(CR.doll,CR.gender)}
+ const L=LK();if(!L.doll)L.doll=D.rollLook(S.gender);return L.doll=D.fixLook(L.doll,S.gender)};
+const ctxG=ctx=>ctx==='cr'?CR.gender:S.gender;
+D.step=function(ctx,kind,d){const L=ctxLook(ctx);if(!L)return;const pose=L.pose;const opt=D.KINDS.find(k=>k[0]===kind)[2];
+ const list=items(pose,kind);if(!list.length)return;
+ if(kind==='acc'){const ids=['',...list.map(i=>i.id)];const cur=L.acc[0]||'';const n=(ids.indexOf(cur)+d+ids.length)%ids.length;L.acc=ids[n]?[ids[n]]:[]}
+ else{const ids=(opt?['']:[]).concat(list.map(i=>i.id));const n=(ids.indexOf(L[kind]||'')+d+ids.length)%ids.length;L[kind]=ids[n]}
+ D.refresh(ctx)};
+D.roll=function(ctx){const g=ctxG(ctx);const L=D.rollLook(g);if(!L)return;if(ctx==='cr')CR.doll=L;else LK().doll=L;D.refresh(ctx)};
+D.names=function(L){const pose=L.pose;const nm=(k,id)=>{const it=get(pose,k,id);return it?it.name:'Không'};
+ return {face:nm('face',L.face),hair:nm('hair',L.hair),outfit:nm('outfit',L.outfit),acc:L.acc&&L.acc[0]?nm('acc',L.acc[0]):'Không',fxb:L.fxb?nm('fxb',L.fxb):'Không',fxf:L.fxf?nm('fxf',L.fxf):'Không'}};
+D.rows=function(ctx){const L=ctxLook(ctx);if(!L)return '';const nm=D.names(L);const pose=L.pose;
+ return D.KINDS.filter(k=>items(pose,k[0]).length).map(([k,lab])=>`<div class="dlr"><span class="dll">${lab}</span><button class="mini" onclick="DOLL.step('${ctx}','${k}',-1)">◀</button><b class="dln" data-k="${k}">${esc(nm[k])}</b><button class="mini" onclick="DOLL.step('${ctx}','${k}',1)">▶</button></div>`).join('')
+  +`<div class="dlr"><button class="mini" onclick="DOLL.roll('${ctx}')">🎲 Ngẫu nhiên</button></div>`};
+D.refresh=function(ctx){const L=ctxLook(ctx);if(!L)return;const nm=D.names(L);
+ document.querySelectorAll('.dln').forEach(e=>{if(nm[e.dataset.k]!=null)e.textContent=nm[e.dataset.k]});
+ const m=document.getElementById('modal');
+ if(ctx==='cr'){const im=m&&m.querySelector('.croval img');const u=D.url(L,'bust');if(im&&u)im.src=u}
+ else{const im=m&&m.querySelector('#dlprev');const u=D.url(L,'full');if(im&&u)im.src=u;try{stageRender(true)}catch(e){}try{render()}catch(e){}}};
+// ---- móc vào game ----
+const css=document.createElement('style');css.textContent=`img[src$="#doll"]{image-rendering:auto!important}.dollbox{margin-top:6px}.dlr{display:flex;align-items:center;gap:4px;margin:3px 0;font-size:12px}.dll{flex:0 0 82px;opacity:.75}.dln{flex:1;text-align:center;font-weight:600}.dlr .mini{padding:1px 7px}#dlprev{max-height:420px;max-width:100%;display:block;margin:0 auto}`;document.head.appendChild(css);
+const isDollNpc=(key,gender,look)=>D.ready&&gender==='Nữ'&&!(look&&look.spr!=null);
+const _sp=window.spritePerson;
+window.spritePerson=function(key,gender,sect,evil,look){try{
+  if(isDollNpc(key,gender,look)&&D.pose(gender)){
+   if(S&&S.name===key&&S.look&&S.look.doll){const L=D.fixLook(S.look.doll,gender);const u=L&&D.url(L,'full');if(u)return u}
+   else{const n=S&&S.npcs?S.npcs.find(x=>x.name===key):null;
+    if(n&&n.age<90){const L=D.npcLook(key,{evil:evil||n.evil,realm:n.realm});const u=L&&D.url(L,'full');if(u)return u}
+    else if(!n&&!(S&&S.name===key)){const L=D.npcLook(key,{evil:evil,realm:2});const u=L&&D.url(L,'full');if(u)return u}}}
+ }catch(e){console.warn(e)}return _sp.apply(this,arguments)};
+const _pi=window.pimg;
+window.pimg=function(src,size,extra){try{if(src&&size<=110&&D.fulls.has(src)){const b=D.bustOf(src,size<=70?'head':'bust');if(b)return _pi.call(this,b,size,extra)}}catch(e){}return _pi.apply(this,arguments)};
+const _ow=window.owImg;
+window.owImg=function(s){try{if(s&&D.fulls.has(s)){const b=D.bustOf(s,'head');if(b)s=b}}catch(e){}return _ow.call(this,s)};
+const _mp=window.myPortrait;
+window.myPortrait=function(){try{if(D.ready&&S&&S.gender==='Nữ'&&S.look&&S.look.doll){const L=D.fixLook(S.look.doll,'Nữ');const u=L&&D.url(L,'full');if(u)return u}}catch(e){}return _mp.apply(this,arguments)};
+// màn tạo nhân vật
+const _cp=window.crPortrait;
+window.crPortrait=function(){try{if(D.ready&&CR.gender==='Nữ'){const L=ctxLook('cr');const u=L&&D.url(L,'bust');if(u)return u}}catch(e){}return _cp.apply(this,arguments)};
+const _cs=window.crScreen;
+window.crScreen=function(){const r=_cs.apply(this,arguments);try{
+  const m=document.getElementById('modal');if(!m)return r;const left=m.querySelector('.crleft');const ov=left&&left.querySelector('.croval');
+  if(ov&&!left.querySelector('.dollbox')){
+   const isF=CR.gender==='Nữ'&&D.ready&&D.pose('Nữ');
+   if(isF){left.querySelectorAll('.crar').forEach(b=>b.style.display='none');
+    ov.insertAdjacentHTML('afterend',`<div class="crbox dollbox"><b>🎭 Ngoại hình</b>${D.rows('cr')}</div>`)}
+   else left.querySelectorAll('.crar').forEach(b=>b.style.display='')}}catch(e){console.warn(e)}return r};
+const _cc=window.crConfirm;
+window.crConfirm=function(){const had=CR&&CR.gender==='Nữ'&&CR.doll&&D.ready?JSON.parse(JSON.stringify(ctxLook('cr'))):null;const r=_cc.apply(this,arguments);
+ try{if(S&&S.name&&had&&S.gender==='Nữ'){LK().doll=had}}catch(e){}return r};
+// đổi hình thủ công cũ thì bỏ diện mạo ghép
+const _spk=window.sprPick;if(_spk)window.sprPick=function(i){try{if(S.look)S.look.doll=null}catch(e){}return _spk.apply(this,arguments)};
+// trong game: nút Đổi diện mạo
+window.openDoll=function(){if(!D.ready||S.gender!=='Nữ'||!D.pose('Nữ'))return;const L=ctxLook('me');
+ modal(`<h2>🎭 Đổi diện mạo</h2><p class="small">Chọn riêng khuôn mặt, kiểu tóc, trang phục, phụ kiện và hiệu ứng. Đổi ở đây không tốn gì, chỉ là ngoại hình.</p><img id="dlprev" src="${D.url(L,'full')||''}" alt=""><div class="dollbox" style="max-width:360px;margin:8px auto">${D.rows('me')}</div><div class="btns"><button class="mini primary" onclick="closeModal()">Xong</button></div>`)};
+const _ol=window.openLook;
+window.openLook=function(tab){const r=_ol.apply(this,arguments);try{const h=document.querySelector('#modal h2');if(h&&S.gender==='Nữ'&&D.ready&&D.pose('Nữ')&&!h.querySelector('.bdoll'))h.insertAdjacentHTML('beforeend',` <button class="mini jade bdoll" onclick="openDoll()">🎭 Đổi diện mạo</button>`)}catch(e){}return r};
+D.listeners.push(()=>{try{if(S&&S.menh){stageRender(true);render()}}catch(e){}try{const m=document.getElementById('modal');if(m&&m.querySelector('.crwrap'))crScreen()}catch(e){}});
+try{PATCH_NOTES.unshift(['v8.2 · 07/11/2026 · Nhân vật nữ ghép lớp',[
+ 'Nhân vật nữ giờ ghép từ nhiều lớp ảnh vẽ tay phong cách thủy mặc bán thực: khuôn mặt, kiểu tóc, trang phục, phụ kiện, hiệu ứng chọn riêng từng lớp. Màn tạo nhân vật có khung "Ngoại hình" bên dưới chân dung; trong game bấm Ngoại hình, rồi "Đổi diện mạo".',
+ 'NPC nữ cũng dùng bộ ảnh này. Diện mạo chọn theo chính hay tà và cảnh giới: tà đạo hay có mặt quyến rũ, tóc đỏ, áo phượng; cao thủ hay có búi cài trâm, tóc bạc.',
+ 'Đợt này mới có một phần bộ ảnh (4 khuôn mặt, 6 kiểu tóc, 3 trang phục). Phụ kiện, hiệu ứng (rồng, sen, hào quang…), thêm tư thế và nhân vật nam sẽ bổ sung ở các bản sau.']])}catch(e){}
+D.load();
 })();
 
 </script>
