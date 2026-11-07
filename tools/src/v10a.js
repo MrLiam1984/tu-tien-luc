@@ -76,7 +76,7 @@ D.draw=function(look,mode){const pose=look.pose||'nu1';const M=MAN[pose];if(!M)r
  const out=mk(),ox=out.getContext('2d');
  // hào quang: vòng sáng theo phẩm (phía sau) + tranh chủ đề
  if(look.fxb&&look.ag>=4)glow(ox,M,look.ag);
- put(ox,look.fxb&&artOf(pose,look.fxb));ox.drawImage(body,0,0);put(ox,look.fxf&&get(pose,'fxf',look.fxf));
+ put(ox,look.fxb&&artOf(pose,look.fxb));try{D.wpn&&D.wpn.draw(ox,look,pose,of,h,0)}catch(e){}ox.drawImage(body,0,0);try{D.wpn&&D.wpn.draw(ox,look,pose,of,h,1)}catch(e){}put(ox,look.fxf&&get(pose,'fxf',look.fxf));
  const c2=document.createElement('canvas');let sx=0,sy=0,sw=M.W,sh=M.H,ow=448,oh=600;
  const BUST=[196,20,510,680],HEAD=[311,45,280,280];
  if(mode==='bust'){[sx,sy,sw,sh]=BUST;ow=340;oh=Math.round(340*sh/sw)}
@@ -98,7 +98,7 @@ D.POSES={nu1:{g:'Nữ',name:'Đứng chắp tay'},nu2:{g:'Nữ',name:'Hiên ngan
 D.poseList=g=>Object.keys(D.POSES).filter(k=>MAN[k]&&D.POSES[k].g===(g==='Nam'?'Nam':'Nữ')).map(k=>({id:k,name:D.POSES[k].name,kind:'pose'}));
 // ---------- tích hợp vào khung chọn ----------
 const _kinds=D.KINDS;
-D.KINDS=[['pose','Tư thế',0],['face','Khuôn mặt',0],['hair','Kiểu tóc',0],['outfit','Trang phục',0],['acc','Phụ kiện',1],['fxb','Hào quang',1],['fxf','Hiệu ứng',1]];
+D.KINDS=[['pose','Tư thế',0],['face','Khuôn mặt',0],['hair','Kiểu tóc',0],['outfit','Trang phục',0],['acc','Phụ kiện',1],['wp','Vũ khí',1],['fxb','Hào quang',1],['fxf','Hiệu ứng',1]];
 const ctxOf=ctx=>ctx==='cr'?'cr':'me';
 const _ctxLook=L=>L;
 // danh sách theo loại, có lọc hào quang theo đặc tính
@@ -119,10 +119,10 @@ D.step=function(ctx,kind,d){const L0=lookOf(ctx);const L=D.fixLook(L0,gOf(ctx));
 // tên hiển thị
 const _names=D.names;
 D.names=function(L){const o=_names(L);const pp=(D.POSES[L.pose]||{});o.pose=pp.name||'Đứng chắp tay';
- if(L.fxb){o.fxb=AURA_NAME[L.fxb]||o.fxb}else o.fxb='Không';return o};
+ if(L.fxb){o.fxb=AURA_NAME[L.fxb]||o.fxb}else o.fxb='Không';try{o.wp=D.wpn?D.wpn.name(L):'Không'}catch(e){o.wp='Không'}return o};
 D.rows=function(ctx){const L=D.fixLook(lookOf(ctx),gOf(ctx));if(!L)return '';const nm=D.names(L);const pose=L.pose;
  const un=D.auraUnlocked(ctxOf(ctx));
- return D.KINDS.filter(k=>{if(k[0]==='fxb')return true;if(k[0]==='pose')return D.poseList(gOf(ctx)).length>1;return items(pose,k[0]).length}).map(([k,lab])=>{
+ return D.KINDS.filter(k=>{if(k[0]==='fxb')return true;if(k[0]==='pose')return D.poseList(gOf(ctx)).length>1;if(k[0]==='wp')return !!D.wpn;return items(pose,k[0]).length}).map(([k,lab])=>{
   if(k==='fxb'&&!un.length)return `<div class="dlr"><span class="dll">${lab}</span><b class="dln" data-k="fxb" style="opacity:.6">🔒 cần phẩm Thánh+</b></div>`;
   return `<div class="dlr"><span class="dll">${lab}</span><button class="mini" onclick="DOLL.step('${ctx}','${k}',-1)">◀</button><b class="dln" data-k="${k}">${esc(nm[k])}</b><button class="mini" onclick="DOLL.step('${ctx}','${k}',1)">▶</button></div>`}).join('')
   +`<div class="dlr"><button class="mini" onclick="DOLL.roll('${ctx}')">🎲 Ngẫu nhiên</button></div>`};

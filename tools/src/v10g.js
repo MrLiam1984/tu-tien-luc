@@ -82,11 +82,12 @@ function paint(k,n,say){const T=(typeof TOWN_B!=='undefined'?TOWN_B:{});const e=
  e.innerHTML=`<button class="vs-x" aria-label="Rời quầy">✕ Rời quầy</button><div class="vs-stage">${imgTag(VIMG[k]||['ev_gapgo'])}<div class="vs-cap">${esc((T[k]&&T[k].ic)||'')} ${esc((T[k]&&T[k].n)||k)} · ${esc((typeof TW!=='undefined'&&TW.nm)||'')}</div></div>
  <div class="vs-pan"><div class="vs-who"><b>${n?esc(n.name):''}</b><small>${esc(ROLE[k]||'')} · ${TIERN[t]} · thiện cảm ${f}${d?` · giảm giá ${Math.round(d*100)}% ở chợ`:''}</small><div class="vs-fav"><i style="width:${clamp(f,0,100)}%"></i></div></div>
  <div class="vs-say">“${esc(line)}”</div>
- <div class="vs-btns"><button class="primary" data-a="svc">${esc((T[k]&&T[k].ic)||'')} ${esc((T[k]&&T[k].n)||'Vào')}: ${esc((T[k]&&T[k].d)||'')}</button><button data-a="talk" ${chat>=3?'disabled':''}>💬 Trò chuyện${chat>=3?' (hôm nay đã nói nhiều)':''}</button><button data-a="gift">🎁 Biếu chút quà · ${giftCost()} LS</button>${f>=20?'<button data-a="rumor">🗣 Hỏi tin đồn</button>':''}${hasSecret?'<button data-a="secret">📜 Nhiệm vụ ẩn</button>':''}</div></div>`;
+ <div class="vs-btns"><button class="primary" data-a="svc">${esc((T[k]&&T[k].ic)||'')} ${esc((T[k]&&T[k].n)||'Vào')}: ${esc((T[k]&&T[k].d)||'')}</button><button data-a="talk" ${chat>=3?'disabled':''}>💬 Trò chuyện${chat>=3?' (hôm nay đã nói nhiều)':''}</button><button data-a="gift">🎁 Biếu chút quà · ${giftCost()} LS</button>${f>=20?'<button data-a="rumor">🗣 Hỏi tin đồn</button>':''}${hasSecret?'<button data-a="secret">📜 Nhiệm vụ ẩn</button>':''}${(window.__wpnShop&&window.__wpnShop.has(k))?'<button data-a="wshop">💎 Bảo khí hiếm</button>':''}</div></div>`;
  e.querySelector('.vs-x').onclick=closeV;
  e.querySelectorAll('.vs-btns button').forEach(b=>b.onclick=()=>act(b.dataset.a,k,n))}
 const giftCost=()=>Math.max(5,Math.round(tierPrice(12,S.realm+1)));
 async function act(a,k,n){const T=(typeof TOWN_B!=='undefined'?TOWN_B:{});if(!n)return;
+ if(a==='wshop'){try{await window.__wpnShop.open(n)}catch(e){console.error(e)}try{render()}catch(e){}paint(k,n,null);return}
  if(a==='svc'){try{T[k].f(TW.lv,TW.nm)}catch(e){console.error(e)}setTimeout(()=>{const el=document.getElementById('ctown');if(!el||!el.classList.contains('on'))closeV()},500);return}
  if(a==='talk'){const key=S.day+':'+nowM();const c=(n.vTalk&&n.vTalk.d===key?n.vTalk.c:0);if(c>=3)return;try{passDays(0.1)}catch(e){}n.vTalk={d:key,c:c+1};
   const gain=Math.max(1,Math.round(2+(eff('me')-50)/25+(n.like?0:0)+(chance(25)?2:0)));n.fav=clamp(n.fav+gain,-100,100);
