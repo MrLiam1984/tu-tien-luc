@@ -13,6 +13,14 @@ window.cmIcon=function(x){const key=mkKey(x);const s=x.dom?140:(SZ[key]||SZ[x.lv
 window.__mk={MI,mkImg};
 function mkSpr(key,px){const i=MI[key];if(i==null)return '';const R=Math.ceil(MK.length/MC);return `<i class="mkspr" style="width:${px}px;height:${px}px;background-image:url(doll/mk_atlas.webp);background-size:${MC*100}% ${R*100}%;background-position:${(i%MC)/(MC-1)*100}% ${Math.floor(i/MC)/(R-1)*100}%"></i>`}
 window.__mk.spr=mkSpr;
+// bản đồ ô vuông ở màn chính cũng dùng biểu tượng Flow
+const AT=new Image();AT.onload=()=>{try{owDraw()}catch(e){}};AT.src='doll/mk_atlas.webp';
+const _vn=window.v7Node;
+window.v7Node=function(x,n,cx,cy,T){try{if(AT.complete&&AT.naturalWidth){const key=n.kn?'fortune':mkKey(n);const i=MI[key];if(i!=null){
+ const sc=n.lv?(n.lv==='thanh'||n.lv==='dedo'?2.3:n.lv==='huyen'?2.1:1.9):n.dom?2.1:n.k==='tong'?2.1:1.7;const w=T*sc;
+ x.fillStyle='rgba(0,0,0,.2)';x.beginPath();x.ellipse(cx,cy+T*.32,w*.38,T*.13,0,0,7);x.fill();
+ x.drawImage(AT,(i%MC)*MS,Math.floor(i/MC)*MS,MS,MS,cx-w/2,cy+T*.45-w,w,w);return true}}}catch(e){}
+ return _vn?_vn.apply(this,arguments):false};
 const _cc=window.cmCard;if(typeof _cc==='function')window.cmCard=function(){const r=_cc.apply(this,arguments);try{const x=cmNodes().find(n=>n.id===CM.sel);const im=document.querySelector('#cmcard .cmhead img');if(x&&im){const h=mkSpr(mkKey(x),64);if(h)im.outerHTML=h}else if(x){const hd=document.querySelector('#cmcard .cmhead');if(hd&&!hd.querySelector('.mkspr'))hd.insertAdjacentHTML('afterbegin',mkSpr(mkKey(x),64))}}catch(e){}return r};
 const css=`.mkspr{display:inline-block;flex:none;background-repeat:no-repeat;border-radius:4px}.cmsvg .cmn .mkg{filter:drop-shadow(0 3px 3px rgba(40,30,15,.35))}.cmsvg .cmn:hover .mkg{filter:drop-shadow(0 0 7px rgba(179,64,43,.85)) brightness(1.06)}.cmsvg .cmn.dim .mkg{filter:grayscale(.8) opacity(.6)}`;
 if(!document.getElementById('v10xcss')){const s=document.createElement('style');s.id='v10xcss';s.textContent=css;document.head.appendChild(s)}
