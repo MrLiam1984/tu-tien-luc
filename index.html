@@ -9681,11 +9681,11 @@ try{PATCH_NOTES.unshift(['v9.0 · 07/11/2026 · Giao diện kiểu cuộn trục
 /* ===== v9.1 · Thẻ sự kiện có tranh thủy mặc + tranh đầu cửa sổ ===== */
 (function(){
 const $=(s,r=document)=>r.querySelector(s);
-const KIND_TITLE={trom:'Trộm cắp',dotpha:'Đột phá',tong:'Tông môn',kyngo:'Kỳ ngộ',phucich:'Chặn đường',gapgo:'Gặp gỡ',tinhduyen:'Tình duyên',thienma:'Đại sự thiên hạ',chet:'Thân tử đạo tiêu',tuluyen:'Tu luyện',cho:'Chợ phiên',thienkiep:'Thiên kiếp',san:'Săn yêu thú',dan:'Luyện đan',cuoc:'Giao đấu',caosu:'Cố sự',tamma:'Tâm ma'};
+const KIND_TITLE={ci_amsat:'Sát thủ đêm khuya',ci_thu:'Yêu thú đánh hơi',ci_cuop:'Bị cướp vây',ci_doc:'Độc khí',ci_tamma:'Tâm ma',ci_linhkhi:'Linh khí bạo động',laonhan:'Gặp lão nhân',khoang:'Khai khoáng',thaoduoc:'Hái linh thảo',trom:'Trộm cắp',dotpha:'Đột phá',tong:'Tông môn',kyngo:'Kỳ ngộ',phucich:'Chặn đường',gapgo:'Gặp gỡ',tinhduyen:'Tình duyên',thienma:'Đại sự thiên hạ',chet:'Thân tử đạo tiêu',tuluyen:'Tu luyện',cho:'Chợ phiên',thienkiep:'Thiên kiếp',san:'Săn yêu thú',dan:'Luyện đan',cuoc:'Giao đấu',caosu:'Cố sự',tamma:'Tâm ma'};
 // nhãn nhật ký -> loại tranh
 const BY_LABEL={'Đột phá':'dotpha','Tông môn':'tong','Nhiệm vụ tông môn':'tong','Cơ duyên':'kyngo','Gặp gỡ':'gapgo','Tình duyên':'tinhduyen','Đạo lữ':'tinhduyen','Thiên Ma':'thienma','Đại sự':'thienma','Truy đuổi':'phucich','Thiên lộ':'thienkiep','Cố sự':'caosu','Hồi sau':'caosu','Chương I':'caosu','Vật độc nhất':'kyngo','Trường Sinh Lộ':'thienkiep'};
 // chữ trong nội dung -> loại tranh (ưu tiên hơn nhãn)
-const BY_TEXT=[[/trộm|móc túi|mất cắp|không cánh mà bay|chôm/i,'trom'],[/tẩu hỏa nhập ma|tâm ma bùng|tâm ma xâm/i,'tamma'],[/ĐỘT PHÁ THÀNH CÔNG|Kim Đan kết thành|kết thành Nguyên Anh|Tiến giai:/,'dotpha'],[/thiên kiếp|lôi kiếp|độ kiếp/i,'thienkiep'],[/Thăng cấp trong tông|gia nhập .*tông|nhập môn/i,'tong'],[/bị phục kích|chặn đường|cướp đường/i,'phucich'],[/Thiên hạ đại sự/,'thienma']];
+const BY_TEXT=[[/sát thủ .{0,30}lẻn vào|Né đòn ám sát/,'ci_amsat'],[/đánh hơi thấy linh khí/,'ci_thu'],[/Kẻ cướp mò tới/,'ci_cuop'],[/Độc khí trong hang/,'ci_doc'],[/Tâm ma thừa/,'ci_tamma'],[/Linh khí quanh người bỗng bạo động/,'ci_linhkhi'],[/lão nhân|lão ông|ông lão|lão giả/i,'laonhan'],[/trộm|móc túi|mất cắp|không cánh mà bay|chôm/i,'trom'],[/tẩu hỏa nhập ma|tâm ma bùng|tâm ma xâm/i,'tamma'],[/ĐỘT PHÁ THÀNH CÔNG|Kim Đan kết thành|kết thành Nguyên Anh|Tiến giai:/,'dotpha'],[/thiên kiếp|lôi kiếp|độ kiếp/i,'thienkiep'],[/Thăng cấp trong tông|gia nhập .*tông|nhập môn/i,'tong'],[/bị phục kích|chặn đường|cướp đường/i,'phucich'],[/Thiên hạ đại sự/,'thienma']];
 const DONE=new Set();
 const imgOf=k=>`doll/ev_${k}.webp`;
 const card={q:null,t:0,last:0,open:false};
@@ -9735,7 +9735,7 @@ window.addEntry=function(html,cls,label){const r=_ae.apply(this,arguments);
   pend={kind:k,texts:[t.length>260?t.slice(0,257)+'…':t]};pend.timer=setTimeout(flush,450)}catch(e){console.warn(e)}return r};
 function flush(){if(!pend)return;const p=pend;pend=null;show(p.kind,p.texts)}
 // tranh đầu cửa sổ cho một số màn
-const BY_TITLE=[[/^Đột phá/,'dotpha'],[/^(Tông môn|🏯)/,'tong'],[/Thân tử đạo tiêu|đã chết/,'chet'],[/Chợ|Phường thị|Đấu giá|Thương nhân/,'cho'],[/Khách Điếm|^🧘|Động phủ/,'tuluyen'],[/Phi thăng|Thiên lộ/,'thienkiep'],[/Trà Lâu|Tửu Quán|Quảng Trường/,'gapgo'],[/Luyện đan|Rèn đúc|Lò rèn/,'dan'],[/Chiến đấu/,'cuoc']];
+const BY_TITLE=[[/ám sát|sát thủ/i,'ci_amsat'],[/Phát hiện .* từ xa/,'ci_thu'],[/kẻ cướp/i,'ci_cuop'],[/Độc khí/,'ci_doc'],[/Nhổ rễ linh thảo|Hái linh thảo/,'thaoduoc'],[/Gõ mạch khoáng|Khai khoáng/,'khoang'],[/lão nhân/i,'laonhan'],[/^Đột phá/,'dotpha'],[/^(Tông môn|🏯)/,'tong'],[/Thân tử đạo tiêu|đã chết/,'chet'],[/Chợ|Phường thị|Đấu giá|Thương nhân/,'cho'],[/Khách Điếm|^🧘|Động phủ/,'tuluyen'],[/Phi thăng|Thiên lộ/,'thienkiep'],[/Trà Lâu|Tửu Quán|Quảng Trường/,'gapgo'],[/Luyện đan|Rèn đúc|Lò rèn/,'dan'],[/Chiến đấu/,'cuoc']];
 const _md=window.modal;
 window.modal=function(){const r=_md.apply(this,arguments);
  try{const m=document.getElementById('modal');if(!m||m.classList.contains('crmodal')||m.classList.contains('vnmodal')||m.querySelector('.mscene,.evban'))return r;
@@ -10189,6 +10189,31 @@ try{PATCH_NOTES.unshift(['v10.6 · 07/11/2026 · Năm tư thế nam mới, vẽ 
  'Nam có thêm 5 tư thế đứng: Khoanh tay · kiếm đeo lưng, Mã bộ xuất quyền, Đứng tựa kiếm, Vung trọng đao, Quay lưng ngoái nhìn. Dáng người vạm vỡ, góc cạnh, khác hẳn dáng nữ.',
  'Cảnh tu luyện của nam cũng dùng tranh ngồi thiền riêng. Trang phục nam theo từng tư thế sẽ được vẽ bổ sung dần.',
  '<b>Chiến đấu</b>: bấm Chiến đấu hoặc Túi đồ thì bảng chiêu và bảng vật phẩm giữ nguyên sau mỗi lượt, chỉ quay về menu chính khi bấm Quay lại.']])}catch(e){}
+})();
+
+/* ===== v10.7 · Tranh thủy mặc cho biến cố tu luyện, hái thuốc, khai khoáng; gặp lão nhân khi nhập định ===== */
+(function(){
+const _ci=window.cultIncident;
+async function laoNhan(x){
+ addEntry('👴 Một lão nhân râu bạc chống gậy bước tới, đứng lặng nhìn ngươi nhập định, tay xách bầu rượu.','system','Tu luyện');
+ await sleep(400);
+ let stop='';
+ const pGood=clamp(38+(eff('ngo')-50)*0.5+(eff('duyen')-50)*0.4-S.tamMa/6,12,85);
+ await choose('👴 Lão nhân giữa đường tu luyện','Lão nhân cười hiền, không nói tên, chỉ hỏi: "Tiểu hữu, đường tu hành khổ lắm, có muốn nghe lão nói vài câu?"',[
+  {t:'🙇 Cung kính xin chỉ giáo',desc:`Có thể được chỉ điểm (~${Math.round(pGood)}%); lão nhân cũng có thể chỉ là kẻ say rượu, tốn nửa ngày`,run:async()=>{
+    if(chance(pGood)){const g=Math.max(1,Math.round(tuviGain()*ri(4,8)/3));S.tuvi+=g;addTamMa(-2);addEntry(`✅ Lão nhân điểm một câu khiến ngươi sáng ra: tu vi +${g}, tâm ma −2.`,'good','Tu luyện')}
+    else{const l=Math.min(S.linhThach,Math.round(ri(8,20)*(S.realm+1)));S.linhThach-=l;addEntry(`❌ Lão nhân say khướt nói lảm nhảm, còn kéo ngươi uống rượu giùm: mất ${l} linh thạch.`,'system danger','Tu luyện');stop='Bị lão nhân quấy nhiễu, đành xuất quan.'}}},
+  {t:'🍶 Mời lão một bầu rượu quý',desc:'Tốn linh thạch nhưng thân thiện hơn: chắc chắn được một lời chỉ điểm nhỏ',run:async()=>{const fee=Math.min(S.linhThach,Math.round(ri(10,25)*(S.realm+1)));S.linhThach-=fee;const g=Math.max(1,Math.round(tuviGain()*ri(2,4)/3));S.tuvi+=g;addEntry(`Mời lão chén rượu (−${fee} linh thạch), được chỉ vài câu: tu vi +${g}.`,'system','Tu luyện')}},
+  {t:'👁 Giữ cảnh giác, mặc kệ',desc:'Không được gì, cũng không mất gì. Nhưng biết đâu lão là cao nhân.',run:async()=>{addEntry('Ngươi giữ nguyên tư thế nhập định, lão nhân lắc đầu rồi biến mất sau làn sương.','system','Tu luyện')}}]);
+ return stop}
+if(typeof _ci==='function')window.cultIncident=async function(x,info){
+ if(!window._ciForce&&S&&!S.dead&&chance(9)){try{return await laoNhan(x)}catch(e){console.error(e)}}
+ return _ci.apply(this,arguments)};
+window.__laoNhan=laoNhan;
+try{PATCH_NOTES.unshift(['v10.7 · 07/11/2026 · Thêm tranh thủy mặc cho biến cố tu luyện và nghề phụ',[
+ 'Bảy tranh cảnh mới: sát thủ ám sát, yêu thú đánh hơi, bị cướp vây, độc khí, tâm ma hiện hình, linh khí bạo động và lão nhân gặp giữa đường. Mỗi biến cố khi tu luyện giờ hiện thẻ tranh riêng, và cửa sổ lựa chọn có tranh ở đầu.',
+ 'Mini game hái linh thảo và khai khoáng có tranh riêng ở đầu cửa sổ.',
+ 'Thêm biến cố mới khi tu luyện: gặp lão nhân. Cung kính xin chỉ giáo có thể được điểm hóa (tu vi tăng, tâm ma giảm) hoặc gặp phải lão say rượu; mời rượu thì chắc chắn được chỉ điểm nhỏ; mặc kệ thì không được gì.']])}catch(e){}
 })();
 
 </script>
