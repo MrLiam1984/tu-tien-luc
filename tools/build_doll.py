@@ -1,6 +1,7 @@
 # Tách lớp nhân vật nhiều lớp (paper-doll) từ ảnh Flow đã chụp. Dùng: python3 build_doll.py manifest.json outdir
 import sys,json,glob,os
 import numpy as np
+import cv2
 from PIL import Image,ImageFilter
 from scipy import ndimage as ndi
 D='/tmp/claude-chrome-screenshots-6iC0Nb/'
@@ -24,9 +25,20 @@ def bgcolor(a):
     # nền magenta gần phẳng: ước lượng từ các mép
     e=np.concatenate([a[:40,:].reshape(-1,3),a[:, :40].reshape(-1,3),a[:,-40:].reshape(-1,3)])
     return np.median(e,0)
+
+def star_fix(a,bg):
+    """xóa ngôi sao watermark của Flow (hồng nhạt sáng) ở góc dưới phải bằng inpaint"""
+    a=np.ascontiguousarray(a.astype(np.uint8));y0,y1,x0,x1=1050,1150,745,845
+    r=a[y0:y1,x0:x1];yy,xx=np.mgrid[y0:y1,x0:x1]
+    disc=((xx-795)**2+(yy-1100)**2)<=30**2
+    R,G,B=[r[...,k].astype(int) for k in range(3)]
+    m=(disc&(R>135)&(G>100)&(B>120)).astype(np.uint8)*255
+    m=cv2.dilate(m,np.ones((3,3),np.uint8),iterations=3)
+    a[y0:y1,x0:x1]=cv2.inpaint(r.copy(),m,6,cv2.INPAINT_TELEA);return a
 def key(img,bg=None):
     a=np.asarray(img).astype(np.float32)
     bg=bgcolor(a) if bg is None else bg
+    if a.shape[0]>=1170:a=star_fix(a,bg).astype(np.float32)
     d=np.sqrt(((a-bg)**2).sum(2))
     al=np.clip((d-46)/(105-46),0,1)
     # co nhẹ 1px để bỏ viền hồng, giữ nét mảnh
@@ -38,7 +50,6 @@ def key(img,bg=None):
     near=a[idx[0],idx[1]]
     # pixel viền lấy màu của pixel đặc gần nhất (khử hoàn toàn màu nền)
     out[edge]=near[edge]
-    al[1040:1160,740:860]=0
     return np.clip(out,0,255).astype(np.uint8),al
 def rgba(rgb,al):
     return Image.fromarray(np.dstack([rgb,(al*255).astype(np.uint8)]),'RGBA')

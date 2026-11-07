@@ -1,0 +1,171 @@
+{
+ "pose": "nu1",
+ "base": "/home/claude/pd/NU_B1.png",
+ "base_name": "Áo lụa trắng",
+ "faces": {
+  "lanh": {
+   "name": "Lạnh sắc",
+   "src": "/home/claude/pd/b1/F1_lanh_top.png",
+   "tags": [
+    "evil",
+    "cold",
+    "high"
+   ]
+  },
+  "diu": {
+   "name": "Dịu dàng",
+   "src": "/home/claude/pd/b1/F2_diu_top.png",
+   "tags": [
+    "good",
+    "gentle",
+    "young"
+   ]
+  },
+  "quyen": {
+   "name": "Quyến rũ",
+   "src": "/home/claude/pd/b1/F3_quyen_top.png",
+   "tags": [
+    "evil",
+    "charm"
+   ]
+  },
+  "anhkhi": {
+   "name": "Anh khí",
+   "src": "/home/claude/pd/b1/F4_anhkhi_top.png",
+   "tags": [
+    "good",
+    "brave"
+   ]
+  }
+ },
+ "hairs": {
+  "bun": {
+   "name": "Búi phượng quý phái",
+   "src": "/home/claude/pd/b1/H1_bun_top.png",
+   "tags": [
+    "noble",
+    "high"
+   ]
+  },
+  "xoa": {
+   "name": "Xõa dài",
+   "src": "/home/claude/pd/b1/H2_xoa.png",
+   "tags": [
+    "plain",
+    "free"
+   ]
+  },
+  "ngua": {
+   "name": "Đuôi ngựa kiếm khách",
+   "src": "/home/claude/pd/b1/H3_ngua.png",
+   "tags": [
+    "brave",
+    "young",
+    "good"
+   ]
+  },
+  "haibui": {
+   "name": "Hai búi hoa đào",
+   "src": "/home/claude/pd/b1/H4_haibui.png",
+   "tags": [
+    "young",
+    "gentle"
+   ]
+  },
+  "bac": {
+   "name": "Tóc bạc tiên nhân",
+   "src": "/home/claude/pd/b1/H5_bac.png",
+   "tags": [
+    "immortal",
+    "high"
+   ]
+  },
+  "do": {
+   "name": "Tóc đỏ ma mị",
+   "src": "/home/claude/pd/b1/H6_do.png",
+   "tags": [
+    "evil",
+    "charm"
+   ]
+  }
+ },
+ "outfits": {
+  "phuong": {
+   "name": "Phượng hoàng đỏ",
+   "src": "/home/claude/pd/b1/O1_phuong.png",
+   "tags": [
+    "evil",
+    "noble",
+    "charm"
+   ]
+  },
+  "tien": {
+   "name": "Tiên nữ lam",
+   "src": "/home/claude/pd/b1/O2_tien.png",
+   "tags": [
+    "good",
+    "immortal",
+    "gentle"
+   ]
+  },
+  "kiem": {
+   "name": "Kiếm khách hắc y",
+   "src": "/home/claude/pd/b1/O3_kiem.png",
+   "tags": [
+    "brave",
+    "good",
+    "free"
+   ]
+  },
+  "hoang": {
+   "name": "Tử kim phượng bào",
+   "src": "/home/claude/pd/b1/O4_hoang.png",
+   "tags": [
+    "noble",
+    "high",
+    "charm"
+   ]
+  },
+  "luc": {
+   "name": "Lục ngọc dược sư",
+   "src": "/home/claude/pd/b1/O5_luc.png",
+   "tags": [
+    "good",
+    "gentle",
+    "plain"
+   ]
+  },
+  "dao": {
+   "name": "Đào hoa sa mỏng",
+   "src": "/home/claude/pd/b1/O6_dao.png",
+   "tags": [
+    "young",
+    "gentle",
+    "charm"
+   ]
+  },
+  "bac": {
+   "name": "Bạch ngân tiên bào",
+   "src": "/home/claude/pd/b1/O7_bac.png",
+   "tags": [
+    "immortal",
+    "high",
+    "good",
+    "cold"
+   ]
+  },
+  "hac": {
+   "name": "Hắc kim ma bào",
+   "src": "/home/claude/pd/b1/O8_hac.png",
+   "tags": [
+    "evil",
+    "charm",
+    "high"
+   ]
+  }
+ },
+ "base_tags": [
+  "poor",
+  "plain"
+ ]
+}
