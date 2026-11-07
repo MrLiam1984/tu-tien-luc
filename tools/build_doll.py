@@ -6,6 +6,7 @@ from PIL import Image,ImageFilter
 from scipy import ndimage as ndi
 D='/tmp/claude-chrome-screenshots-6iC0Nb/'
 W,H=896,1200
+ROBUST=False
 def shot(n):
     p=glob.glob(D+f'*-{n}.png')
     return Image.open(p[0]).convert('RGB') if p else None
@@ -41,6 +42,14 @@ def key(img,bg=None):
     if a.shape[0]>=1170:a=star_fix(a,bg).astype(np.float32)
     d=np.sqrt(((a-bg)**2).sum(2))
     al=np.clip((d-46)/(105-46),0,1)
+    if ROBUST:
+        lab,n=ndi.label(d<82)
+        sz=ndi.sum(np.ones_like(d),lab,range(1,n+1))
+        edge_l=set(np.unique(np.concatenate([lab[0],lab[-1],lab[:,0],lab[:,-1]])))-{0}
+        keep=[i+1 for i in range(n) if (i+1) in edge_l or sz[i]>400]
+        bgc=np.isin(lab,keep)
+        band=ndi.binary_dilation(bgc,iterations=3)
+        al=np.where(band,al,1.0).astype(np.float32)
     # co nhẹ 1px để bỏ viền hồng, giữ nét mảnh
     al=0.5*al+0.5*ndi.minimum_filter(al,size=3)
     interior=al>0.97
@@ -71,7 +80,8 @@ def save(im,path,q=90):
     im.save(path,'WEBP',quality=q,method=6)
 def main(mf,out):
     M=json.load(open(mf));os.makedirs(out,exist_ok=True)
-    global BASE
+    global BASE,ROBUST
+    ROBUST=bool(M.get('robust'))
     base=load(M['base']);BASE=base;A0=np.asarray(base)
     bk,bal=key(base)
     man={'W':W,'H':H,'pose':{},'items':[]}
@@ -91,10 +101,15 @@ def main(mf,out):
         yy,xx=np.mgrid[0:H,0:W]
         el=(((xx-cx)/rx)**2+((yy-cy)/ry)**2)<=1
         al=ndi.gaussian_filter(el.astype(np.float32),2.5)
+        if ROBUST:
+            fk,fal=key(f);al=al*np.clip(fal*1.0,0,1)
         img=rgba(fa,al);c,bb=crop(img);put('face',k,v['name'],c,bb,{'tags':v.get('tags',[])})
     for k,v in M.get('hairs',{}).items():
         h=load(v['src']);ha=np.asarray(h)
-        m=diffmask(ha,A0,thr=60,dil=3)
+        if M.get('hair_raw'):
+            m=(np.abs(ha.astype(int)-A0.astype(int)).sum(2)>M.get('hair_thr',60));m[1040:1160,740:860]=False
+            m=ndi.binary_opening(m,iterations=1);m=ndi.binary_dilation(m,iterations=M.get('hair_dil',1))
+        else:m=diffmask(ha,A0,thr=M.get('hair_thr',60),dil=M.get('hair_dil',3))
         # bỏ vùng mặt ra khỏi lớp tóc (mặt do lớp mặt đảm nhiệm)
         hk,hal=key(h)
         add=m&(hal>0.05)
@@ -102,6 +117,14 @@ def main(mf,out):
         er=m&(bal>0.3)&(hal<0.2)
         al=np.where(add,hal,0).astype(np.float32)
         al=np.maximum(al,ndi.binary_dilation(add&(hal>0.9),iterations=0)*0.0)
+        if v.get('color'):
+            hc=np.array(v['color'],np.float32);ha_f=ha.astype(np.float32);A0f=A0.astype(np.float32)
+            db=np.sqrt(((ha_f-A0f)**2).sum(2));dh=np.sqrt(((hc-A0f)**2).sum(2))
+            a2=np.clip(db/np.maximum(dh,1)*1.15,0,1);a2=np.where(m,a2,0)
+            a2=np.where(a2<0.12,0,a2)
+            # giữ nét tóc đặc từ ảnh gốc; viền thì dùng màu tóc
+            hk=np.where((a2<0.85)[...,None],hc,hk).astype(np.uint8)
+            al=np.maximum(np.where(add,hal,0)*(hal>0.9)*(a2>0.85),a2*(hal>0.05)).astype(np.float32)
         img=rgba(hk,al);c,bb=crop(img)
         ex={'tags':v.get('tags',[])}
         if er.any():

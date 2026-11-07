@@ -1,0 +1,140 @@
+{
+ "pose": "nam1",
+ "base": "/home/claude/pd/nam/base.png",
+ "base_name": "Áo trắng thư sinh",
+ "base_tags": [
+  "poor",
+  "plain"
+ ],
+ "face_ell": [
+  450,
+  205,
+  46,
+  64
+ ],
+ "faces": {
+  "hien": {
+   "name": "Hiền hòa",
+   "src": "/home/claude/pd/nam/F_hien.png",
+   "tags": [
+    "good",
+    "gentle"
+   ]
+  },
+  "manh": {
+   "name": "Mạnh mẽ",
+   "src": "/home/claude/pd/nam/F_manh.png",
+   "tags": [
+    "good",
+    "brave",
+    "high"
+   ]
+  },
+  "gian": {
+   "name": "Gian xảo",
+   "src": "/home/claude/pd/nam/F_gian.png",
+   "tags": [
+    "evil",
+    "cunning"
+   ]
+  }
+ },
+ "hairs": {
+  "xoa": {
+   "name": "Xõa dài phóng khoáng",
+   "src": "/home/claude/pd/nam/H_xoa.png",
+   "tags": [
+    "free",
+    "plain",
+    "evil"
+   ],
+   "color": [
+    24,
+    22,
+    28
+   ]
+  },
+  "ngua": {
+   "name": "Đuôi ngựa kiếm khách",
+   "src": "/home/claude/pd/nam/H_ngua.png",
+   "tags": [
+    "brave",
+    "young",
+    "good"
+   ],
+   "color": [
+    24,
+    22,
+    28
+   ]
+  },
+  "bac": {
+   "name": "Tóc bạc tiên nhân",
+   "src": "/home/claude/pd/nam/H_bac.png",
+   "tags": [
+    "immortal",
+    "high"
+   ]
+  },
+  "quan": {
+   "name": "Mũ quan thư sinh",
+   "src": "/home/claude/pd/nam/H_quan.png",
+   "tags": [
+    "noble",
+    "gentle",
+    "high"
+   ]
+  }
+ },
+ "outfits": {
+  "thusinh": {
+   "name": "Thư sinh lam trúc",
+   "src": "/home/claude/pd/nam/O_thusinh.png",
+   "tags": [
+    "good",
+    "gentle",
+    "noble"
+   ]
+  },
+  "hacy": {
+   "name": "Hắc y kiếm khách",
+   "src": "/home/claude/pd/nam/O_hacy.png",
+   "tags": [
+    "evil",
+    "brave",
+    "free"
+   ]
+  },
+  "giap": {
+   "name": "Chiến giáp xích kim",
+   "src": "/home/claude/pd/nam/O_giap.png",
+   "tags": [
+    "brave",
+    "good",
+    "high"
+   ]
+  },
+  "dao": {
+   "name": "Đạo bào xám",
+   "src": "/home/claude/pd/nam/O_dao.png",
+   "tags": [
+    "plain",
+    "good",
+    "immortal"
+   ]
+  },
+  "tukim": {
+   "name": "Tử kim long bào",
+   "src": "/home/claude/pd/nam/O_tukim.png",
+   "tags": [
+    "noble",
+    "high",
+    "evil"
+   ]
+  }
+ },
+ "robust": true,
+ "hair_thr": 45,
+ "hair_dil": 1,
+ "hair_raw": true
+}
