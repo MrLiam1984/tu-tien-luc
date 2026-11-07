@@ -9767,7 +9767,7 @@ function nameOfItem(k){const it=(typeof ITEMS!=='undefined'&&ITEMS[k])||{};
  if(it.cat==='chau')return 'pearl_kim';
  if(it.cat==='dan')return /Đột phá|Trúc Cơ|Kết|Ngưng|Cụ Linh|Hóa|Đăng|Diên|Tẩy|Nguyên/.test(k)?'pill_gold':(/Giải Độc|Định Tâm/.test(k)?'bottle':'pill_red');
  if(it.cat==='phu')return /Trận/.test(k)?'plate':(/Hộ|Kim Cang|Tĩnh/.test(k)?'talis_blue':'talis_gold');
- if(/Đan Lô|\bLô\b/.test(k))return 'furnace';if(/Trận|Bàn/.test(k))return 'plate';
+ if(/Đan Lô|(^|\s)Lô(\s|$)/.test(k))return 'furnace';if(/Trận|Bàn/.test(k))return 'plate';
  if(it.cat==='bao')return /Châu|Khôi Lỗi/.test(k)?'orb':'orb';
  if(it.cat==='vat')return /Bản đồ/.test(k)?'map':/Ngọc|giản/.test(k)?'slip':/Nanh/.test(k)?'fang':'token';
  if(it.cat==='lieu'){const t=it.tier||1,ty=it.type;
@@ -9791,6 +9791,7 @@ function itemFilter(k){try{const ic=nameOfItem(k),it=ITEMS[k]||{};const f=[];
 function itemCls(k){const t=(ITEMS[k]||{}).tier||0;return t>=6?'gr6':t>=5?'gr5':t>=4?'gr4':t>=3?'gr3':''}
 window.__itemFilter=itemFilter;window.__itemCls=itemCls;
 window.__nameOfItem=nameOfItem;
+const itemSpr=(k,px)=>{try{const h=window.__ic2&&__ic2.html(k,px);if(h)return h}catch(e){}return spr(nameOfItem(k),px,itemFilter(k))};
 const TYPE_NAME=(ty,t)=>nameOfItem('__'+ty+t);
 // ghi đè hàm icon cũ để mọi chỗ trong game dùng icon thủy mặc
 const _ii=window.itemIco;
@@ -9845,8 +9846,8 @@ function renderBody(){
   html=`<div class="bg-eq"><div class="me par">${window.v9Fig?v9Fig(me):''}</div><div class="bg-grid">${EQ_SLOTS.map(k=>{const it=S.gear[k];
    return it?`${tileGear(it,'eq:'+k)}`.replace('<button','<button').replace('</button>',`<span class="sl">${EQ_N[k]}</span></button>`):`<button type="button" class="bg-t empty" data-k="eq:${k}">${spr(SLOT_ICON[k],48)}<span class="sl">${EQ_N[k]}</span></button>`}).join('')}</div></div>`}
  else if(tab==='kho'){html=S.gearBag.length?`<div class="bg-grid">${S.gearBag.map((it,i)=>tileGear(it,'gb:'+i,gearUsable(it)?'':'lock')).join('')}</div>`:'<div class="bg-empty">Kho trang bị trống.</div>'}
- else if(tab==='dan'){const L=consList();html=L.length?`<div class="bg-grid">${L.map(k=>`<button type="button" class="bg-t ${itemCls(k)}" data-k="it:${esc_(k)}" style="--gc:#b8a67a">${spr(nameOfItem(k),64,itemFilter(k))}<span class="n">${S.items[k]}</span></button>`).join('')}</div>`:'<div class="bg-empty">Chưa có đan dược, phù hay bảo vật.</div>'}
- else{const L=matList();html=L.length?`<div class="bg-grid">${L.map(k=>`<button type="button" class="bg-t ${itemCls(k)}" data-k="mt:${esc_(k)}" style="--gc:#b8a67a">${spr(nameOfItem(k),64,itemFilter(k))}<span class="n">${S.items[k]}</span></button>`).join('')}</div>`:'<div class="bg-empty">Chưa có nguyên liệu. Hái thảo, khai khoáng, săn yêu thú để có.</div>'}
+ else if(tab==='dan'){const L=consList();html=L.length?`<div class="bg-grid">${L.map(k=>`<button type="button" class="bg-t ${itemCls(k)}" data-k="it:${esc_(k)}" style="--gc:#b8a67a">${itemSpr(k,64)}<span class="n">${S.items[k]}</span></button>`).join('')}</div>`:'<div class="bg-empty">Chưa có đan dược, phù hay bảo vật.</div>'}
+ else{const L=matList();html=L.length?`<div class="bg-grid">${L.map(k=>`<button type="button" class="bg-t ${itemCls(k)}" data-k="mt:${esc_(k)}" style="--gc:#b8a67a">${itemSpr(k,64)}<span class="n">${S.items[k]}</span></button>`).join('')}</div>`:'<div class="bg-empty">Chưa có nguyên liệu. Hái thảo, khai khoáng, săn yêu thú để có.</div>'}
  host.innerHTML=html;
  const det=$('#modal .bg-det');
  if(BG.sel&&BG.sel.startsWith(tab==='eq'?'eq:':tab==='kho'?'gb:':tab==='dan'?'it:':'mt:'))showDet(BG.sel);else{BG.sel=null;det.innerHTML='<div class="bg-empty">Chọn một ô để xem chi tiết.</div>'}
@@ -9856,8 +9857,8 @@ function showDet(key){BG.sel=key;const det=$('#modal .bg-det');if(!det)return;
  const [t,id]=[key.slice(0,2),key.slice(3)];let h='';
  if(t==='eq'){const it=S.gear[id];h=it?`<div class="dh">${gLabel(it)}<button class="mini" onclick="unGear('${id}')">Tháo</button></div><div class="dx">${gDesc(it)}</div>`:`<div class="dh"><b class="dn">${EQ_N[id]}</b></div><div class="dx small">Ô trống. Mặc trang bị từ Kho trang bị.</div>`}
  else if(t==='gb'){const it=S.gearBag[+id];if(it){const lk=!gearUsable(it);h=`<div class="dh">${gLabel(it)}${lk?`<span class="small">🔒 cần ${it.t>S.realm+2?'cảnh giới cao hơn':REALMS[gReq(it.g)].name}</span>`:`<button class="mini jade" onclick="eqGear(${+id})">Mặc → ${EQ_N[targetSlot(it)]}</button>`}</div><div class="dx">${gDesc(it)}</div>`}}
- else if(t==='it'){const k=id,it=ITEMS[k]||{};h=`<div class="dh"><span>${spr(nameOfItem(k),32)}</span><b class="dn">${esc_(k)}</b> <span>×${S.items[k]}</span><button class="mini" data-use="${esc_(k)}">Dùng / xem</button></div><div class="dx">${it.desc||''}${itemSource(k)?`<div class="small">📍 ${itemSource(k)}</div>`:''}</div>`}
- else if(t==='mt'){const k=id,it=ITEMS[k]||{};h=`<div class="dh"><span>${spr(nameOfItem(k),32)}</span><b class="dn">${esc_(k)}</b> <span>×${S.items[k]}</span></div><div class="dx">${it.tier?'Cấp '+it.tier+' · ':''}giá ${it.price}<div class="small">📍 ${itemSource(k)}</div></div>`}
+ else if(t==='it'){const k=id,it=ITEMS[k]||{};h=`<div class="dh"><span>${itemSpr(k,32)}</span><b class="dn">${esc_(k)}</b> <span>×${S.items[k]}</span><button class="mini" data-use="${esc_(k)}">Dùng / xem</button></div><div class="dx">${it.desc||''}${itemSource(k)?`<div class="small">📍 ${itemSource(k)}</div>`:''}</div>`}
+ else if(t==='mt'){const k=id,it=ITEMS[k]||{};h=`<div class="dh"><span>${itemSpr(k,32)}</span><b class="dn">${esc_(k)}</b> <span>×${S.items[k]}</span></div><div class="dx">${it.tier?'Cấp '+it.tier+' · ':''}giá ${it.price}<div class="small">📍 ${itemSource(k)}</div></div>`}
  det.innerHTML=h||'<div class="bg-empty">—</div>';
  const u=$('[data-use]',det);if(u)u.onclick=()=>{closeModal();useItem(u.dataset.use)}}
 function bagUI(){
@@ -11289,6 +11290,27 @@ try{PATCH_NOTES.unshift(['v10.25 · 08/11/2026 · Bản đồ vẽ lại theo ph
  '<b>Bản đồ châu</b>: nền giấy dó ố mép, núi mực nhòe theo lớp có sương mù chen giữa, sông nhạt viền mực, cây chấm mực (thông, tre, cây trụi tùy vùng), mặt trời son, chim bay, khung tranh và con dấu đỏ.',
  '<b>Địa danh</b>: nhà mái cong nét mực, tháp nhiều tầng, tông môn ẩn trong núi, cổng son; cõi hoang dã, cơ duyên, hang yêu vương, tám cõi ở góc đều thành ấn mực tròn thay cho nút màu cũ. Nhãn là phướn giấy có dải son.',
  '<b>Thẻ thông tin</b>: giấy dó, viền mực, ảnh trong thẻ phủ sắc mực. <b>Bản đồ thành trấn</b> cũng đổi cùng phong cách.']])}catch(e){}
+})();
+
+/* ===== v10.26 · Icon vật phẩm vẽ bằng Flow: mỗi món một hình riêng ===== */
+(function(){
+'use strict';
+const N=["Hồi khí đan", "Phá Khóa đan", "Ngộ Đạo Đan", "Tục Mạch Đan", "Đại Hồi Nguyên đan", "Đột phá đan", "Tẩy Tủy đan", "Diên Thọ đan", "Trúc Cơ Đan", "Kết Tinh Đan", "Ngưng Kim Đan", "Cụ Linh Đan", "Hóa Anh Đan", "Hóa Thần Đan", "Vũ Hóa Đan", "Đăng Tiên Đan", "Lang Huyết", "Mãng Huyết", "Giao Huyết", "Hổ Vương Huyết", "Huyền Vũ Huyết", "Bạch Trạch Huyết", "Kỳ Lân Huyết", "Phượng Huyết", "Định Tâm Đan", "Giải Độc đan", "Nanh thú", "Lang Bì", "Huyền Quy Giáp", "Kỳ Lân Giác", "Hổ Cốt", "Ưng Vũ", "Phượng Linh", "Giao Lân", "Long Cốt", "Hàn Thiết", "Thiết Tinh", "Xích Đồng", "Tử Kim", "Huyền Thiết", "Thiên Ngoại Vẫn Thiết", "Tinh Ngân", "Long Văn Thiết", "Hỗn Độn Thạch", "Hoàng Linh Sa", "Hắc Tinh Sa", "Xích Viêm Sa", "Băng Phách Sa", "Tinh Thần Sa", "Thái Dương Kim Sa", "Thái Âm Ngân Sa", "Hư Không Tinh Sa", "Thanh Linh Ngọc", "Bạch Linh Ngọc", "Huyết Linh Ngọc", "Mặc Linh Ngọc", "Tử Tinh Ngọc", "Côn Luân Ngọc", "Hòa Thị Bích", "Ngũ Sắc Thạch", "Hỗn Nguyên Ngọc", "Ngọc bội cũ", "Ngọc giản di ngôn", "Bản đồ cổ", "Sơn Tuyền Thủy", "Vô Căn Thủy", "Huyền Âm Thủy", "Thiên Nhất Chân Thủy", "Cửu U Hàn Tuyền", "Bích Lạc Linh Dịch", "Tam Quang Thần Thủy", "Nhược Thủy Tinh", "Hỗn Độn Nguyên Dịch", "Linh Chi", "Huyết Sâm", "Băng Tâm Thảo", "Tử Linh Chi", "Hỏa Long Quả", "Cửu Diệp Liên", "Tuyết Liên Ngàn Năm", "Bất Tử Thảo", "Thiên Đạo Quả", "Thanh Mộc", "Thiết Hoa Mộc", "Xích Tùng Chi", "Âm Trầm Mộc", "Long Huyết Mộc", "Phù Tang Chi", "Kiến Mộc Chi", "Ngô Đồng Tâm", "Thế Giới Thụ Diệp", "Tránh Lôi Châu", "Lôi Báo Gân", "Lôi Văn Sa", "Thanh Đồng Đan Lô", "Tử Kim Đan Lô", "Cửu Long Đan Lô", "Thần Hành Phù", "Liệt Hỏa Phù", "Ngũ Lôi Phù", "Độn Không Phù", "Thiên Lôi Phù", "Hộ Mệnh Phù", "Tĩnh Tâm Phù", "Kim Cang Phù", "Thái Thượng Hộ Mệnh Phù", "Thiên Cơ Bàn", "Tụ Linh Trận Bàn", "Hộ Thân Trận Bàn", "Mê Tung Trận", "Bế Quan Trận Bàn", "Chu Thiên Tinh Đấu Trận", "Thế Kiếp Khôi Lỗi", "Định Nhạc Kỳ", "Quỷ Cốc lệnh bài", "Mảnh ấn phong", "Yêu đan", "Yêu đan nhất giai", "Yêu đan nhị giai", "Yêu đan tam giai", "Yêu đan tứ giai", "Yêu đan ngũ giai", "Yêu đan lục giai", "Yêu đan thất giai", "Yêu đan bát giai", "Yêu đan cửu giai", "Linh châu hoàn mỹ", "Linh châu vỡ"];
+const COLS=16,ROWS=8,IDX={};N.forEach((n,i)=>{IDX[n]=i});
+const ALIAS=[[/^Tụ Linh Trận \(cấp \d\)$/,'Tụ Linh Trận Bàn'],[/^Yêu đan (nhất|nhị|tam|tứ|ngũ|lục|thất|bát|cửu) giai$/,null]];
+function of(k){if(k in IDX)return IDX[k];for(const [re,to] of ALIAS)if(re.test(k)&&to&&to in IDX)return IDX[to];return null}
+function html(k,px,extra){const i=of(k);if(i==null)return '';
+ const x=i%COLS,y=Math.floor(i/COLS);let f='';try{f=(window.__itemFilter?__itemFilter(k):'').replace(/hue-rotate\([^)]*\)\s*/,'').replace(/saturate\([^)]*\)\s*/,'').replace(/^filter:\s*$/,'')}catch(e){}
+ if(f&&!/filter:\s*\S/.test(f))f='';
+ return `<i class="bic ic2" style="width:${px}px;height:${px}px;background-image:url(doll/ic2_atlas.webp);background-size:${COLS*100}% ${ROWS*100}%;background-position:${x/(COLS-1)*100}% ${y/(ROWS-1)*100}%;${f}${extra||''}"></i>`}
+window.__ic2={of,html,N,IDX};
+const css='.ic2{background-repeat:no-repeat;display:inline-block;vertical-align:middle;image-rendering:auto}';
+if(!document.getElementById('v10wcss')){const s=document.createElement('style');s.id='v10wcss';s.textContent=css;document.head.appendChild(s)}
+// itemIco toàn game
+const _ii=window.itemIco;window.itemIco=function(k,sz){try{const h=html(k,sz||22);if(h)return h}catch(e){}return _ii.apply(this,arguments)};
+try{PATCH_NOTES.unshift(['v10.26 · 08/11/2026 · Icon riêng cho từng vật phẩm, vẽ bằng Flow',[
+ '128 icon thủy mặc mới: mỗi viên đan, giọt huyết, thỏi kim loại, đống sa, viên ngọc, giọt nước, cây linh thảo, khúc gỗ, đan lô, lá phù, trận bàn, yêu đan từ nhất đến cửu giai đều có hình riêng, không còn dùng chung một icon.',
+ 'Hiện ở hành trang, chợ, kho, nhà đấu giá, bảng nhiệm vụ và mọi nơi liệt kê vật phẩm.']])}catch(e){}
 })();
 
 </script>

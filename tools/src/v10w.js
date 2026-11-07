@@ -1,0 +1,20 @@
+/* ===== v10.26 · Icon vật phẩm vẽ bằng Flow: mỗi món một hình riêng ===== */
+(function(){
+'use strict';
+const N=["Hồi khí đan", "Phá Khóa đan", "Ngộ Đạo Đan", "Tục Mạch Đan", "Đại Hồi Nguyên đan", "Đột phá đan", "Tẩy Tủy đan", "Diên Thọ đan", "Trúc Cơ Đan", "Kết Tinh Đan", "Ngưng Kim Đan", "Cụ Linh Đan", "Hóa Anh Đan", "Hóa Thần Đan", "Vũ Hóa Đan", "Đăng Tiên Đan", "Lang Huyết", "Mãng Huyết", "Giao Huyết", "Hổ Vương Huyết", "Huyền Vũ Huyết", "Bạch Trạch Huyết", "Kỳ Lân Huyết", "Phượng Huyết", "Định Tâm Đan", "Giải Độc đan", "Nanh thú", "Lang Bì", "Huyền Quy Giáp", "Kỳ Lân Giác", "Hổ Cốt", "Ưng Vũ", "Phượng Linh", "Giao Lân", "Long Cốt", "Hàn Thiết", "Thiết Tinh", "Xích Đồng", "Tử Kim", "Huyền Thiết", "Thiên Ngoại Vẫn Thiết", "Tinh Ngân", "Long Văn Thiết", "Hỗn Độn Thạch", "Hoàng Linh Sa", "Hắc Tinh Sa", "Xích Viêm Sa", "Băng Phách Sa", "Tinh Thần Sa", "Thái Dương Kim Sa", "Thái Âm Ngân Sa", "Hư Không Tinh Sa", "Thanh Linh Ngọc", "Bạch Linh Ngọc", "Huyết Linh Ngọc", "Mặc Linh Ngọc", "Tử Tinh Ngọc", "Côn Luân Ngọc", "Hòa Thị Bích", "Ngũ Sắc Thạch", "Hỗn Nguyên Ngọc", "Ngọc bội cũ", "Ngọc giản di ngôn", "Bản đồ cổ", "Sơn Tuyền Thủy", "Vô Căn Thủy", "Huyền Âm Thủy", "Thiên Nhất Chân Thủy", "Cửu U Hàn Tuyền", "Bích Lạc Linh Dịch", "Tam Quang Thần Thủy", "Nhược Thủy Tinh", "Hỗn Độn Nguyên Dịch", "Linh Chi", "Huyết Sâm", "Băng Tâm Thảo", "Tử Linh Chi", "Hỏa Long Quả", "Cửu Diệp Liên", "Tuyết Liên Ngàn Năm", "Bất Tử Thảo", "Thiên Đạo Quả", "Thanh Mộc", "Thiết Hoa Mộc", "Xích Tùng Chi", "Âm Trầm Mộc", "Long Huyết Mộc", "Phù Tang Chi", "Kiến Mộc Chi", "Ngô Đồng Tâm", "Thế Giới Thụ Diệp", "Tránh Lôi Châu", "Lôi Báo Gân", "Lôi Văn Sa", "Thanh Đồng Đan Lô", "Tử Kim Đan Lô", "Cửu Long Đan Lô", "Thần Hành Phù", "Liệt Hỏa Phù", "Ngũ Lôi Phù", "Độn Không Phù", "Thiên Lôi Phù", "Hộ Mệnh Phù", "Tĩnh Tâm Phù", "Kim Cang Phù", "Thái Thượng Hộ Mệnh Phù", "Thiên Cơ Bàn", "Tụ Linh Trận Bàn", "Hộ Thân Trận Bàn", "Mê Tung Trận", "Bế Quan Trận Bàn", "Chu Thiên Tinh Đấu Trận", "Thế Kiếp Khôi Lỗi", "Định Nhạc Kỳ", "Quỷ Cốc lệnh bài", "Mảnh ấn phong", "Yêu đan", "Yêu đan nhất giai", "Yêu đan nhị giai", "Yêu đan tam giai", "Yêu đan tứ giai", "Yêu đan ngũ giai", "Yêu đan lục giai", "Yêu đan thất giai", "Yêu đan bát giai", "Yêu đan cửu giai", "Linh châu hoàn mỹ", "Linh châu vỡ"];
+const COLS=16,ROWS=8,IDX={};N.forEach((n,i)=>{IDX[n]=i});
+const ALIAS=[[/^Tụ Linh Trận \(cấp \d\)$/,'Tụ Linh Trận Bàn'],[/^Yêu đan (nhất|nhị|tam|tứ|ngũ|lục|thất|bát|cửu) giai$/,null]];
+function of(k){if(k in IDX)return IDX[k];for(const [re,to] of ALIAS)if(re.test(k)&&to&&to in IDX)return IDX[to];return null}
+function html(k,px,extra){const i=of(k);if(i==null)return '';
+ const x=i%COLS,y=Math.floor(i/COLS);let f='';try{f=(window.__itemFilter?__itemFilter(k):'').replace(/hue-rotate\([^)]*\)\s*/,'').replace(/saturate\([^)]*\)\s*/,'').replace(/^filter:\s*$/,'')}catch(e){}
+ if(f&&!/filter:\s*\S/.test(f))f='';
+ return `<i class="bic ic2" style="width:${px}px;height:${px}px;background-image:url(doll/ic2_atlas.webp);background-size:${COLS*100}% ${ROWS*100}%;background-position:${x/(COLS-1)*100}% ${y/(ROWS-1)*100}%;${f}${extra||''}"></i>`}
+window.__ic2={of,html,N,IDX};
+const css='.ic2{background-repeat:no-repeat;display:inline-block;vertical-align:middle;image-rendering:auto}';
+if(!document.getElementById('v10wcss')){const s=document.createElement('style');s.id='v10wcss';s.textContent=css;document.head.appendChild(s)}
+// itemIco toàn game
+const _ii=window.itemIco;window.itemIco=function(k,sz){try{const h=html(k,sz||22);if(h)return h}catch(e){}return _ii.apply(this,arguments)};
+try{PATCH_NOTES.unshift(['v10.26 · 08/11/2026 · Icon riêng cho từng vật phẩm, vẽ bằng Flow',[
+ '128 icon thủy mặc mới: mỗi viên đan, giọt huyết, thỏi kim loại, đống sa, viên ngọc, giọt nước, cây linh thảo, khúc gỗ, đan lô, lá phù, trận bàn, yêu đan từ nhất đến cửu giai đều có hình riêng, không còn dùng chung một icon.',
+ 'Hiện ở hành trang, chợ, kho, nhà đấu giá, bảng nhiệm vụ và mọi nơi liệt kê vật phẩm.']])}catch(e){}
+})();

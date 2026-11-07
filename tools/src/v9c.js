@@ -18,7 +18,7 @@ function nameOfItem(k){const it=(typeof ITEMS!=='undefined'&&ITEMS[k])||{};
  if(it.cat==='chau')return 'pearl_kim';
  if(it.cat==='dan')return /Đột phá|Trúc Cơ|Kết|Ngưng|Cụ Linh|Hóa|Đăng|Diên|Tẩy|Nguyên/.test(k)?'pill_gold':(/Giải Độc|Định Tâm/.test(k)?'bottle':'pill_red');
  if(it.cat==='phu')return /Trận/.test(k)?'plate':(/Hộ|Kim Cang|Tĩnh/.test(k)?'talis_blue':'talis_gold');
- if(/Đan Lô|\bLô\b/.test(k))return 'furnace';if(/Trận|Bàn/.test(k))return 'plate';
+ if(/Đan Lô|(^|\s)Lô(\s|$)/.test(k))return 'furnace';if(/Trận|Bàn/.test(k))return 'plate';
  if(it.cat==='bao')return /Châu|Khôi Lỗi/.test(k)?'orb':'orb';
  if(it.cat==='vat')return /Bản đồ/.test(k)?'map':/Ngọc|giản/.test(k)?'slip':/Nanh/.test(k)?'fang':'token';
  if(it.cat==='lieu'){const t=it.tier||1,ty=it.type;
@@ -42,6 +42,7 @@ function itemFilter(k){try{const ic=nameOfItem(k),it=ITEMS[k]||{};const f=[];
 function itemCls(k){const t=(ITEMS[k]||{}).tier||0;return t>=6?'gr6':t>=5?'gr5':t>=4?'gr4':t>=3?'gr3':''}
 window.__itemFilter=itemFilter;window.__itemCls=itemCls;
 window.__nameOfItem=nameOfItem;
+const itemSpr=(k,px)=>{try{const h=window.__ic2&&__ic2.html(k,px);if(h)return h}catch(e){}return spr(nameOfItem(k),px,itemFilter(k))};
 const TYPE_NAME=(ty,t)=>nameOfItem('__'+ty+t);
 // ghi đè hàm icon cũ để mọi chỗ trong game dùng icon thủy mặc
 const _ii=window.itemIco;
@@ -96,8 +97,8 @@ function renderBody(){
   html=`<div class="bg-eq"><div class="me par">${window.v9Fig?v9Fig(me):''}</div><div class="bg-grid">${EQ_SLOTS.map(k=>{const it=S.gear[k];
    return it?`${tileGear(it,'eq:'+k)}`.replace('<button','<button').replace('</button>',`<span class="sl">${EQ_N[k]}</span></button>`):`<button type="button" class="bg-t empty" data-k="eq:${k}">${spr(SLOT_ICON[k],48)}<span class="sl">${EQ_N[k]}</span></button>`}).join('')}</div></div>`}
  else if(tab==='kho'){html=S.gearBag.length?`<div class="bg-grid">${S.gearBag.map((it,i)=>tileGear(it,'gb:'+i,gearUsable(it)?'':'lock')).join('')}</div>`:'<div class="bg-empty">Kho trang bị trống.</div>'}
- else if(tab==='dan'){const L=consList();html=L.length?`<div class="bg-grid">${L.map(k=>`<button type="button" class="bg-t ${itemCls(k)}" data-k="it:${esc_(k)}" style="--gc:#b8a67a">${spr(nameOfItem(k),64,itemFilter(k))}<span class="n">${S.items[k]}</span></button>`).join('')}</div>`:'<div class="bg-empty">Chưa có đan dược, phù hay bảo vật.</div>'}
- else{const L=matList();html=L.length?`<div class="bg-grid">${L.map(k=>`<button type="button" class="bg-t ${itemCls(k)}" data-k="mt:${esc_(k)}" style="--gc:#b8a67a">${spr(nameOfItem(k),64,itemFilter(k))}<span class="n">${S.items[k]}</span></button>`).join('')}</div>`:'<div class="bg-empty">Chưa có nguyên liệu. Hái thảo, khai khoáng, săn yêu thú để có.</div>'}
+ else if(tab==='dan'){const L=consList();html=L.length?`<div class="bg-grid">${L.map(k=>`<button type="button" class="bg-t ${itemCls(k)}" data-k="it:${esc_(k)}" style="--gc:#b8a67a">${itemSpr(k,64)}<span class="n">${S.items[k]}</span></button>`).join('')}</div>`:'<div class="bg-empty">Chưa có đan dược, phù hay bảo vật.</div>'}
+ else{const L=matList();html=L.length?`<div class="bg-grid">${L.map(k=>`<button type="button" class="bg-t ${itemCls(k)}" data-k="mt:${esc_(k)}" style="--gc:#b8a67a">${itemSpr(k,64)}<span class="n">${S.items[k]}</span></button>`).join('')}</div>`:'<div class="bg-empty">Chưa có nguyên liệu. Hái thảo, khai khoáng, săn yêu thú để có.</div>'}
  host.innerHTML=html;
  const det=$('#modal .bg-det');
  if(BG.sel&&BG.sel.startsWith(tab==='eq'?'eq:':tab==='kho'?'gb:':tab==='dan'?'it:':'mt:'))showDet(BG.sel);else{BG.sel=null;det.innerHTML='<div class="bg-empty">Chọn một ô để xem chi tiết.</div>'}
@@ -107,8 +108,8 @@ function showDet(key){BG.sel=key;const det=$('#modal .bg-det');if(!det)return;
  const [t,id]=[key.slice(0,2),key.slice(3)];let h='';
  if(t==='eq'){const it=S.gear[id];h=it?`<div class="dh">${gLabel(it)}<button class="mini" onclick="unGear('${id}')">Tháo</button></div><div class="dx">${gDesc(it)}</div>`:`<div class="dh"><b class="dn">${EQ_N[id]}</b></div><div class="dx small">Ô trống. Mặc trang bị từ Kho trang bị.</div>`}
  else if(t==='gb'){const it=S.gearBag[+id];if(it){const lk=!gearUsable(it);h=`<div class="dh">${gLabel(it)}${lk?`<span class="small">🔒 cần ${it.t>S.realm+2?'cảnh giới cao hơn':REALMS[gReq(it.g)].name}</span>`:`<button class="mini jade" onclick="eqGear(${+id})">Mặc → ${EQ_N[targetSlot(it)]}</button>`}</div><div class="dx">${gDesc(it)}</div>`}}
- else if(t==='it'){const k=id,it=ITEMS[k]||{};h=`<div class="dh"><span>${spr(nameOfItem(k),32)}</span><b class="dn">${esc_(k)}</b> <span>×${S.items[k]}</span><button class="mini" data-use="${esc_(k)}">Dùng / xem</button></div><div class="dx">${it.desc||''}${itemSource(k)?`<div class="small">📍 ${itemSource(k)}</div>`:''}</div>`}
- else if(t==='mt'){const k=id,it=ITEMS[k]||{};h=`<div class="dh"><span>${spr(nameOfItem(k),32)}</span><b class="dn">${esc_(k)}</b> <span>×${S.items[k]}</span></div><div class="dx">${it.tier?'Cấp '+it.tier+' · ':''}giá ${it.price}<div class="small">📍 ${itemSource(k)}</div></div>`}
+ else if(t==='it'){const k=id,it=ITEMS[k]||{};h=`<div class="dh"><span>${itemSpr(k,32)}</span><b class="dn">${esc_(k)}</b> <span>×${S.items[k]}</span><button class="mini" data-use="${esc_(k)}">Dùng / xem</button></div><div class="dx">${it.desc||''}${itemSource(k)?`<div class="small">📍 ${itemSource(k)}</div>`:''}</div>`}
+ else if(t==='mt'){const k=id,it=ITEMS[k]||{};h=`<div class="dh"><span>${itemSpr(k,32)}</span><b class="dn">${esc_(k)}</b> <span>×${S.items[k]}</span></div><div class="dx">${it.tier?'Cấp '+it.tier+' · ':''}giá ${it.price}<div class="small">📍 ${itemSource(k)}</div></div>`}
  det.innerHTML=h||'<div class="bg-empty">—</div>';
  const u=$('[data-use]',det);if(u)u.onclick=()=>{closeModal();useItem(u.dataset.use)}}
 function bagUI(){
