@@ -6,19 +6,7 @@ const items=(pose,kind)=>MAN[pose]?MAN[pose].items.filter(i=>i.kind===kind):[];
 const get=(pose,kind,id)=>items(pose,kind).find(i=>i.id===id);
 // ---------- 5 dáng người mỗi giới (biến dạng ảnh theo hàng ngang/dọc, đầu giữ nguyên) ----------
 // sh vai · ch ngực · wa eo · hp hông · th đùi · lw gấu/chân (hệ số ngang) · vt thân dài · v chân dài (hệ số dọc)
-const BODIES={
- nu1:[
-  {id:'can',name:'Cân đối',d:'Dáng chuẩn, hài hòa.',hf:.97,sh:1,ch:1,wa:1,hp:1,th:1,lw:1,vt:1,v:1},
-  {id:'manh',name:'Thanh mảnh',d:'Mảnh mai, eo thon, tay chân dài.',hf:.98,sh:.94,ch:.93,wa:.82,hp:.91,th:.92,lw:.94,vt:1,v:1.04},
-  {id:'day',name:'Đầy đặn',d:'Ngực đầy hông nở, đường cong rõ.',hf:.96,sh:1.02,ch:1.13,wa:.98,hp:1.22,th:1.17,lw:1.1,vt:1,v:.98},
-  {id:'cao',name:'Cao ráo',d:'Dáng cao, chân dài.',hf:1,sh:1,ch:.98,wa:.9,hp:.98,th:.98,lw:1,vt:1.03,v:1.07},
-  {id:'nho',name:'Nhỏ nhắn',d:'Thấp nhỏ, đáng yêu.',hf:.89,sh:.93,ch:.96,wa:.9,hp:.95,th:.95,lw:.94,vt:.96,v:.88}],
- nam1:[
-  {id:'can',name:'Cân đối',d:'Dáng chuẩn, khỏe vừa phải.',hf:.97,sh:1,ch:1,wa:1,hp:1,th:1,lw:1,vt:1,v:1},
-  {id:'thu',name:'Thư sinh',d:'Gầy thanh, nho nhã.',hf:.98,sh:.9,ch:.88,wa:.88,hp:.9,th:.9,lw:.92,vt:1,v:1.04},
-  {id:'vam',name:'Vạm vỡ',d:'Vai rộng ngực dày, sức mạnh.',hf:1,sh:1.17,ch:1.17,wa:1.1,hp:1.07,th:1.1,lw:1.08,vt:1,v:1},
-  {id:'cao',name:'Cao lớn',d:'Cao hơn người, bước dài.',hf:1,sh:1.05,ch:1.04,wa:1,hp:1,th:1,lw:1,vt:1.03,v:1.07},
-  {id:'thap',name:'Thấp rắn',d:'Thấp mà chắc nịch.',hf:.89,sh:1.1,ch:1.12,wa:1.1,hp:1.08,th:1.08,lw:1.08,vt:.96,v:.88}]};
+const BODIES={nu1:[],nam1:[]}; // đã bỏ hệ vóc người (không phải pose)
 D.BODIES=BODIES;
 const AXIS={nu1:450,nam1:456};
 const Y={neck:262,sh:300,ch:385,wa:455,hp:565,th:720,lw:1000};
@@ -103,14 +91,19 @@ function glow(x,M,g){const col=COL[g]||'#e2b53c';const cx=450,cy=560;x.save();
  x.globalAlpha=g>=6?.3:.2;x.translate(cx,300);const n=g>=6?28:g>=5?20:14;
  for(let i=0;i<n;i++){x.rotate(Math.PI*2/n);const lg=x.createLinearGradient(0,0,0,430);lg.addColorStop(0,col+'ee');lg.addColorStop(1,col+'00');x.fillStyle=lg;x.beginPath();x.moveTo(-6,0);x.lineTo(6,0);x.lineTo(0,430);x.fill()}
  x.restore()}
+
+// ---------- TƯ THẾ (pose) thật: mỗi pose là một bộ ảnh riêng (thân/mặt/tóc/trang phục) ----------
+D.POSES={nu1:{g:'Nữ',name:'Đứng chắp tay'},nu2:{g:'Nữ',name:'Hiên ngang'},nu3:{g:'Nữ',name:'Yểu điệu'},nu4:{g:'Nữ',name:'Ngồi thiền'},nu5:{g:'Nữ',name:'Cầm vũ khí'},nu6:{g:'Nữ',name:'Ngoái nhìn'},
+ nam1:{g:'Nam',name:'Đứng chắp tay'},nam2:{g:'Nam',name:'Hiên ngang'},nam3:{g:'Nam',name:'Ung dung'},nam4:{g:'Nam',name:'Ngồi thiền'},nam5:{g:'Nam',name:'Cầm vũ khí'},nam6:{g:'Nam',name:'Ngoái nhìn'}};
+D.poseList=g=>Object.keys(D.POSES).filter(k=>MAN[k]&&D.POSES[k].g===(g==='Nam'?'Nam':'Nữ')).map(k=>({id:k,name:D.POSES[k].name,kind:'pose'}));
 // ---------- tích hợp vào khung chọn ----------
 const _kinds=D.KINDS;
-D.KINDS=[['dang','Dáng người',0],['face','Khuôn mặt',0],['hair','Kiểu tóc',0],['outfit','Trang phục',0],['acc','Phụ kiện',1],['fxb','Hào quang',1],['fxf','Hiệu ứng',1]];
+D.KINDS=[['pose','Tư thế',0],['face','Khuôn mặt',0],['hair','Kiểu tóc',0],['outfit','Trang phục',0],['acc','Phụ kiện',1],['fxb','Hào quang',1],['fxf','Hiệu ứng',1]];
 const ctxOf=ctx=>ctx==='cr'?'cr':'me';
 const _ctxLook=L=>L;
 // danh sách theo loại, có lọc hào quang theo đặc tính
 const listOf=(ctx,pose,kind)=>{
- if(kind==='dang')return BODIES[pose]||[];
+ if(kind==='pose')return D.poseList(gOf(ctx));
  if(kind==='fxb'){return D.auraUnlocked(ctxOf(ctx)).map(u=>({id:u.id,name:u.name,kind:'fxb'}))}
  return items(pose,kind)};
 const lookOf=ctx=>ctx==='cr'?(CR.doll||(CR.doll=D.rollLook(CR.gender))):(()=>{const L=LK();return L.doll||(L.doll=D.rollLook(S.gender))})();
@@ -119,25 +112,26 @@ D.step=function(ctx,kind,d){const L0=lookOf(ctx);const L=D.fixLook(L0,gOf(ctx));
  const opt=(D.KINDS.find(k=>k[0]===kind)||[0,0,0])[2];const list=listOf(ctx,pose,kind);
  if(!list.length&&kind!=='acc')return;
  if(kind==='acc'){const al=items(pose,'acc');const ids=['',...al.map(i=>i.id)];const cur=L.acc[0]||'';const n=(ids.indexOf(cur)+d+ids.length)%ids.length;L.acc=ids[n]?[ids[n]]:[]}
- else if(kind==='dang'){const ids=list.map(i=>i.id);const n=(ids.indexOf(L.dang||'can')+d+ids.length)%ids.length;L.dang=ids[n]}
+ else if(kind==='pose'){const ids=list.map(i=>i.id);const n=(ids.indexOf(L.pose)+d+ids.length)%ids.length;L.pose=ids[n];D.fixLook(L,gOf(ctx))}
  else{const ids=(opt?['']:[]).concat(list.map(i=>i.id));const n=(ids.indexOf(L[kind]||'')+d+ids.length)%ids.length;L[kind]=ids[n];
   if(kind==='fxb'){L.fxbSet=1;const u=D.auraUnlocked(ctxOf(ctx)).find(x=>x.id===L.fxb);L.ag=u?u.g:0}}
  D.refresh(ctx)};
 // tên hiển thị
 const _names=D.names;
-D.names=function(L){const o=_names(L);const b=(BODIES[L.pose]||[]).find(x=>x.id===(L.dang||'can'));o.dang=b?b.name:'Cân đối';
+D.names=function(L){const o=_names(L);const pp=(D.POSES[L.pose]||{});o.pose=pp.name||'Đứng chắp tay';
  if(L.fxb){o.fxb=AURA_NAME[L.fxb]||o.fxb}else o.fxb='Không';return o};
 D.rows=function(ctx){const L=D.fixLook(lookOf(ctx),gOf(ctx));if(!L)return '';const nm=D.names(L);const pose=L.pose;
  const un=D.auraUnlocked(ctxOf(ctx));
- return D.KINDS.filter(k=>{if(k[0]==='fxb')return true;if(k[0]==='dang')return true;return items(pose,k[0]).length}).map(([k,lab])=>{
+ return D.KINDS.filter(k=>{if(k[0]==='fxb')return true;if(k[0]==='pose')return D.poseList(gOf(ctx)).length>1;return items(pose,k[0]).length}).map(([k,lab])=>{
   if(k==='fxb'&&!un.length)return `<div class="dlr"><span class="dll">${lab}</span><b class="dln" data-k="fxb" style="opacity:.6">🔒 cần phẩm Thánh+</b></div>`;
   return `<div class="dlr"><span class="dll">${lab}</span><button class="mini" onclick="DOLL.step('${ctx}','${k}',-1)">◀</button><b class="dln" data-k="${k}">${esc(nm[k])}</b><button class="mini" onclick="DOLL.step('${ctx}','${k}',1)">▶</button></div>`}).join('')
   +`<div class="dlr"><button class="mini" onclick="DOLL.roll('${ctx}')">🎲 Ngẫu nhiên</button></div>`};
 // look mặc định / chuẩn hóa
 const _roll=D.rollLook;
-D.rollLook=function(g){const L=_roll(g);if(!L)return L;const bl=BODIES[L.pose]||[];L.dang=bl.length?bl[Math.floor(Math.random()*bl.length)].id:'can';return L};
+D.rollLook=function(g){const L=_roll(g);if(!L)return L;const pl=D.poseList(g);if(pl.length>1){const p=pl[Math.floor(Math.random()*pl.length)].id;D.fixLook(Object.assign(L,{pose:p}),g)}return L};
 const _fix=D.fixLook;
-D.fixLook=function(L,g){L=_fix(L,g);if(!L)return L;const bl=BODIES[L.pose]||[];if(!bl.some(b=>b.id===L.dang))L.dang='can';
+D.fixLook=function(L,g){const want=L&&L.pose;L=_fix(L,g);if(!L)return L;delete L.dang;if(!L.pose||!MAN[L.pose])L.pose=D.pose(g)||'nu1';
+ if(want&&want!==L.pose&&D.poseList(g).some(p=>p.id===want)){L.pose=want;for(const k of ['face','hair','outfit']){if(!get(L.pose,k,L[k])){const f=items(L.pose,k)[0];L[k]=f?f.id:''}}if(L.fxb&&!get(L.pose,'fxb',L.fxb)){}}
  // hào quang chỉ giữ khi còn được mở khóa
  try{const ctx=(typeof CR!=='undefined'&&CR&&CR.doll===L)?'cr':'me';const un=D.auraUnlocked(ctx);
   if(L.fxb&&!un.some(u=>u.id===L.fxb)){L.fxb='';L.ag=0}
@@ -148,12 +142,12 @@ D.fixLook=function(L,g){L=_fix(L,g);if(!L)return L;const bl=BODIES[L.pose]||[];i
 D.syncAura=function(L,ctx){try{const un=D.auraUnlocked(ctx||'me');if(un.length&&!L.fxbSet){L.fxb=un[0].id;L.ag=un[0].g}}catch(e){}return L};
 // NPC: bậc cao (Hóa Thần+) hoặc Boss có hào quang theo cảnh giới
 const _npc=D.npcLook;
-D.npcLook=function(key,o){const L=_npc(key,o);if(!L)return L;o=o||{};const h=hashStr(String(key));const bl=BODIES[L.pose]||[];L.dang=bl[Math.abs(h>>9)%bl.length].id;
+D.npcLook=function(key,o){const L=_npc(key,o);if(!L)return L;o=o||{};const h=hashStr(String(key));{const pl=D.poseList(o.gender||'Nữ');if(pl.length>1){const p=pl[Math.abs(h>>9)%pl.length].id;L.pose=p;for(const k of ['face','hair','outfit']){if(!get(p,k,L[k])){const f=items(p,k)[0];L[k]=f?f.id:''}}}}
  if(o.realm>=6){L.fxb=(items(L.pose,'fxb')[0]||{}).id||'';L.ag=o.realm>=8?6:o.realm>=7?5:4}return L};
 // vẽ lại khi đổi: xóa bộ nhớ đệm
 D.memo.clear();
 try{PATCH_NOTES.unshift(['v10.0 · 07/11/2026 · 5 dáng người, thêm trang phục, hào quang theo phẩm',[
- 'Mỗi giới có 5 dáng người (nữ: Cân đối, Thanh mảnh, Đầy đặn, Cao ráo, Nhỏ nhắn; nam: Cân đối, Thư sinh, Vạm vỡ, Cao lớn, Thấp rắn). Dáng áp lên mọi trang phục và kiểu tóc.',
+ 'Hệ "dáng người" (cao gầy/đầy đặn) đã gỡ bỏ. Thay bằng hệ Tư thế thật (hiên ngang, yểu điệu, ngồi thiền, cầm vũ khí, ngoái nhìn) đang được vẽ.',
  'Thêm 13 bộ trang phục nữ vẽ mới (nữ tướng kim giáp, thanh long cung bào, hồ yêu, ma nữ, dạ hành, thôn nữ, quận chúa, đạo cô…).',
  'Hào quang chỉ xuất hiện khi nhân vật có linh căn, thể chất, ngộ tính, thiên mệnh, mệnh cách hay thiên phú từ phẩm Thánh trở lên. Phẩm Thánh quầng tím, Chí Tôn quầng vàng, Hồng Mông quầng đỏ; mỗi đặc tính có chủ đề riêng (Thiên Đạo kim luân, Phượng hoàng liệt hỏa, Luân hồi pháp luân…).']])}catch(e){}
 })();

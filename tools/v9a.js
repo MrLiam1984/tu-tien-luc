@@ -177,7 +177,7 @@ function csBuild(){
  id.appendChild(mk('Đạo hiệu',nameI));id.appendChild(mk('Giới tính',genS));
  if(alignBox){const d=document.createElement('div');d.innerHTML='<label>Lập trường</label>';const b=$('.btns',alignBox);if(b){b.className='cs-al';d.appendChild(b)}const s=$('.small',alignBox);if(s){s.className='cs-alt';d.appendChild(s)}id.appendChild(d)}
  stage.appendChild(fb);
- if(dollbox){const SH={'Khuôn mặt':'Mặt','Kiểu tóc':'Tóc','Trang phục':'Áo','Phụ kiện':'Phụ kiện','Sau lưng':'Sau','Hiệu ứng trước':'Hiệu ứng'};$$('.dll',dollbox).forEach(e=>{const t=e.textContent.trim();if(SH[t])e.textContent=SH[t]});const lk=document.createElement('div');lk.className='cs-look';lk.appendChild(dollbox);stage.appendChild(lk)}
+ if(dollbox){const SH={'Tư thế':'Tư thế','Dáng người':'Dáng','Khuôn mặt':'Mặt','Kiểu tóc':'Tóc','Trang phục':'Áo','Phụ kiện':'Phụ kiện','Hào quang':'Hào quang','Hiệu ứng':'Hiệu ứng'};$$('.dll',dollbox).forEach(e=>{const t=e.textContent.trim();if(SH[t])e.textContent=SH[t]});const lk=document.createElement('div');lk.className='cs-look';lk.appendChild(dollbox);stage.appendChild(lk)}
  if(!doll&&arrows.length){const a=document.createElement('div');a.className='cs-arr';arrows.forEach(x=>{x.style.cssText='position:static;display:inline-block';a.appendChild(x)});stage.appendChild(a)}
  // cột phải
  const R=document.createElement('div');R.className='cs-right';
