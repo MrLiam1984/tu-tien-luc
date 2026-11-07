@@ -93,7 +93,7 @@ function glow(x,M,g){const col=COL[g]||'#e2b53c';const cx=450,cy=560;x.save();
  x.restore()}
 
 // ---------- TƯ THẾ (pose) thật: mỗi pose là một bộ ảnh riêng (thân/mặt/tóc/trang phục) ----------
-D.POSES={nu1:{g:'Nữ',name:'Đứng chắp tay'},nu2:{g:'Nữ',name:'Hiên ngang'},nu3:{g:'Nữ',name:'Yểu điệu'},nu4:{g:'Nữ',name:'Ngồi thiền'},nu5:{g:'Nữ',name:'Cầm vũ khí'},nu6:{g:'Nữ',name:'Ngoái nhìn'},
+D.POSES={nu1:{g:'Nữ',name:'Đứng chắp tay'},nu2:{g:'Nữ',name:'Hiên ngang'},nu3:{g:'Nữ',name:'Yểu điệu · quạt lụa'},nu4:{g:'Nữ',name:'Yểu điệu · duyên dáng'},nu5:{g:'Nữ',name:'Ngồi thiền'},nu6:{g:'Nữ',name:'Cầm trượng'},nu7:{g:'Nữ',name:'Ngoái nhìn'},
  nam1:{g:'Nam',name:'Đứng chắp tay'},nam2:{g:'Nam',name:'Hiên ngang'},nam3:{g:'Nam',name:'Ung dung'},nam4:{g:'Nam',name:'Ngồi thiền'},nam5:{g:'Nam',name:'Cầm vũ khí'},nam6:{g:'Nam',name:'Ngoái nhìn'}};
 D.poseList=g=>Object.keys(D.POSES).filter(k=>MAN[k]&&D.POSES[k].g===(g==='Nam'?'Nam':'Nữ')).map(k=>({id:k,name:D.POSES[k].name,kind:'pose'}));
 // ---------- tích hợp vào khung chọn ----------
