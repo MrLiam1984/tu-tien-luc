@@ -6119,8 +6119,8 @@ function owSize(){const el=OW.el;if(!el)return null;const w=el.clientWidth,h=el.
 function owView(){const sz=owSize();if(!sz)return null;const p=owPos();const c=OW.cam||{x:p[0],y:p[1]};const T=OW.T;return {...sz,T,ox:sz.w/2-(c.x+.5)*T,oy:sz.h/2-(c.y+.5)*T}}
 const OW_ICON={gate:'⛩',thon:'🏘',tran:'🏮',huyen:'🏯',thanh:'🏯',dedo:'👑',tong:'⛰',zone:'🌲',boss:'☠',cave:'🏠',fortune:'📢',portal:'🌀',kn:'✨',q:'📜'};
 function owDraw(){if(!OW.el||!OW.cv)return;const V=owView();if(!V)return;const x=OW.cv.getContext('2d');const {w,h,dpr,T,ox,oy}=V;x.setTransform(dpr,0,0,dpr,0,0);const M=owGen(S.loc);const p=owPos();const R=owRad();
- x.fillStyle='#1e1a15';x.fillRect(0,0,w,h);const sx=Math.max(0,Math.floor(-ox/T)),sy=Math.max(0,Math.floor(-oy/T)),ex=Math.min(M.W-1,Math.ceil((w-ox)/T)),ey=Math.min(M.H-1,Math.ceil((h-oy)/T));const seen=owSeen(S.loc);
- for(let ty=sy;ty<=ey;ty++)for(let tx=sx;tx<=ex;tx++){const px=ox+tx*T,py=oy+ty*T;if(seen[ty*M.W+tx]!=='1'){x.fillStyle=((tx+ty)&1)?'#29231c':'#251f19';x.fillRect(px,py,T+1,T+1);continue}
+ const PL=window.OWPAL||{bg:'#1e1a15',u0:'#251f19',u1:'#29231c',dim:'rgba(25,20,15,.32)'};x.fillStyle=PL.bg;x.fillRect(0,0,w,h);const sx=Math.max(0,Math.floor(-ox/T)),sy=Math.max(0,Math.floor(-oy/T)),ex=Math.min(M.W-1,Math.ceil((w-ox)/T)),ey=Math.min(M.H-1,Math.ceil((h-oy)/T));const seen=owSeen(S.loc);
+ for(let ty=sy;ty<=ey;ty++)for(let tx=sx;tx<=ex;tx++){const px=ox+tx*T,py=oy+ty*T;if(seen[ty*M.W+tx]!=='1'){x.fillStyle=((tx+ty)&1)?PL.u1:PL.u0;x.fillRect(px,py,T+1,T+1);continue}
   const c=M.t[ty*M.W+tx];x.fillStyle=OWT[c].c;x.fillRect(px,py,T+1,T+1);const hr=hashStr(tx+','+ty+','+S.loc)%100;
   if(c===1){x.fillStyle='#3f6a35';for(const [a,b] of [[.3,.55],[.68,.38]]){x.beginPath();x.moveTo(px+a*T,py+(b-.28)*T);x.lineTo(px+(a-.16)*T,py+(b+.14)*T);x.lineTo(px+(a+.16)*T,py+(b+.14)*T);x.fill()}}
   else if(c===2){x.fillStyle='#6d6458';x.beginPath();x.moveTo(px+.5*T,py+.12*T);x.lineTo(px+.1*T,py+.88*T);x.lineTo(px+.9*T,py+.88*T);x.fill();x.fillStyle='#ece6da';x.beginPath();x.moveTo(px+.5*T,py+.12*T);x.lineTo(px+.38*T,py+.36*T);x.lineTo(px+.62*T,py+.36*T);x.fill()}
@@ -6129,7 +6129,7 @@ function owDraw(){if(!OW.el||!OW.cv)return;const V=owView();if(!V)return;const x
   else if(c===4){x.fillStyle='rgba(120,95,60,.18)';x.fillRect(px+.42*T,py,.16*T,T)}
   else if(c===10&&hr<14){x.fillStyle='#8a8590';x.fillRect(px+.4*T,py+.35*T,.2*T,.4*T)}
   else if(c===0&&hr<10){x.fillStyle='#c9d98e';x.fillRect(px+.3*T,py+.6*T,.08*T,.08*T)}
-  const dd=(tx-p[0])**2+(ty-p[1])**2;if(dd>R*R+1){x.fillStyle='rgba(25,20,15,.32)';x.fillRect(px,py,T+1,T+1)}}
+  const dd=(tx-p[0])**2+(ty-p[1])**2;if(dd>R*R+1){x.fillStyle=PL.dim;x.fillRect(px,py,T+1,T+1)}}
  // đường đi
  if(OW.path&&OW.path.length){x.fillStyle='rgba(255,240,200,.85)';for(const [a,b] of OW.path)x.fillRect(ox+a*T+T*.44,oy+b*T+T*.44,T*.12,T*.12)}
  // điểm
@@ -9289,6 +9289,125 @@ try{PATCH_NOTES.unshift(['v8.2 · 07/11/2026 · Nhân vật nữ ghép lớp',[
  'NPC nữ cũng dùng bộ ảnh này. Diện mạo chọn theo chính hay tà và cảnh giới: tà đạo hay có mặt quyến rũ, tóc đỏ, áo phượng; cao thủ hay có búi cài trâm, tóc bạc.',
  'Đợt này mới có một phần bộ ảnh (4 khuôn mặt, 6 kiểu tóc, 3 trang phục). Phụ kiện, hiệu ứng (rồng, sen, hào quang…), thêm tư thế và nhân vật nam sẽ bổ sung ở các bản sau.']])}catch(e){}
 D.load();
+})();
+
+/* ===== v8.3 · Giao diện gọn kiểu Bát Hoang: bản đồ toàn màn hình, HUD tối giản ===== */
+(function(){
+const LS='tt_ui8';
+const get=()=>{try{const v=localStorage.getItem(LS);return v==null?'1':v}catch(e){return '1'}};
+const set=v=>{try{localStorage.setItem(LS,v)}catch(e){}};
+const css=document.createElement('style');
+css.textContent=`
+:root{--hp8:#c24545;--ll8:#3f7fc4;--tm8:#8b4fc0;--tv8:#d6a73a;--p8:rgba(22,17,12,.86);--b8:rgba(214,178,98,.55);--t8:#f4ead2}
+body.h8 .app.show{display:block;height:100vh;overflow:hidden;position:relative}
+body.h8 header{position:fixed;top:8px;right:8px;left:auto;z-index:40;width:auto;max-width:min(300px,62vw);padding:8px 10px;border:1px solid var(--b8);border-radius:10px;background:var(--p8);color:var(--t8);backdrop-filter:blur(3px)}
+body.h8 header h1,body.h8 #btnSheetMobile{display:none}
+body.h8 header .meta{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:5px;color:var(--t8);font-size:12px}
+body.h8 header .meta .chip{background:transparent;color:var(--t8);border-color:var(--b8)}
+body.h8 header .meta button{background:rgba(255,255,255,.08);color:var(--t8);border-color:var(--b8)}
+body.h8 #mc8loc{font:600 13px 'Noto Serif',serif;color:#f0d68e;text-align:right;line-height:1.3;width:100%}body.h8 #hdTime{width:100%;text-align:right;font-size:11.5px;opacity:.9}
+body.h8 #mc8row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+body.h8 main{display:block;height:100vh}
+body.h8 .logcol.stgcol,body.h8 .stgcol.owmode{height:100vh!important;min-height:0!important;max-height:none!important}
+body.h8 #scene{min-height:0}
+body.h8 #ow .owhud,body.h8 #ow .owtop,body.h8 .stgcol .popst,body.h8 .stgcol #log,body.h8 #logT{display:none!important}
+body.h8 #sheet{position:fixed;top:0;right:0;bottom:0;width:min(370px,94vw);z-index:60;display:block!important;transform:translateX(105%);transition:transform .25s ease;box-shadow:-8px 0 30px rgba(0,0,0,.45)}
+body.h8.sheet8 #sheet{transform:none}
+body.h8 #sheet .sh8x{position:sticky;top:0;float:right;z-index:2}
+body.h8 footer{position:fixed;left:50%;bottom:112px;transform:translateX(-50%);width:min(560px,94vw);z-index:48;border:1px solid var(--b8);border-radius:12px;background:var(--p8);padding:8px;display:none}
+body.h8.free8 footer{display:block}
+body.h8 footer .actions{display:none!important}
+body.h8 footer input{background:rgba(255,255,255,.95)}
+body.h8 #tut7{left:auto!important;right:8px!important;top:var(--tut8,104px)!important;bottom:auto!important;position:fixed!important;margin-top:0;z-index:30;max-width:min(250px,60vw);background:var(--p8)!important;color:var(--t8)!important;border:1px solid var(--b8)!important;box-shadow:none!important;border-radius:10px!important;font-size:12px!important}
+body.h8 #tut7 span{color:#ffb0a4!important}
+body.h8 #ow .owcard{left:50%!important;right:auto!important;transform:translateX(-50%);bottom:112px!important;top:auto!important;width:min(540px,94vw)!important;max-height:52vh!important}
+/* HUD trái dưới */
+#hud8{display:none}
+body.h8 #hud8{display:flex;position:fixed;left:8px;bottom:8px;z-index:44;align-items:flex-end;gap:8px;max-width:min(430px,56vw);color:var(--t8)}
+#hud8 .pt{width:92px;height:92px;border-radius:50%;border:3px solid #d6b262;background:radial-gradient(circle at 50% 35%,#5a5048,#1d1814);overflow:hidden;cursor:pointer;flex:0 0 auto;box-shadow:0 3px 12px rgba(0,0,0,.6);position:relative}
+#hud8 .pt img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;display:block}
+#hud8 .info{background:var(--p8);border:1px solid var(--b8);border-radius:12px;padding:7px 10px 8px;min-width:190px;flex:1}
+#hud8 .nm{display:flex;justify-content:space-between;gap:8px;align-items:baseline;font-size:12px;margin-bottom:4px}
+#hud8 .nm b{font:700 14px 'Noto Serif',serif;color:#f0d68e}
+#hud8 .nm span{opacity:.85;white-space:nowrap}
+#hud8 .b8{position:relative;height:13px;margin:3px 0;background:rgba(255,255,255,.14);border-radius:7px;overflow:hidden}
+#hud8 .b8 i{position:absolute;inset:0 auto 0 0;display:block;border-radius:7px;transition:width .4s}
+#hud8 .b8 em{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:600 10px 'Be Vietnam Pro',sans-serif;font-style:normal;text-shadow:0 1px 2px #000}
+/* dock phải dưới */
+#dock8{display:none}
+body.h8 #dock8{display:flex;position:fixed;right:8px;bottom:8px;z-index:44;gap:8px;align-items:flex-end}
+#dock8 button{width:62px;height:auto;padding:6px 0 4px;border-radius:50%/42%;border:2px solid #d6b262;background:radial-gradient(circle at 50% 30%,#4a3f35,#17120e);color:var(--t8);display:flex;flex-direction:column;align-items:center;gap:1px;box-shadow:0 3px 10px rgba(0,0,0,.55)}
+#dock8 button span.ic{font-size:24px;line-height:1.1}
+#dock8 button span.lb{font-size:11px;white-space:nowrap}
+#dock8 button.dis{opacity:.4}
+#dock8 button.hot{border-color:#ff7a5c;box-shadow:0 0 12px #ff7a5c}
+/* toast nhật ký */
+#toast8{display:none}
+body.h8 #toast8{position:fixed;left:50%;bottom:118px;transform:translateX(-50%);width:min(560px,92vw);z-index:43;background:var(--p8);border:1px solid var(--b8);border-radius:12px;color:var(--t8);padding:9px 14px;font-size:13.5px;line-height:1.5;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
+body.h8 #toast8.on{display:block;opacity:1;pointer-events:auto}body.free8 #toast8,body.h8:has(#ow .owcard.on) #toast8,body.h8:has(#overlay.show) #toast8{display:none!important}
+#toast8 small{display:block;opacity:.6;font-size:10.5px;letter-spacing:1px;text-transform:uppercase}
+.mg8{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:10px}
+.mg8 button{text-align:left}
+.lg8 .entry{margin-bottom:8px}
+@media(max-width:700px){#hud8 .pt{width:70px;height:70px}#hud8 .info{min-width:150px;padding:5px 8px}#dock8{gap:5px}#dock8 button{width:50px}#dock8 button span.ic{font-size:20px}#dock8 button span.lb{font-size:9.5px}body.h8 #hud8{max-width:48vw}}
+@media(max-width:560px){body.h8 #hud8{max-width:calc(100vw - 16px)}body.h8 #dock8{bottom:84px}body.h8 #toast8,body.h8 footer{bottom:150px}body.h8 #ow .owcard{bottom:150px!important}#dock8 button{width:54px}}
+@media(max-height:480px){body.h8 #hud8 .pt{width:58px;height:58px}body.h8 #toast8{bottom:92px}body.h8 footer{bottom:92px}}
+`;
+document.head.appendChild(css);
+function on(){return document.body.classList.contains('h8')}
+function pal(){window.OWPAL=document.body.classList.contains('h8')?{bg:'#d9d2c0',u0:'#d2cab6',u1:'#d6cebb',dim:'rgba(236,231,220,.42)'}:null}
+function setMode(v){document.body.classList.toggle('h8',v==='1');pal();set(v);if(v!=='1')document.body.classList.remove('sheet8','free8');try{render()}catch(e){}}
+setMode0();function setMode0(){document.body.classList.toggle('h8',get()==='1');pal()}
+// ---- các phần tử HUD ----
+function mk(id,html,tag){let e=document.getElementById(id);if(!e){e=document.createElement(tag||'div');e.id=id;document.body.appendChild(e)}if(html!=null)e.innerHTML=html;return e}
+const actBtn=re=>[...document.querySelectorAll('#actions button')].find(b=>re.test(b.textContent));
+function fire(re){const b=actBtn(re);if(b)b.click();else{try{toast8('Chưa dùng được ở đây.')}catch(e){}}}
+function portrait(){try{const s=myPortrait();return s?pimg(s,92,'width:100%;height:100%'):''}catch(e){return ''}}
+function realmText(){try{return tierName()}catch(e){return ''}}
+function bar(c,v,m,txt){const p=m>0?Math.max(0,Math.min(100,v/m*100)):0;return `<div class="b8"><i style="width:${p}%;background:${c}"></i><em>${txt}</em></div>`}
+function hudRender(){
+  if(!on()||!S||!S.menh||document.getElementById('modal')&&0)return;
+  const need=(()=>{try{const r=realm();return r.tuvi===Infinity?null:r.tuvi}catch(e){return null}})();
+  mk('hud8',`<div class="pt" onclick="UI8.sheet()" title="Xem nhân vật">${portrait()}</div><div class="info"><div class="nm"><b>${esc(S.name||'')}</b><span>${esc(realmText())}</span></div>
+   ${bar('var(--hp8)',S.hp,S.hpMax,`❤ ${Math.round(S.hp)}/${S.hpMax}`)}${bar('var(--ll8)',S.ll,S.llMax,`🔮 ${Math.round(S.ll)}/${S.llMax}`)}${need?bar('var(--tv8)',S.tuvi,need,`✨ ${Math.round(S.tuvi)}/${need}`):''}${bar('var(--tm8)',S.tamMa,100,`🜏 ${Math.round(S.tamMa)}/100`)}</div>`);
+  const btn=(ic,lb,fn,cls)=>`<button onclick="${fn}" class="${cls||''}"><span class="ic">${ic}</span><span class="lb">${lb}</span></button>`;
+  const canBreak=!!actBtn(/Đột phá/)&&need&&S.tuvi>=need;
+  mk('dock8',btn('🧘','Tu luyện',"UI8.fire(/Tu luyện/)")+btn('📖','Công pháp',"UI8.fire(/Công pháp/)")+btn('🎒','Hành trang',"UI8.fire(/Hành trang/)")+btn('👥','Nhân vật',"UI8.fire(/Nhân vật/)")+(canBreak?btn('⚡','Đột phá',"UI8.fire(/Đột phá/)",'hot'):'')+btn('✍','Hành động',"UI8.free()")+btn('☰','Thêm',"UI8.more()"));
+  // thẻ góc phải: tên nơi đang đứng
+  const hdr=document.querySelector('header .meta');
+  if(hdr){let loc=document.getElementById('mc8loc');if(!loc){loc=document.createElement('div');loc.id='mc8loc';hdr.insertBefore(loc,hdr.firstChild)}
+   let t='';try{const h=document.querySelector('#ow .owhud b');t=h?h.textContent:''}catch(e){}
+   if(!t){try{t=CHAU[S.loc].name}catch(e){}}loc.textContent=t}
+  placeTut()}
+function placeTut(){const t=document.getElementById('tut7');const h=document.querySelector('header');if(t&&h&&on()){document.body.style.setProperty('--tut8',Math.round(h.getBoundingClientRect().bottom+8)+'px')}}
+// ---- toast nhật ký ----
+let tT=null,lastTxt='';
+function toast8(txt,label){if(!on())return;const e=mk('toast8',`<small>${esc(label||'Vừa xảy ra')}</small>${esc(txt)}`);e.onclick=()=>UI8.log();e.classList.add('on');clearTimeout(tT);tT=setTimeout(()=>e.classList.remove('on'),9000)}
+function watchLog(){const log=document.getElementById('log');if(!log||log._w8)return;log._w8=1;
+ new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes){if(n.nodeType===1&&n.classList&&n.classList.contains('entry')){const lab=(n.querySelector('.label')||{}).textContent||'';let t=n.textContent.replace(lab,'').replace(/\s+/g,' ').trim();if(t.length>260)t=t.slice(0,257)+'…';if(t&&t!==lastTxt){lastTxt=t;toast8(t,lab.trim())}}}}).observe(log,{childList:true})}
+// ---- hành động trong giao diện ----
+window.UI8={
+ sheet(on){document.body.classList.toggle('sheet8',on==null?!document.body.classList.contains('sheet8'):on);
+  const sh=document.getElementById('sheet');if(sh&&!sh.querySelector('.sh8x'))sh.insertAdjacentHTML('afterbegin','<button class="mini sh8x" onclick="UI8.sheet(false)">✕ Đóng</button>')},
+ fire,
+ free(){document.body.classList.toggle('free8');if(document.body.classList.contains('free8')){const i=document.getElementById('freeInput');setTimeout(()=>i&&i.focus(),50)}},
+ more(){const bs=[...document.querySelectorAll('#actions button')];
+  modal(`<h2>☰ Mọi việc có thể làm</h2><div class="mg8">${bs.map((b,i)=>`<button onclick="closeModal();UI8.go(${i})">${esc(b.textContent.trim())}</button>`).join('')}</div><div class="btns"><button onclick="UI8.mode('0')">🖥 Giao diện cổ điển</button><button onclick="closeModal()">Đóng</button></div>`)},
+ go(i){const b=document.querySelectorAll('#actions button')[i];if(b)b.click()},
+ log(){const log=document.getElementById('log');const h=log?log.innerHTML:'';modal(`<h2>📜 Diễn biến gần đây</h2><div class="lg8" style="max-height:60vh;overflow:auto">${h||'<p class="small">Chưa có gì.</p>'}</div><div class="btns"><button onclick="closeModal()">Đóng</button></div>`)},
+ mode(v){closeModal();setMode(v)}
+};
+// ---- móc vào vòng vẽ ----
+const _r=window.render;
+window.render=function(){const x=_r.apply(this,arguments);try{if(on()){watchLog();hudRender()}}catch(e){console.warn('ui8',e)}return x};
+// menu chính: thêm nút bật/tắt giao diện
+const _om=window.openMenu;
+window.openMenu=function(){const r=_om.apply(this,arguments);try{const m=document.getElementById('modal');if(m&&!m.querySelector('.ui8b')){const b=document.createElement('div');b.className='btns ui8b';b.innerHTML=`<button onclick="UI8.mode('${on()?'0':'1'}')">${on()?'🖥 Giao diện cổ điển':'🎛 Giao diện gọn'}</button>`;m.appendChild(b)}}catch(e){}return r};
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('sheet8'))UI8.sheet(false)});
+try{PATCH_NOTES.unshift(['v8.3 · 07/11/2026 · Giao diện gọn kiểu Bát Hoang',[
+ 'Màn chính giờ là bản đồ toàn màn hình. Chỉ còn thẻ vị trí và giờ ở góc phải trên, bảng nhiệm vụ nhỏ dưới thẻ, chân dung với thanh máu, linh lực, tu vi, tâm ma ở góc trái dưới, và hàng nút tròn ở góc phải dưới (Tu luyện, Công pháp, Hành trang, Nhân vật, Hành động, Thêm).',
+ 'Nhật ký không còn phủ lên bản đồ. Việc vừa xảy ra hiện thành một dòng ngắn rồi tự ẩn; bấm vào dòng đó để xem diễn biến gần đây.',
+ 'Bấm chân dung để mở bảng nhân vật. Nút "Thêm" chứa mọi việc còn lại (chợ, động phủ, tra cứu, danh hiệu…). Ô nhập hành động tự do nằm sau nút "Hành động". Menu có nút chuyển về giao diện cổ điển.']])}catch(e){}
 })();
 
 </script>
