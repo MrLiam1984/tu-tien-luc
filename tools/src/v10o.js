@@ -1,0 +1,4 @@
+(function(){try{PATCH_NOTES.unshift(['v10.18 · 07/11/2026 · Tranh 7 tông môn, bảng nhiệm vụ và 9 trùm châu',[
+ 'Mỗi tông môn có tranh sơn môn riêng: Thiên Kiếm Tông (rừng kiếm trên vách đá), Vạn Thú Sơn (cổng hổ trắng, hạc bay), Đan Đạo Cung (đại đỉnh khói ngũ sắc), Huyền Phù Các (tháp bùa, trận pháp xanh), Kim Thân Tự (chùa vàng, tượng khổng lồ), U Minh Giáo (cổng xương, đèn ma), Thương Nhân Liên Minh (thương hội ven sông). Hiện khi mở cửa sổ tông môn.',
+ 'Nhiệm vụ tông môn có tranh bảng lệnh bài và thẻ ngọc.',
+ 'Chín trùm mỗi châu đều có chân dung thủy mặc: Bạch Viên Vương, Hắc Thủy Huyền Ngạc, Cửu Đầu Lôi Giao, Hoàng Kim Sư Vương, Thiết Bối Hùng Hoàng, Chu Tước Tàn Hồn, Thi Tiên Lão Tổ, Băng Phách Thần Long, Hoang Thú Thao Thiết. Hiện khi chọn hang ổ và khi giáp mặt trong trận đánh.']])}catch(e){}})();
