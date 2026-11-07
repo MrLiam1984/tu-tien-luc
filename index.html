@@ -10280,8 +10280,8 @@ try{PATCH_NOTES.unshift(['v10.8 · 07/11/2026 · Khung gọn hơn, cảnh có tr
 const $=(s,r=document)=>r.querySelector(s);
 // ---- tranh từng nơi: thử lần lượt các tệp, tệp nào chưa có thì dùng tệp kế ----
 const VIMG={khach:['ven_khach','ev_tuluyen'],y:['ven_y','ev_cho'],tra:['ven_tra','ev_gapgo'],tuu:['ven_tuu','ven_tra','ev_gapgo'],cho:['ven_cho','ev_cho'],thuong:['ven_thuong','ev_cho'],lo:['ven_lo','ev_dan'],ren:['ven_ren','ev_dan'],dau:['ven_dau','ev_cho'],nha:['ven_nha','ev_phucich'],nguoi:['ven_nguoi','ev_gapgo'],bang:['ven_bang','ev_tong'],
- lytruong:['ven_lytruong','ev_gapgo'],thodet:['ven_ren','ev_dan'],thaiy:['ven_thaiy','ev_dan'],cung:['ven_cung','ev_tong'],quandoanh:['ven_nha','ev_phucich']};
-const ROLE={khach:'Chủ khách điếm',y:'Chủ tiệm y phường',tra:'Chưởng quầy trà lâu',tuu:'Chủ tửu quán',cho:'Chủ sạp chợ',thuong:'Thương nhân',lo:'Đan sư',ren:'Thợ rèn',dau:'Chủ phiên đấu giá',nha:'Huyện úy',nguoi:'Dân thành',bang:'Thư lại cáo thị',lytruong:'Lý trưởng',thodet:'Thợ thủ công',thaiy:'Thầy thuốc',cung:'Thái giám',quandoanh:'Quản doanh'};
+ lytruong:['ven_lytruong','ev_gapgo'],thodet:['ven_ren','ev_dan'],thaiy:['ven_thaiy','ev_dan'],cung:['ven_cung','ev_tong'],quandoanh:['ven_nha','ev_phucich'],dia:['ven_dia','ven_nha','ev_phucich']};
+const ROLE={khach:'Chủ khách điếm',y:'Chủ tiệm y phường',tra:'Chưởng quầy trà lâu',tuu:'Chủ tửu quán',cho:'Chủ sạp chợ',thuong:'Thương nhân',lo:'Đan sư',ren:'Thợ rèn',dau:'Chủ phiên đấu giá',nha:'Huyện úy',nguoi:'Dân thành',bang:'Thư lại cáo thị',lytruong:'Lý trưởng',thodet:'Thợ thủ công',thaiy:'Thầy thuốc',cung:'Thái giám',quandoanh:'Quản doanh',dia:'Thư lại địa khế'};
 const GOOD={y:'Nữ',khach:'Nam',ren:'Nam',lo:'Nam'};
 const NM_N=['Trương','Lý','Vương','Triệu','Hồ','Tiêu','Đỗ','Cao','Mạc','Phó'],NM_M=['Lão Tam','Đại Hải','Phúc Sinh','Thiết Trụ','Văn Bình','Quang Minh','Tiểu Ngũ','Hữu Lễ'],NM_F=['Thúy Lan','Bích Hà','Ngọc Yến','Mai Hương','Tố Nga','Hồng Liên'];
 const LINES={
@@ -10471,6 +10471,42 @@ try{PATCH_NOTES.unshift(['v10.10 · 07/11/2026 · Mọi lựa chọn, hành đ�
  'Mọi cửa sổ có lựa chọn đều hiện tranh thủy mặc trước (tranh theo ngữ cảnh: cướp, yêu thú, lão nhân, chợ, khách điếm, cơ duyên, thiên ma, bí cảnh…), chạm vào tranh mới hiện khung chọn nhỏ phía dưới.',
  'Bấm một lựa chọn sẽ hiện tranh mô tả hành động đó (ra tay, ẩn nấp, nộp tiền, cung kính, tìm kiếm, rời đi…), rồi khi có kết quả thì hiện tranh kết quả (thành công, thất bại, bị thương, được lợi, ngộ đạo) cùng tóm tắt những gì vừa xảy ra.',
  'Chiến đấu: vào trận hiện tranh theo loại đối thủ (hổ, rắn, đại bàng, quỷ, ma tu, tu sĩ, sát thủ, cướp, boss); gặp quái hoặc boss lần đầu hiện tranh riêng và phải chạm để tiếp tục; kết thúc hiện tranh thắng, bại, chạy thoát hoặc thuyết phục thành công.']])}catch(e){}
+})();
+
+/* ===== v10.11 · Quái và kẻ địch vẽ thủy mặc thay hình pixel ===== */
+(function(){
+const MON={tiger:'doll/mon_tiger.webp',wolf:'doll/mon_wolf.webp',snake:'doll/mon_snake.webp',eagle:'doll/mon_eagle.webp',boar:'doll/mon_boar.webp',bear:'doll/mon_bear.webp',spider:'doll/mon_spider.webp',ghost:'doll/mon_ghost.webp',demon:'doll/mon_demon.webp',bandit:'doll/mon_bandit.webp',assassin:'doll/mon_assassin.webp',boss:'doll/mon_boss.webp',fox:'doll/mon_fox.webp'};
+const have={};
+function pickMon(e){const n=String(e.name||'');
+ if(e.kind==='beast'){
+  if(e.boss)return 'boss';
+  if(/hổ|báo|sư tử|mãnh/i.test(n))return 'tiger';
+  if(/mãng|giao|xà|rắn|hạt|rết|trùng|bọ/i.test(n))return 'snake';
+  if(/nhện|chu |thù/i.test(n))return 'spider';
+  if(/điểu|ưng|nha|phượng|chim|kền|cú|dơi|bằng|hạc/i.test(n))return 'eagle';
+  if(/trư|heo|lợn|ngưu|tê|tượng|sơn trư/i.test(n))return 'boar';
+  if(/hùng|gấu|viên|vượn/i.test(n))return 'bear';
+  if(/hồ|cáo|ly /i.test(n))return 'fox';
+  if(/lang|sói|khuyển|cẩu/i.test(n))return 'wolf';
+  const ks=['tiger','wolf','snake','eagle','boar','bear','spider','fox'];return ks[hashStr(n)%ks.length]}
+ if(e.kind==='heart')return 'ghost';
+ if(/sát thủ|thích khách/i.test(n))return 'assassin';
+ if(/cướp|phỉ|sơn tặc|thủ lĩnh|giặc/i.test(n))return 'bandit';
+ if(/quỷ|thi|hồn|vong|cương|cốt/i.test(n))return 'ghost';
+ if(e.evil||/ma tu|huyết|tà|ma /i.test(n))return 'demon';
+ return null}
+const _es=window.enemySprite;
+if(typeof _es==='function')window.enemySprite=function(e){try{const k=pickMon(e);if(k&&MON[k])return MON[k]}catch(x){}return _es.apply(this,arguments)};
+const _pi=window.pimg;
+if(typeof _pi==='function')window.pimg=function(src,size,extra){const r=_pi.apply(this,arguments);return typeof src==='string'&&src.indexOf('doll/mon_')===0?r.replace('image-rendering:pixelated;','image-rendering:auto;'):r};
+const st=document.createElement('style');st.textContent=`.cfoe .cspr[src^="doll/mon_"]{image-rendering:auto;transform:none;filter:drop-shadow(0 6px 8px rgba(0,0,0,.3));object-fit:contain}
+.cfoe.heart .cspr[src^="doll/mon_"]{filter:drop-shadow(0 0 10px #7a2bd6)}
+.cfoe.beast .cspr[src^="doll/mon_"]{height:70%}.cfoe.boss .cspr[src^="doll/mon_"]{height:86%}
+#modal.cmodal .fighter.cfoe .cspr[src^="doll/mon_"]{height:100%;max-width:140%}`;
+document.head.appendChild(st);
+try{PATCH_NOTES.unshift(['v10.11 · 07/11/2026 · Quái và kẻ địch vẽ thủy mặc',[
+ 'Trong chiến đấu, hổ, sói, rắn, đại bàng, heo rừng, gấu, nhện, hồ ly, quỷ hồn, ma tu, sơn tặc, sát thủ và boss đều hiện hình thủy mặc thay cho hình pixel.',
+ 'Thêm tranh cửa hiệu cho quảng trường, bảng cáo thị, tửu quán, thái y, lý trưởng, cung điện và địa khế.']])}catch(e){}
 })();
 
 </script>

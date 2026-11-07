@@ -3,8 +3,8 @@
 const $=(s,r=document)=>r.querySelector(s);
 // ---- tranh từng nơi: thử lần lượt các tệp, tệp nào chưa có thì dùng tệp kế ----
 const VIMG={khach:['ven_khach','ev_tuluyen'],y:['ven_y','ev_cho'],tra:['ven_tra','ev_gapgo'],tuu:['ven_tuu','ven_tra','ev_gapgo'],cho:['ven_cho','ev_cho'],thuong:['ven_thuong','ev_cho'],lo:['ven_lo','ev_dan'],ren:['ven_ren','ev_dan'],dau:['ven_dau','ev_cho'],nha:['ven_nha','ev_phucich'],nguoi:['ven_nguoi','ev_gapgo'],bang:['ven_bang','ev_tong'],
- lytruong:['ven_lytruong','ev_gapgo'],thodet:['ven_ren','ev_dan'],thaiy:['ven_thaiy','ev_dan'],cung:['ven_cung','ev_tong'],quandoanh:['ven_nha','ev_phucich']};
-const ROLE={khach:'Chủ khách điếm',y:'Chủ tiệm y phường',tra:'Chưởng quầy trà lâu',tuu:'Chủ tửu quán',cho:'Chủ sạp chợ',thuong:'Thương nhân',lo:'Đan sư',ren:'Thợ rèn',dau:'Chủ phiên đấu giá',nha:'Huyện úy',nguoi:'Dân thành',bang:'Thư lại cáo thị',lytruong:'Lý trưởng',thodet:'Thợ thủ công',thaiy:'Thầy thuốc',cung:'Thái giám',quandoanh:'Quản doanh'};
+ lytruong:['ven_lytruong','ev_gapgo'],thodet:['ven_ren','ev_dan'],thaiy:['ven_thaiy','ev_dan'],cung:['ven_cung','ev_tong'],quandoanh:['ven_nha','ev_phucich'],dia:['ven_dia','ven_nha','ev_phucich']};
+const ROLE={khach:'Chủ khách điếm',y:'Chủ tiệm y phường',tra:'Chưởng quầy trà lâu',tuu:'Chủ tửu quán',cho:'Chủ sạp chợ',thuong:'Thương nhân',lo:'Đan sư',ren:'Thợ rèn',dau:'Chủ phiên đấu giá',nha:'Huyện úy',nguoi:'Dân thành',bang:'Thư lại cáo thị',lytruong:'Lý trưởng',thodet:'Thợ thủ công',thaiy:'Thầy thuốc',cung:'Thái giám',quandoanh:'Quản doanh',dia:'Thư lại địa khế'};
 const GOOD={y:'Nữ',khach:'Nam',ren:'Nam',lo:'Nam'};
 const NM_N=['Trương','Lý','Vương','Triệu','Hồ','Tiêu','Đỗ','Cao','Mạc','Phó'],NM_M=['Lão Tam','Đại Hải','Phúc Sinh','Thiết Trụ','Văn Bình','Quang Minh','Tiểu Ngũ','Hữu Lễ'],NM_F=['Thúy Lan','Bích Hà','Ngọc Yến','Mai Hương','Tố Nga','Hồng Liên'];
 const LINES={
