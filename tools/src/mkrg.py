@@ -1,6 +1,6 @@
 import cv2,glob,numpy as np
 from PIL import Image
-names={42:'rg_thanhthach',43:'rg_bachthao',44:'rg_hacphong',45:'rg_hanbang',46:'rg_xichviem',47:'rg_vanyeu',48:'rg_thienloi',49:'rg_uminh',50:'rg_hondon',51:'bc_cua',52:'bc_dien'}
+names={53:'kham_lair',54:'kham_portal',55:'kham_map',56:'kham_city',57:'kham_wild',58:'kham_hub'}
 for n,k in names.items():
     f=glob.glob('/tmp/claude-chrome-screenshots-8yJPRW/screenshot-*-%d.png'%n)[0]
     im=cv2.imread(f)
