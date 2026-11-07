@@ -9171,7 +9171,7 @@ try{PATCH_NOTES.unshift(['v8.1 · 07/11/2026 · Thân phận phải xứng với
 
 /* ===== v8.2 · Nhân vật ghép lớp (paper-doll): chọn riêng khuôn mặt, tóc, trang phục, phụ kiện, hiệu ứng ===== */
 (function(){
-const MAN={"nu1":{"W":896,"H":1200,"pose":{},"items":[{"kind":"outfit","id":"base","name":"Áo lụa trắng","file":"nu1_outfit_base.webp","x":276,"y":94,"w":347,"h":1045,"tags":["poor","plain"]},{"kind":"outfit","id":"phuong","name":"Phượng hoàng đỏ","file":"nu1_outfit_phuong.webp","x":276,"y":94,"w":620,"h":1106,"tags":["evil","noble","charm"]},{"kind":"outfit","id":"tien","name":"Tiên nữ lam","file":"nu1_outfit_tien.webp","x":202,"y":81,"w":519,"h":1058,"tags":["good","immortal","gentle"]},{"kind":"outfit","id":"kiem","name":"Kiếm khách hắc y","file":"nu1_outfit_kiem.webp","x":287,"y":92,"w":326,"h":1067,"tags":["brave","good","free"]},{"kind":"outfit","id":"hoang","name":"Tử kim phượng bào","file":"nu1_outfit_hoang.webp","x":76,"y":94,"w":749,"h":1047,"tags":["noble","high","charm"]},{"kind":"outfit","id":"luc","name":"Lục ngọc dược sư","file":"nu1_outfit_luc.webp","x":180,"y":93,"w":716,"h":1107,"tags":["good","gentle","plain"]},{"kind":"outfit","id":"dao","name":"Đào hoa sa mỏng","file":"nu1_outfit_dao.webp","x":99,"y":93,"w":733,"h":1047,"tags":["young","gentle","charm"]},{"kind":"outfit","id":"bac","name":"Bạch ngân tiên bào","file":"nu1_outfit_bac.webp","x":170,"y":94,"w":564,"h":1038,"tags":["immortal","high","good","cold"]},{"kind":"outfit","id":"hac","name":"Hắc kim ma bào","file":"nu1_outfit_hac.webp","x":234,"y":93,"w":447,"h":1048,"tags":["evil","charm","high"]},{"kind":"face","id":"lanh","name":"Lạnh sắc","file":"nu1_face_lanh.webp","x":405,"y":134,"w":93,"h":125,"tags":["evil","cold","high"]},{"kind":"face","id":"diu","name":"Dịu dàng","file":"nu1_face_diu.webp","x":405,"y":134,"w":93,"h":125,"tags":["good","gentle","young"]},{"kind":"face","id":"quyen","name":"Quyến rũ","file":"nu1_face_quyen.webp","x":405,"y":134,"w":93,"h":125,"tags":["evil","charm"]},{"kind":"face","id":"anhkhi","name":"Anh khí","file":"nu1_face_anhkhi.webp","x":405,"y":134,"w":93,"h":125,"tags":["good","brave"]},{"kind":"hair","id":"bun","name":"Búi phượng quý phái","file":"nu1_hair_bun.webp","x":350,"y":16,"w":200,"h":471,"tags":["noble","high"],"er":"nu1_hairer_bun.png","ex":365,"ey":182},{"kind":"hair","id":"xoa","name":"Xõa dài","file":"nu1_hair_xoa.webp","x":204,"y":95,"w":482,"h":1017,"tags":["plain","free"],"er":"nu1_hairer_xoa.png","ex":365,"ey":91},{"kind":"hair","id":"ngua","name":"Đuôi ngựa kiếm khách","file":"nu1_hair_ngua.webp","x":291,"y":56,"w":349,"h":1082,"tags":["brave","young","good"],"er":"nu1_hairer_ngua.png","ex":287,"ey":92},{"kind":"hair","id":"haibui","name":"Hai búi hoa đào","file":"nu1_hair_haibui.webp","x":355,"y":68,"w":191,"h":419,"tags":["young","gentle"],"er":"nu1_hairer_haibui.png","ex":368,"ey":90},{"kind":"hair","id":"bac","name":"Tóc bạc tiên nhân","file":"nu1_hair_bac.webp","x":289,"y":68,"w":327,"h":631,"tags":["immortal","high"],"er":"nu1_hairer_bac.png","ex":365,"ey":103},{"kind":"hair","id":"do","name":"Tóc đỏ ma mị","file":"nu1_hair_do.webp","x":211,"y":94,"w":506,"h":485,"tags":["evil","charm"],"er":"nu1_hairer_do.png","ex":365,"ey":90},{"kind":"fxb","id":"rong","name":"Rồng vàng bên mình","file":"nu1_fxb_rong.webp","x":12,"y":31,"w":878,"h":1129,"tags":["noble","high","evil"]},{"kind":"fxb","id":"sen","name":"Liên hoa sau lưng","file":"nu1_fxb_sen.webp","x":0,"y":0,"w":896,"h":1200,"tags":["good","immortal","gentle"]},{"kind":"fxb","id":"haoquang","name":"Hào quang tiên nhân","file":"nu1_fxb_haoquang.webp","x":33,"y":21,"w":828,"h":721,"tags":["immortal","high","good"]},{"kind":"fxf","id":"muc","name":"Khói mực kiếm khí","file":"nu1_fxf_muc.webp","x":0,"y":0,"w":896,"h":1200,"tags":["evil","brave"]}]},"nam1":{"W":896,"H":1200,"pose":{},"items":[{"kind":"outfit","id":"base","name":"Áo trắng thư sinh","file":"nam1_outfit_base.webp","x":267,"y":80,"w":376,"h":1071,"tags":["poor","plain"]},{"kind":"outfit","id":"thusinh","name":"Thư sinh lam trúc","file":"nam1_outfit_thusinh.webp","x":267,"y":80,"w":376,"h":1071,"tags":["good","gentle","noble"]},{"kind":"outfit","id":"hacy","name":"Hắc y kiếm khách","file":"nam1_outfit_hacy.webp","x":266,"y":80,"w":405,"h":1076,"tags":["evil","brave","free"]},{"kind":"outfit","id":"giap","name":"Chiến giáp xích kim","file":"nam1_outfit_giap.webp","x":264,"y":80,"w":384,"h":1071,"tags":["brave","good","high"]},{"kind":"outfit","id":"dao","name":"Đạo bào xám","file":"nam1_outfit_dao.webp","x":267,"y":81,"w":376,"h":1070,"tags":["plain","good","immortal"]},{"kind":"outfit","id":"tukim","name":"Tử kim long bào","file":"nam1_outfit_tukim.webp","x":193,"y":80,"w":630,"h":1072,"tags":["noble","high","evil"]},{"kind":"face","id":"hien","name":"Hiền hòa","file":"nam1_face_hien.webp","x":400,"y":137,"w":100,"h":137,"tags":["good","gentle"]},{"kind":"face","id":"manh","name":"Mạnh mẽ","file":"nam1_face_manh.webp","x":400,"y":137,"w":101,"h":137,"tags":["good","brave","high"]},{"kind":"face","id":"gian","name":"Gian xảo","file":"nam1_face_gian.webp","x":401,"y":137,"w":99,"h":137,"tags":["evil","cunning"]},{"kind":"hair","id":"xoa","name":"Xõa dài phóng khoáng","file":"nam1_hair_xoa.webp","x":352,"y":106,"w":332,"h":494,"tags":["free","plain","evil"],"er":"nam1_hairer_xoa.png","ex":378,"ey":76},{"kind":"hair","id":"ngua","name":"Đuôi ngựa kiếm khách","file":"nam1_hair_ngua.webp","x":358,"y":76,"w":274,"h":524,"tags":["brave","young","good"],"er":"nam1_hairer_ngua.png","ex":378,"ey":76},{"kind":"hair","id":"bac","name":"Tóc bạc tiên nhân","file":"nam1_hair_bac.webp","x":275,"y":80,"w":284,"h":506,"tags":["immortal","high"],"er":"nam1_hairer_bac.png","ex":357,"ey":77},{"kind":"hair","id":"quan","name":"Mũ quan thư sinh","file":"nam1_hair_quan.webp","x":275,"y":47,"w":353,"h":539,"tags":["noble","gentle","high"],"er":"nam1_hairer_quan.png","ex":382,"ey":101},{"kind":"hair","id":"bui","name":"Búi tóc thường","file":"nam1_hair_bui.webp","x":0,"y":0,"w":1,"h":1,"tags":["plain","poor"]},{"kind":"fxb","id":"rong","name":"Rồng vàng bên mình","file":"nam1_fxb_rong.webp","x":12,"y":31,"w":878,"h":1129,"tags":["noble","high","evil"]},{"kind":"fxb","id":"sen","name":"Liên hoa sau lưng","file":"nam1_fxb_sen.webp","x":0,"y":0,"w":896,"h":1200,"tags":["good","immortal","gentle"]},{"kind":"fxb","id":"haoquang","name":"Hào quang tiên nhân","file":"nam1_fxb_haoquang.webp","x":33,"y":21,"w":828,"h":721,"tags":["immortal","high","good"]},{"kind":"fxf","id":"muc","name":"Khói mực kiếm khí","file":"nam1_fxf_muc.webp","x":0,"y":0,"w":896,"h":1200,"tags":["evil","brave"]}]}};
+const MAN={"nu1":{"W":896,"H":1200,"pose":{},"items":[{"kind":"outfit","id":"base","name":"Áo lụa trắng","file":"nu1_outfit_base.webp","x":276,"y":94,"w":347,"h":1045,"tags":["poor","plain"]},{"kind":"outfit","id":"phuong","name":"Phượng hoàng đỏ","file":"nu1_outfit_phuong.webp","x":276,"y":94,"w":620,"h":1106,"tags":["evil","noble","charm"]},{"kind":"outfit","id":"tien","name":"Tiên nữ lam","file":"nu1_outfit_tien.webp","x":202,"y":81,"w":519,"h":1058,"tags":["good","immortal","gentle"]},{"kind":"outfit","id":"kiem","name":"Kiếm khách hắc y","file":"nu1_outfit_kiem.webp","x":287,"y":92,"w":326,"h":1067,"tags":["brave","good","free"]},{"kind":"outfit","id":"hoang","name":"Tử kim phượng bào","file":"nu1_outfit_hoang.webp","x":76,"y":94,"w":749,"h":1047,"tags":["noble","high","charm"]},{"kind":"outfit","id":"luc","name":"Lục ngọc dược sư","file":"nu1_outfit_luc.webp","x":180,"y":93,"w":716,"h":1107,"tags":["good","gentle","plain"]},{"kind":"outfit","id":"dao","name":"Đào hoa sa mỏng","file":"nu1_outfit_dao.webp","x":99,"y":93,"w":733,"h":1047,"tags":["young","gentle","charm"]},{"kind":"outfit","id":"bac","name":"Bạch ngân tiên bào","file":"nu1_outfit_bac.webp","x":170,"y":94,"w":564,"h":1038,"tags":["immortal","high","good","cold"]},{"kind":"outfit","id":"hac","name":"Hắc kim ma bào","file":"nu1_outfit_hac.webp","x":234,"y":93,"w":447,"h":1048,"tags":["evil","charm","high"]},{"kind":"face","id":"lanh","name":"Lạnh sắc","file":"nu1_face_lanh.webp","x":405,"y":134,"w":93,"h":125,"tags":["evil","cold","high"]},{"kind":"face","id":"diu","name":"Dịu dàng","file":"nu1_face_diu.webp","x":405,"y":134,"w":93,"h":125,"tags":["good","gentle","young"]},{"kind":"face","id":"quyen","name":"Quyến rũ","file":"nu1_face_quyen.webp","x":405,"y":134,"w":93,"h":125,"tags":["evil","charm"]},{"kind":"face","id":"anhkhi","name":"Anh khí","file":"nu1_face_anhkhi.webp","x":405,"y":134,"w":93,"h":125,"tags":["good","brave"]},{"kind":"hair","id":"bun","name":"Búi phượng quý phái","file":"nu1_hair_bun.webp","x":350,"y":16,"w":200,"h":471,"tags":["noble","high"],"er":"nu1_hairer_bun.png","ex":365,"ey":182},{"kind":"hair","id":"xoa","name":"Xõa dài","file":"nu1_hair_xoa.webp","x":204,"y":95,"w":482,"h":1017,"tags":["plain","free"],"er":"nu1_hairer_xoa.png","ex":365,"ey":91},{"kind":"hair","id":"ngua","name":"Đuôi ngựa kiếm khách","file":"nu1_hair_ngua.webp","x":291,"y":56,"w":349,"h":1082,"tags":["brave","young","good"],"er":"nu1_hairer_ngua.png","ex":287,"ey":92},{"kind":"hair","id":"haibui","name":"Hai búi hoa đào","file":"nu1_hair_haibui.webp","x":355,"y":68,"w":191,"h":419,"tags":["young","gentle"],"er":"nu1_hairer_haibui.png","ex":368,"ey":90},{"kind":"hair","id":"bac","name":"Tóc bạc tiên nhân","file":"nu1_hair_bac.webp","x":289,"y":68,"w":327,"h":631,"tags":["immortal","high"],"er":"nu1_hairer_bac.png","ex":365,"ey":103},{"kind":"hair","id":"do","name":"Tóc đỏ ma mị","file":"nu1_hair_do.webp","x":211,"y":94,"w":506,"h":485,"tags":["evil","charm"],"er":"nu1_hairer_do.png","ex":365,"ey":90},{"kind":"fxb","id":"rong","name":"Rồng vàng bên mình","file":"nu1_fxb_rong.webp","x":12,"y":31,"w":878,"h":1129,"tags":["noble","high","evil"]},{"kind":"fxb","id":"sen","name":"Liên hoa sau lưng","file":"nu1_fxb_sen.webp","x":0,"y":0,"w":896,"h":1200,"tags":["good","immortal","gentle"]},{"kind":"fxb","id":"haoquang","name":"Hào quang tiên nhân","file":"nu1_fxb_haoquang.webp","x":33,"y":21,"w":828,"h":721,"tags":["immortal","high","good"]},{"kind":"fxf","id":"muc","name":"Khói mực kiếm khí","file":"nu1_fxf_muc.webp","x":0,"y":0,"w":896,"h":1200,"tags":["evil","brave"]},{"kind":"outfit","id":"tuyet","name":"Băng tuyết hồ cừu","file":"nu1_outfit_tuyet.webp","x":55,"y":94,"w":797,"h":1052,"tags":["good","immortal","cold","high"]},{"kind":"outfit","id":"vaitho","name":"Áo vải thô vá víu","file":"nu1_outfit_vaitho.webp","x":275,"y":94,"w":345,"h":1048,"tags":["poor","plain"]},{"kind":"outfit","id":"daoco","name":"Đạo cô áo xám","file":"nu1_outfit_daoco.webp","x":274,"y":94,"w":347,"h":1047,"tags":["plain","good","gentle"]},{"kind":"outfit","id":"daiso","name":"Quận chúa tử kim","file":"nu1_outfit_daiso.webp","x":92,"y":94,"w":715,"h":1040,"tags":["noble","high","good"]},{"kind":"outfit","id":"hoakim","name":"Cung trang mẫu đơn","file":"nu1_outfit_hoakim.webp","x":176,"y":94,"w":571,"h":1038,"tags":["noble","charm","gentle"]},{"kind":"outfit","id":"thonnu","name":"Thôn nữ váy hoa","file":"nu1_outfit_thonnu.webp","x":277,"y":94,"w":350,"h":1046,"tags":["plain","young","poor"]},{"kind":"outfit","id":"vucong","name":"Vũ cơ lụa san hô","file":"nu1_outfit_vucong.webp","x":117,"y":94,"w":721,"h":1049,"tags":["charm","young","free"]},{"kind":"outfit","id":"vokiem","name":"Võ nữ giáp da","file":"nu1_outfit_vokiem.webp","x":283,"y":94,"w":332,"h":1049,"tags":["brave","good","free"]},{"kind":"outfit","id":"dahanh","name":"Dạ hành sát thủ","file":"nu1_outfit_dahanh.webp","x":232,"y":94,"w":445,"h":1071,"tags":["evil","cold","free"]},{"kind":"outfit","id":"maco","name":"Ma nữ hắc hồng","file":"nu1_outfit_maco.webp","x":122,"y":94,"w":655,"h":1042,"tags":["evil","charm","high"]},{"kind":"outfit","id":"hoyeu","name":"Hồ yêu bạch cẩm","file":"nu1_outfit_hoyeu.webp","x":172,"y":94,"w":560,"h":1040,"tags":["charm","evil","young"]},{"kind":"outfit","id":"kimgiap","name":"Nữ tướng kim giáp","file":"nu1_outfit_kimgiap.webp","x":76,"y":94,"w":744,"h":1056,"tags":["brave","noble","high"]},{"kind":"outfit","id":"thanhlong","name":"Thanh long cung bào","file":"nu1_outfit_thanhlong.webp","x":159,"y":94,"w":577,"h":1077,"tags":["noble","high","good"]}]},"nam1":{"W":896,"H":1200,"pose":{},"items":[{"kind":"outfit","id":"base","name":"Áo trắng thư sinh","file":"nam1_outfit_base.webp","x":267,"y":80,"w":376,"h":1071,"tags":["poor","plain"]},{"kind":"outfit","id":"thusinh","name":"Thư sinh lam trúc","file":"nam1_outfit_thusinh.webp","x":267,"y":80,"w":376,"h":1071,"tags":["good","gentle","noble"]},{"kind":"outfit","id":"hacy","name":"Hắc y kiếm khách","file":"nam1_outfit_hacy.webp","x":266,"y":80,"w":405,"h":1076,"tags":["evil","brave","free"]},{"kind":"outfit","id":"giap","name":"Chiến giáp xích kim","file":"nam1_outfit_giap.webp","x":264,"y":80,"w":384,"h":1071,"tags":["brave","good","high"]},{"kind":"outfit","id":"dao","name":"Đạo bào xám","file":"nam1_outfit_dao.webp","x":267,"y":81,"w":376,"h":1070,"tags":["plain","good","immortal"]},{"kind":"outfit","id":"tukim","name":"Tử kim long bào","file":"nam1_outfit_tukim.webp","x":193,"y":80,"w":630,"h":1072,"tags":["noble","high","evil"]},{"kind":"face","id":"hien","name":"Hiền hòa","file":"nam1_face_hien.webp","x":400,"y":137,"w":100,"h":137,"tags":["good","gentle"]},{"kind":"face","id":"manh","name":"Mạnh mẽ","file":"nam1_face_manh.webp","x":400,"y":137,"w":101,"h":137,"tags":["good","brave","high"]},{"kind":"face","id":"gian","name":"Gian xảo","file":"nam1_face_gian.webp","x":401,"y":137,"w":99,"h":137,"tags":["evil","cunning"]},{"kind":"hair","id":"xoa","name":"Xõa dài phóng khoáng","file":"nam1_hair_xoa.webp","x":352,"y":106,"w":332,"h":494,"tags":["free","plain","evil"],"er":"nam1_hairer_xoa.png","ex":378,"ey":76},{"kind":"hair","id":"ngua","name":"Đuôi ngựa kiếm khách","file":"nam1_hair_ngua.webp","x":358,"y":76,"w":274,"h":524,"tags":["brave","young","good"],"er":"nam1_hairer_ngua.png","ex":378,"ey":76},{"kind":"hair","id":"bac","name":"Tóc bạc tiên nhân","file":"nam1_hair_bac.webp","x":275,"y":80,"w":284,"h":506,"tags":["immortal","high"],"er":"nam1_hairer_bac.png","ex":357,"ey":77},{"kind":"hair","id":"quan","name":"Mũ quan thư sinh","file":"nam1_hair_quan.webp","x":275,"y":47,"w":353,"h":539,"tags":["noble","gentle","high"],"er":"nam1_hairer_quan.png","ex":382,"ey":101},{"kind":"hair","id":"bui","name":"Búi tóc thường","file":"nam1_hair_bui.webp","x":0,"y":0,"w":1,"h":1,"tags":["plain","poor"]},{"kind":"fxb","id":"rong","name":"Rồng vàng bên mình","file":"nam1_fxb_rong.webp","x":12,"y":31,"w":878,"h":1129,"tags":["noble","high","evil"]},{"kind":"fxb","id":"sen","name":"Liên hoa sau lưng","file":"nam1_fxb_sen.webp","x":0,"y":0,"w":896,"h":1200,"tags":["good","immortal","gentle"]},{"kind":"fxb","id":"haoquang","name":"Hào quang tiên nhân","file":"nam1_fxb_haoquang.webp","x":33,"y":21,"w":828,"h":721,"tags":["immortal","high","good"]},{"kind":"fxf","id":"muc","name":"Khói mực kiếm khí","file":"nam1_fxf_muc.webp","x":0,"y":0,"w":896,"h":1200,"tags":["evil","brave"]}]}};
 const BASE='doll/';
 const D={ready:false,bad:false,man:MAN,img:{},memo:new Map(),fulls:new Map(),listeners:[]};
 window.DOLL=D;
@@ -9596,7 +9596,7 @@ function csBuild(){
  id.appendChild(mk('Đạo hiệu',nameI));id.appendChild(mk('Giới tính',genS));
  if(alignBox){const d=document.createElement('div');d.innerHTML='<label>Lập trường</label>';const b=$('.btns',alignBox);if(b){b.className='cs-al';d.appendChild(b)}const s=$('.small',alignBox);if(s){s.className='cs-alt';d.appendChild(s)}id.appendChild(d)}
  stage.appendChild(fb);
- if(dollbox){const SH={'Khuôn mặt':'Mặt','Kiểu tóc':'Tóc','Trang phục':'Áo','Phụ kiện':'Phụ kiện','Sau lưng':'Sau','Hiệu ứng trước':'Hiệu ứng'};$$('.dll',dollbox).forEach(e=>{const t=e.textContent.trim();if(SH[t])e.textContent=SH[t]});const lk=document.createElement('div');lk.className='cs-look';lk.appendChild(dollbox);stage.appendChild(lk)}
+ if(dollbox){const SH={'Dáng người':'Dáng','Khuôn mặt':'Mặt','Kiểu tóc':'Tóc','Trang phục':'Áo','Phụ kiện':'Phụ kiện','Hào quang':'Hào quang','Hiệu ứng':'Hiệu ứng'};$$('.dll',dollbox).forEach(e=>{const t=e.textContent.trim();if(SH[t])e.textContent=SH[t]});const lk=document.createElement('div');lk.className='cs-look';lk.appendChild(dollbox);stage.appendChild(lk)}
  if(!doll&&arrows.length){const a=document.createElement('div');a.className='cs-arr';arrows.forEach(x=>{x.style.cssText='position:static;display:inline-block';a.appendChild(x)});stage.appendChild(a)}
  // cột phải
  const R=document.createElement('div');R.className='cs-right';
@@ -9866,6 +9866,267 @@ window.openBag=function(){const r=_ob.apply(this,arguments);try{bagUI()}catch(e)
 try{PATCH_NOTES.unshift(['v9.2 · 07/11/2026 · Túi đồ icon thủy mặc',[
  'Hành trang làm lại dạng lưới ô vuông: trang bị đang mặc, kho trang bị, đan phù bảo vật, nguyên liệu, mỗi món là một icon vẽ thủy mặc; bấm vào ô để xem chi tiết rồi mới dùng hoặc mặc.',
  'Linh châu, thảo dược, khoáng thạch, yêu đan, đan dược, phù, trận bàn đều có icon mới ở túi đồ, chợ và các bảng khác.']])}catch(e){}
+})();
+
+/* ===== v10.0 · 5 dáng người · hào quang theo phẩm · nhiều trang phục ===== */
+(function(){
+const D=window.DOLL;if(!D)return;
+const MAN=D.man;
+const items=(pose,kind)=>MAN[pose]?MAN[pose].items.filter(i=>i.kind===kind):[];
+const get=(pose,kind,id)=>items(pose,kind).find(i=>i.id===id);
+// ---------- 5 dáng người mỗi giới (biến dạng ảnh theo hàng ngang/dọc, đầu giữ nguyên) ----------
+// sh vai · ch ngực · wa eo · hp hông · th đùi · lw gấu/chân (hệ số ngang) · vt thân dài · v chân dài (hệ số dọc)
+const BODIES={
+ nu1:[
+  {id:'can',name:'Cân đối',d:'Dáng chuẩn, hài hòa.',hf:.97,sh:1,ch:1,wa:1,hp:1,th:1,lw:1,vt:1,v:1},
+  {id:'manh',name:'Thanh mảnh',d:'Mảnh mai, eo thon, tay chân dài.',hf:.98,sh:.94,ch:.93,wa:.82,hp:.91,th:.92,lw:.94,vt:1,v:1.04},
+  {id:'day',name:'Đầy đặn',d:'Ngực đầy hông nở, đường cong rõ.',hf:.96,sh:1.02,ch:1.13,wa:.98,hp:1.22,th:1.17,lw:1.1,vt:1,v:.98},
+  {id:'cao',name:'Cao ráo',d:'Dáng cao, chân dài.',hf:1,sh:1,ch:.98,wa:.9,hp:.98,th:.98,lw:1,vt:1.03,v:1.07},
+  {id:'nho',name:'Nhỏ nhắn',d:'Thấp nhỏ, đáng yêu.',hf:.89,sh:.93,ch:.96,wa:.9,hp:.95,th:.95,lw:.94,vt:.96,v:.88}],
+ nam1:[
+  {id:'can',name:'Cân đối',d:'Dáng chuẩn, khỏe vừa phải.',hf:.97,sh:1,ch:1,wa:1,hp:1,th:1,lw:1,vt:1,v:1},
+  {id:'thu',name:'Thư sinh',d:'Gầy thanh, nho nhã.',hf:.98,sh:.9,ch:.88,wa:.88,hp:.9,th:.9,lw:.92,vt:1,v:1.04},
+  {id:'vam',name:'Vạm vỡ',d:'Vai rộng ngực dày, sức mạnh.',hf:1,sh:1.17,ch:1.17,wa:1.1,hp:1.07,th:1.1,lw:1.08,vt:1,v:1},
+  {id:'cao',name:'Cao lớn',d:'Cao hơn người, bước dài.',hf:1,sh:1.05,ch:1.04,wa:1,hp:1,th:1,lw:1,vt:1.03,v:1.07},
+  {id:'thap',name:'Thấp rắn',d:'Thấp mà chắc nịch.',hf:.89,sh:1.1,ch:1.12,wa:1.1,hp:1.08,th:1.08,lw:1.08,vt:.96,v:.88}]};
+D.BODIES=BODIES;
+const AXIS={nu1:450,nam1:456};
+const Y={neck:262,sh:300,ch:385,wa:455,hp:565,th:720,lw:1000};
+function profile(b){return [[0,1],[Y.neck,1],[Y.sh,b.sh],[Y.ch,b.ch],[Y.wa,b.wa],[Y.hp,b.hp],[Y.th,b.th],[Y.lw,b.lw],[1300,b.lw]]}
+function interp(pts,y){if(y<=pts[0][0])return pts[0][1];for(let i=1;i<pts.length;i++){if(y<=pts[i][0]){const t=(y-pts[i-1][0])/(pts[i][0]-pts[i-1][0]);const s=t*t*(3-2*t);return pts[i-1][1]+(pts[i][1]-pts[i-1][1])*s}}return pts[pts.length-1][1]}
+// hàm ánh xạ dọc y -> y' (chưa dời)
+function vmap(b,y){if(y<=Y.neck)return y;const a=Math.min(y,Y.hp)-Y.neck;let r=Y.neck+a*b.vt;if(y>Y.hp)r+=(y-Y.hp)*b.v;return r}
+D.warp=function(src,pose,dangId,bottom,top){
+ const list=BODIES[pose];const b=list&&list.find(x=>x.id===dangId);if(!b)return {c:src,dy:0,k:1};
+ const W=src.width,H=src.height,ax=AXIS[pose]||W/2;
+ const sh=b.id==='can'?0:Math.round(bottom-vmap(b,bottom));
+ const tmp=document.createElement('canvas');tmp.width=W;tmp.height=H;const x=tmp.getContext('2d');x.imageSmoothingQuality='high';
+ if(b.id==='can')x.drawImage(src,0,0);else{
+  const pts=profile(b);const STEP=2;
+  for(let yo=0;yo<H;yo+=STEP){let lo=0,hi=H+200;for(let k=0;k<18;k++){const m=(lo+hi)/2;if(vmap(b,m)+sh<yo)lo=m;else hi=m}
+   const ys=Math.min(H-1,Math.max(0,lo));const s=interp(pts,ys);
+   x.drawImage(src,0,Math.floor(ys),W,STEP,ax-ax*s,yo,W*s,STEP)}}
+ // thu phóng đều quanh chân để vừa khung, nhân hệ số chiều cao dáng
+ const newTop=top+sh;let k=b.hf||1;const fit=(bottom-4)/Math.max(1,bottom-newTop);if(fit<k)k=fit;
+ if(Math.abs(k-1)<.004)return {c:tmp,dy:sh,k:1};
+ const out=document.createElement('canvas');out.width=W;out.height=H;const o=out.getContext('2d');o.imageSmoothingQuality='high';
+ o.translate(ax,bottom);o.scale(k,k);o.translate(-ax,-bottom);o.drawImage(tmp,0,0);
+ return {c:out,dy:sh,k,bottom}};
+D.bodyOpts=pose=>BODIES[pose]||[];
+// ---------- hào quang theo phẩm: nguồn mở khóa ----------
+const COL={4:'#9a5ad6',5:'#e2b53c',6:'#e0452f'};
+const PN={4:'Thánh',5:'Chí Tôn',6:'Hồng Mông'};
+D.PHAM=PN;D.PHAM_COL=COL;
+// tên đặc tính (từ phẩm Thánh) -> chủ đề hào quang
+const AURA_OF={
+ 'Bất Diệt Kim Thân':'kimquang','Kim Cang Bất Hoại':'kimquang','Thánh thể':'thanhquang','Trường Sinh':'thanhquang',
+ 'Thiên Đạo Chi Tử':'thiendao','Thiên Đạo sủng nhi':'thiendao','Khí vận chi tử':'thiendao',
+ 'Tử Vi đế tinh':'tukhi','Thiên mệnh chi tử':'tukhi','Kiếp vận chi tử':'lei',
+ 'Hỗn Độn linh căn':'hondon','Hỗn Độn thể':'hondon','Vô mệnh chi nhân':'hondon','Nghịch thiên chi mệnh':'nghich',
+ 'Tiên linh căn':'lienhoa','Tiên Thiên Đạo Thể':'lienhoa','Thiên linh căn':'lienhoa',
+ 'Thiên Phượng thể':'phuong','Bất Tử Điểu':'phuong','Bất Tử Chi Thân':'phuong',
+ 'Thiên Ma':'mama','Thiên Ma thể':'mama','Huyết Sát':'huyet','Hung Tinh Chiếu Mệnh':'huyet','Thiên Sát Cô Tinh':'huyet',
+ 'Kiếm Chủng':'kiem','Đan Tổ Chuyển Thế':'dan','Linh Hồ Mị Cốt':'ho','Yêu Hoàng Huyết':'yeu','Vạn Thú Chi Chủ':'yeu',
+ 'Luân Hồi Giả':'luanhoi','Luân Hồi thể':'luanhoi','Thiên Cơ Diễn Toán':'thienco','Thiên thạch':'thienco','Thiên Khôi':'thienco','Vận May Nghịch Thiên':'nghich',
+ 'Hư Không thể':'hukhong','Hỗn Nguyên thể':'thaicuc','Đạo Tâm Kiên Định':'thaicuc',
+ 'Tuệ căn thâm hậu':'tinhha','Thiên túng kỳ tài':'tinhha','Sinh nhi tri chi':'tinhha','Thiên Kiêu':'tinhha','Tụ Linh Thể':'tulinh'};
+const AURA_NAME={kimquang:'Kim quang hộ thể',thanhquang:'Thánh quang',thiendao:'Thiên đạo kim luân',tukhi:'Tử khí đông lai',lei:'Lôi kiếp quanh thân',hondon:'Hỗn độn khí xoáy',nghich:'Nghịch thiên vận khí',lienhoa:'Tiên khí liên hoa',phuong:'Phượng hoàng liệt hỏa',mama:'Ma khí cuồn cuộn',huyet:'Huyết sát hồng vụ',kiem:'Kiếm khí tung hoành',dan:'Đan hỏa dược hương',ho:'Hồ ảnh cửu vĩ',yeu:'Yêu hoàng thú ảnh',luanhoi:'Luân hồi pháp luân',thienco:'Thiên cơ bát quái',hukhong:'Hư không liệt ngân',thaicuc:'Thái cực hỗn nguyên',tinhha:'Tuệ nhãn tinh hà',tulinh:'Tụ linh vòng xoáy'};
+D.AURA_NAME=AURA_NAME;
+// gom nguồn từ trạng thái (CR khi tạo nhân vật, S khi đang chơi)
+D.auraSources=function(ctx){const o=[];const add=(n,g,from)=>{if(n&&g>=4)o.push({n,g:Math.min(6,g),from,t:AURA_OF[n]||null})};
+ try{if(ctx==='cr'&&typeof CR!=='undefined'&&CR&&CR.lc){add(CR.lc.name,CR.lc.g,'Linh căn');if(CR.body)add(CR.body.n,CR.body.g,'Thể chất');if(CR.ngo)add(CR.ngo.n,CR.ngo.g,'Ngộ tính');if(CR.menh)add(CR.menh.name,CR.menh.g,'Thiên mệnh');if(CR.mc)add(CR.mc.n||CR.mc.name,CR.mc.g,'Mệnh cách');(CR.tal||[]).forEach(t=>add(t.n,t.g,'Thiên phú'))}
+  else if(typeof S!=='undefined'&&S&&S.menh){if(S.linhCan)add(S.linhCan.name,S.linhCan.g,'Linh căn');if(S.body10)add(S.body10.n,S.body10.g,'Thể chất');if(S.ngo10)add(S.ngo10.n,S.ngo10.g,'Ngộ tính');add(S.menh.name,S.menh.g,'Thiên mệnh');
+   if(S.mc&&typeof MC!=='undefined'&&MC[S.mc])add(MC[S.mc].n,MC[S.mc].g,'Mệnh cách');(S.talents||[]).forEach(t=>add(t.n,t.g,'Thiên phú'))}}catch(e){console.warn(e)}
+ o.sort((a,b)=>b.g-a.g);return o};
+// các chủ đề đã mở khóa (không trùng), cao phẩm trước
+D.auraUnlocked=function(ctx){const seen={};const out=[];for(const s of D.auraSources(ctx)){const t=s.t||'thienco';if(seen[t])continue;seen[t]=1;out.push({id:t,name:AURA_NAME[t]||t,g:s.g,from:s.n})}return out};
+const ARTALIAS={thanhquang:'haoquang',lienhoa:'sen',thiendao:'rong'};
+const artOf=(pose,id)=>get(pose,'fxb',id)||get(pose,'fxb',ARTALIAS[id]);
+// ---------- vẽ ghép (thay bản cũ) ----------
+D.draw=function(look,mode){const pose=look.pose||'nu1';const M=MAN[pose];if(!M)return null;
+ const mk=()=>{const c=document.createElement('canvas');c.width=M.W;c.height=M.H;return c};
+ const put=(x,it)=>{const im=it&&D.img[it.file];if(im)x.drawImage(im,it.x,it.y)};
+ let body=mk();const bx=body.getContext('2d');
+ const base=get(pose,'outfit','base');const of=get(pose,'outfit',look.outfit)||base;
+ put(bx,of);
+ const h=get(pose,'hair',look.hair);
+ if(h&&h.er&&D.img[h.er]){bx.save();bx.globalCompositeOperation='destination-out';bx.drawImage(D.img[h.er],h.ex,h.ey);bx.restore()}
+ put(bx,get(pose,'face',look.face));put(bx,h);
+ for(const a of (look.acc||[]))put(bx,get(pose,'acc',a));
+ let dy=0,kk=1,bot=1150;
+ if(look.dang){bot=Math.min(M.H-2,((of&&of.y+of.h)||1150));const top=Math.min(of?of.y:94,h?h.y:94,20);const w=D.warp(body,pose,look.dang,bot,top);body=w.c;dy=w.dy;kk=w.k||1}
+ const out=mk(),ox=out.getContext('2d');
+ // hào quang: vòng sáng theo phẩm (phía sau) + tranh chủ đề
+ if(look.fxb&&look.ag>=4)glow(ox,M,look.ag);
+ put(ox,look.fxb&&artOf(pose,look.fxb));ox.drawImage(body,0,0);put(ox,look.fxf&&get(pose,'fxf',look.fxf));
+ const c2=document.createElement('canvas');let sx=0,sy=0,sw=M.W,sh=M.H,ow=448,oh=600;
+ const BUST=[196,20,510,680],HEAD=[311,45,280,280];
+ if(mode==='bust'){[sx,sy,sw,sh]=BUST;ow=340;oh=Math.round(340*sh/sw)}
+ else if(mode==='head'){[sx,sy,sw,sh]=HEAD;ow=oh=200}
+ if(mode==='bust'||mode==='head'){const yh=sy+sh/2;const nyh=bot+(yh+dy-bot)*kk;const nx=AXIS[pose]+(sx+sw/2-AXIS[pose])*kk;sy=nyh-sh*kk/2*1;sx=nx-sw*kk/2;sw*=kk;sh*=kk}
+ c2.width=ow;c2.height=oh;const cx=c2.getContext('2d');cx.imageSmoothingQuality='high';cx.drawImage(out,sx,sy,sw,sh,0,0,ow,oh);
+ return c2};
+function glow(x,M,g){const col=COL[g]||'#e2b53c';const cx=450,cy=560;x.save();
+ const r=x.createRadialGradient(cx,cy,60,cx,cy,520);r.addColorStop(0,col+'00');r.addColorStop(.45,col+(g>=6?'66':'44'));r.addColorStop(.8,col+'1a');r.addColorStop(1,col+'00');
+ x.fillStyle=r;x.fillRect(0,0,M.W,M.H);
+ // tia
+ x.globalAlpha=g>=6?.3:.2;x.translate(cx,300);const n=g>=6?28:g>=5?20:14;
+ for(let i=0;i<n;i++){x.rotate(Math.PI*2/n);const lg=x.createLinearGradient(0,0,0,430);lg.addColorStop(0,col+'ee');lg.addColorStop(1,col+'00');x.fillStyle=lg;x.beginPath();x.moveTo(-6,0);x.lineTo(6,0);x.lineTo(0,430);x.fill()}
+ x.restore()}
+// ---------- tích hợp vào khung chọn ----------
+const _kinds=D.KINDS;
+D.KINDS=[['dang','Dáng người',0],['face','Khuôn mặt',0],['hair','Kiểu tóc',0],['outfit','Trang phục',0],['acc','Phụ kiện',1],['fxb','Hào quang',1],['fxf','Hiệu ứng',1]];
+const ctxOf=ctx=>ctx==='cr'?'cr':'me';
+const _ctxLook=L=>L;
+// danh sách theo loại, có lọc hào quang theo đặc tính
+const listOf=(ctx,pose,kind)=>{
+ if(kind==='dang')return BODIES[pose]||[];
+ if(kind==='fxb'){return D.auraUnlocked(ctxOf(ctx)).map(u=>({id:u.id,name:u.name,kind:'fxb'}))}
+ return items(pose,kind)};
+const lookOf=ctx=>ctx==='cr'?(CR.doll||(CR.doll=D.rollLook(CR.gender))):(()=>{const L=LK();return L.doll||(L.doll=D.rollLook(S.gender))})();
+const gOf=ctx=>ctx==='cr'?CR.gender:S.gender;
+D.step=function(ctx,kind,d){const L0=lookOf(ctx);const L=D.fixLook(L0,gOf(ctx));if(!L)return;const pose=L.pose;
+ const opt=(D.KINDS.find(k=>k[0]===kind)||[0,0,0])[2];const list=listOf(ctx,pose,kind);
+ if(!list.length&&kind!=='acc')return;
+ if(kind==='acc'){const al=items(pose,'acc');const ids=['',...al.map(i=>i.id)];const cur=L.acc[0]||'';const n=(ids.indexOf(cur)+d+ids.length)%ids.length;L.acc=ids[n]?[ids[n]]:[]}
+ else if(kind==='dang'){const ids=list.map(i=>i.id);const n=(ids.indexOf(L.dang||'can')+d+ids.length)%ids.length;L.dang=ids[n]}
+ else{const ids=(opt?['']:[]).concat(list.map(i=>i.id));const n=(ids.indexOf(L[kind]||'')+d+ids.length)%ids.length;L[kind]=ids[n];
+  if(kind==='fxb'){L.fxbSet=1;const u=D.auraUnlocked(ctxOf(ctx)).find(x=>x.id===L.fxb);L.ag=u?u.g:0}}
+ D.refresh(ctx)};
+// tên hiển thị
+const _names=D.names;
+D.names=function(L){const o=_names(L);const b=(BODIES[L.pose]||[]).find(x=>x.id===(L.dang||'can'));o.dang=b?b.name:'Cân đối';
+ if(L.fxb){o.fxb=AURA_NAME[L.fxb]||o.fxb}else o.fxb='Không';return o};
+D.rows=function(ctx){const L=D.fixLook(lookOf(ctx),gOf(ctx));if(!L)return '';const nm=D.names(L);const pose=L.pose;
+ const un=D.auraUnlocked(ctxOf(ctx));
+ return D.KINDS.filter(k=>{if(k[0]==='fxb')return true;if(k[0]==='dang')return true;return items(pose,k[0]).length}).map(([k,lab])=>{
+  if(k==='fxb'&&!un.length)return `<div class="dlr"><span class="dll">${lab}</span><b class="dln" data-k="fxb" style="opacity:.6">🔒 cần phẩm Thánh+</b></div>`;
+  return `<div class="dlr"><span class="dll">${lab}</span><button class="mini" onclick="DOLL.step('${ctx}','${k}',-1)">◀</button><b class="dln" data-k="${k}">${esc(nm[k])}</b><button class="mini" onclick="DOLL.step('${ctx}','${k}',1)">▶</button></div>`}).join('')
+  +`<div class="dlr"><button class="mini" onclick="DOLL.roll('${ctx}')">🎲 Ngẫu nhiên</button></div>`};
+// look mặc định / chuẩn hóa
+const _roll=D.rollLook;
+D.rollLook=function(g){const L=_roll(g);if(!L)return L;const bl=BODIES[L.pose]||[];L.dang=bl.length?bl[Math.floor(Math.random()*bl.length)].id:'can';return L};
+const _fix=D.fixLook;
+D.fixLook=function(L,g){L=_fix(L,g);if(!L)return L;const bl=BODIES[L.pose]||[];if(!bl.some(b=>b.id===L.dang))L.dang='can';
+ // hào quang chỉ giữ khi còn được mở khóa
+ try{const ctx=(typeof CR!=='undefined'&&CR&&CR.doll===L)?'cr':'me';const un=D.auraUnlocked(ctx);
+  if(L.fxb&&!un.some(u=>u.id===L.fxb)){L.fxb='';L.ag=0}
+  if(!L.fxb&&!L.fxbSet&&un.length){L.fxb=un[0].id}
+  if(L.fxb){const u=un.find(x=>x.id===L.fxb);L.ag=u?u.g:0}else L.ag=0}catch(e){}
+ return L};
+// tự gán hào quang cao phẩm nhất khi vừa mở khóa
+D.syncAura=function(L,ctx){try{const un=D.auraUnlocked(ctx||'me');if(un.length&&!L.fxbSet){L.fxb=un[0].id;L.ag=un[0].g}}catch(e){}return L};
+// NPC: bậc cao (Hóa Thần+) hoặc Boss có hào quang theo cảnh giới
+const _npc=D.npcLook;
+D.npcLook=function(key,o){const L=_npc(key,o);if(!L)return L;o=o||{};const h=hashStr(String(key));const bl=BODIES[L.pose]||[];L.dang=bl[Math.abs(h>>9)%bl.length].id;
+ if(o.realm>=6){L.fxb=(items(L.pose,'fxb')[0]||{}).id||'';L.ag=o.realm>=8?6:o.realm>=7?5:4}return L};
+// vẽ lại khi đổi: xóa bộ nhớ đệm
+D.memo.clear();
+try{PATCH_NOTES.unshift(['v10.0 · 07/11/2026 · 5 dáng người, thêm trang phục, hào quang theo phẩm',[
+ 'Mỗi giới có 5 dáng người (nữ: Cân đối, Thanh mảnh, Đầy đặn, Cao ráo, Nhỏ nhắn; nam: Cân đối, Thư sinh, Vạm vỡ, Cao lớn, Thấp rắn). Dáng áp lên mọi trang phục và kiểu tóc.',
+ 'Thêm 13 bộ trang phục nữ vẽ mới (nữ tướng kim giáp, thanh long cung bào, hồ yêu, ma nữ, dạ hành, thôn nữ, quận chúa, đạo cô…).',
+ 'Hào quang chỉ xuất hiện khi nhân vật có linh căn, thể chất, ngộ tính, thiên mệnh, mệnh cách hay thiên phú từ phẩm Thánh trở lên. Phẩm Thánh quầng tím, Chí Tôn quầng vàng, Hồng Mông quầng đỏ; mỗi đặc tính có chủ đề riêng (Thiên Đạo kim luân, Phượng hoàng liệt hỏa, Luân hồi pháp luân…).']])}catch(e){}
+})();
+// ---------- bỏ hệ nhân vật chibi cũ: chỉ còn "Đổi diện mạo" ----------
+(function(){
+const _ol=window.openLook;
+window.openLook=function(tab){const r=_ol.apply(this,arguments);try{document.querySelectorAll('#modal .bspr').forEach(b=>b.remove())}catch(e){}return r};
+window.openSprPick=function(){try{openDoll()}catch(e){}};
+})();
+// ---------- cụ già cũng dùng nhân vật ghép (tóc bạc) ----------
+(function(){
+const D=window.DOLL;if(!D)return;
+const _sp=window.spritePerson;
+window.spritePerson=function(key,gender,sect,evil,look){const r=_sp.apply(this,arguments);
+ try{if(typeof r==='string'&&!r.endsWith('#doll')&&D.ready&&D.pose(gender)&&!(look&&look.spr!=null)){
+   const n=S&&S.npcs?S.npcs.find(x=>x.name===key):null;const L=D.npcLook(key,{evil:evil||(n&&n.evil),realm:(n&&n.realm)||2,gender});
+   if(L){const hb=D.opts('hair',L.pose).find(h=>h.id==='bac');if(hb)L.hair='bac';const u=D.url(L,'full');if(u)return u}}}catch(e){}
+ return r};
+})();
+
+/* ===== v10.1 · Giao diện mực nho: khung nét cọ, giấy dó, ấn đỏ, nút mực, thanh cọ ===== */
+(function(){
+const INK='#1c1712',GOLD='#b8923a',PAPER='#f4ead2',RED='#9c2a22',JADE='#2f6f5e';
+const uri=s=>'url("data:image/svg+xml;utf8,'+encodeURIComponent(s.replace(/\s+/g,' ').trim())+'")';
+// ---- khung nét cọ chín mảnh (9-slice) ----
+const frame=(stroke,gold,w)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<defs><filter id="r" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency=".055" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3.4"/></filter></defs>
+<g filter="url(#r)"><rect x="5" y="5" width="110" height="110" fill="none" stroke="${stroke}" stroke-width="${w}" stroke-linejoin="round"/></g>
+<rect x="15" y="15" width="90" height="90" fill="none" stroke="${gold}" stroke-width="1.6" opacity=".95"/>
+<g fill="none" stroke="${gold}" stroke-width="1.6" stroke-linecap="round">
+<path d="M5 28 Q5 5 28 5"/><path d="M115 28 Q115 5 92 5"/><path d="M5 92 Q5 115 28 115"/><path d="M115 92 Q115 115 92 115"/></g>
+<g fill="${gold}"><circle cx="15" cy="15" r="2.6"/><circle cx="105" cy="15" r="2.6"/><circle cx="15" cy="105" r="2.6"/><circle cx="105" cy="105" r="2.6"/></g></svg>`;
+const frameInk=uri(frame(INK,GOLD,7));
+const frameGold=uri(frame('#3a2c14','#e8c968',6.4));
+// ---- nút mực: nền nét cọ có vết mực ----
+const btn=(fill,edge)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 40" preserveAspectRatio="none">
+<defs><filter id="b" x="-6%" y="-12%" width="112%" height="124%"><feTurbulence type="fractalNoise" baseFrequency=".09 .22" numOctaves="3" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter></defs>
+<g filter="url(#b)"><path d="M4 7 Q40 3 76 6 Q78 20 76 34 Q40 38 4 35 Q2 21 4 7Z" fill="${fill}" stroke="${edge}" stroke-width="1.4"/></g></svg>`;
+const btnInk=uri(btn(INK,GOLD)),btnRed=uri(btn(RED,'#d9a441')),btnPaper=uri(btn('#f7eed7','#6b5530')),btnJade=uri(btn(JADE,'#d9c27a'));
+// ---- giấy dó: nhiễu + mây loang ----
+const paper=uri(`<svg xmlns="http://www.w3.org/2000/svg" width="260" height="260"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="2"/><feColorMatrix values="0 0 0 0 .45  0 0 0 0 .34  0 0 0 0 .18  0 0 0 .13 0"/></filter><rect width="260" height="260" filter="url(#n)"/></svg>`);
+const wash=uri(`<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><filter id="w"><feTurbulence type="fractalNoise" baseFrequency=".006 .012" numOctaves="3" seed="11"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .27  0 0 0 0 .15  0 0 0 .5 -.12"/></filter><rect width="600" height="400" filter="url(#w)"/></svg>`);
+// ---- vạch phân cách nét cọ ----
+const rule=uri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 8" preserveAspectRatio="none"><path d="M0 4 Q40 1 90 4 T200 4 T300 3.5" fill="none" stroke="${INK}" stroke-width="1.6" stroke-linecap="round" opacity=".7"/><path d="M0 5 Q80 7 150 4.5 T300 5" fill="none" stroke="${GOLD}" stroke-width=".8" opacity=".9"/></svg>`);
+// ---- ấn đỏ (con dấu) ----
+const seal=uri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><filter id="s"><feTurbulence type="fractalNoise" baseFrequency=".12" numOctaves="2" seed="5"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter><g filter="url(#s)"><rect x="4" y="4" width="32" height="32" rx="3" fill="${RED}"/><rect x="8" y="8" width="24" height="24" fill="none" stroke="#f6d9c8" stroke-width="1.5"/><path d="M14 15h12M14 20h12M14 25h12M20 12v18" stroke="#f6d9c8" stroke-width="1.7" stroke-linecap="round"/></g></svg>`);
+const css=`
+:root{--ink:${INK};--gold:${GOLD};--paper:${PAPER};--seal:${RED};--jade:${JADE}}
+/* ===== cửa sổ lớn (modal) ===== */
+#overlay #modal:not(.crmodal):not(.vnmodal){background:${paper},${wash},linear-gradient(#f7eed8,#efe2c2)!important;background-blend-mode:multiply,multiply,normal;border:18px solid transparent!important;border-image:${frameInk} 40 / 18px stretch!important;border-radius:0!important;box-shadow:0 18px 60px rgba(0,0,0,.55)!important;padding:12px 16px!important;background-clip:padding-box,padding-box,padding-box!important}
+#overlay #modal h2{font-family:"Noto Serif","Songti SC",serif;letter-spacing:.04em;color:${INK}!important;display:block;margin:0 0 10px!important;padding:0 0 12px;background:${rule} bottom/100% 8px no-repeat;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+#overlay #modal h2:before{content:"";display:inline-block;width:22px;height:22px;margin-right:8px;vertical-align:-4px;background:${seal} center/contain no-repeat}
+#overlay #modal .close,#overlay #modal [onclick="closeModal()"].x{background:${btnRed} center/100% 100% no-repeat!important;border:0!important;color:#fbe9d0!important}
+/* ===== nút ===== */
+button:not(.cs-tag):not(.bg-t):not(.vn-o):not(.evc-ok):not(.crd):not(.tg){font-family:inherit}
+#app button.mini,#overlay button.mini,#modal button.mini{background:${btnPaper} center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;padding:5px 12px!important;color:${INK}!important;box-shadow:none!important;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+#app button.mini:hover,#overlay button.mini:hover{filter:brightness(1.06) drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+#app button.mini.primary,#overlay button.mini.primary,#modal .btns button.primary,#overlay button.primary{background:${btnRed} center/100% 100% no-repeat!important;color:#fbe9d0!important;border:0!important;border-radius:0!important;padding:7px 18px!important;text-shadow:0 1px 1px rgba(0,0,0,.5)}
+#app button.mini.jade,#overlay button.mini.jade{background:${btnJade} center/100% 100% no-repeat!important;color:#f2ecd0!important;border:0!important}
+#app button.mini.ghost,header button.ghost{background:${btnInk} center/100% 100% no-repeat!important;color:#e9d9a8!important;border:0!important;border-radius:0!important}
+#overlay #modal .btns button:not(.primary):not(.mini){background:${btnPaper} center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;padding:7px 18px!important;color:${INK}!important}
+/* ===== lựa chọn lớn ===== */
+#overlay #modal button.choice{background:${paper},linear-gradient(#fbf3de,#f0e4c5)!important;background-blend-mode:multiply,normal;border:10px solid transparent!important;border-image:${uri(frame('#2a2118','#c6a24a',5.4))} 40 / 10px stretch!important;border-radius:0!important;box-shadow:0 1px 0 rgba(255,255,255,.6) inset;padding:4px 8px!important;margin:6px 0!important}
+#overlay #modal button.choice:hover:not([disabled]){background:${paper},linear-gradient(#fff8e4,#f6e9c8)!important;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
+#overlay #modal button.choice[disabled]{opacity:.55;filter:grayscale(.5)}
+#overlay #modal button.choice b{font-family:"Noto Serif",serif}
+/* ===== bảng nhân vật (cột phải) ===== */
+#sheet{background:${paper},${wash},linear-gradient(#f7eed8,#ead9b4)!important;background-blend-mode:multiply,multiply,normal;border-left:14px solid transparent!important;border-image:${uri(frame(INK,GOLD,7))} 40 / 0 0 0 14px stretch!important;box-shadow:-8px 0 30px rgba(0,0,0,.4)}
+#sheet h2{font-family:"Noto Serif",serif!important}
+#sheet .sec{border:0!important;background:${rule} top/100% 8px no-repeat!important;padding-top:12px!important;margin-top:6px}
+#sheet .sec h4{font-family:"Noto Serif",serif;letter-spacing:.14em;color:${RED}!important;text-transform:none}
+#sheet .stat,#sheet .msg>div,.owcard .stat{background:${paper},#fbf4e2!important;background-blend-mode:multiply,normal;border:8px solid transparent!important;border-image:${uri(frame('#3a2c14','#c9a850',5))} 40 / 8px stretch!important;border-radius:0!important}
+#sheet .tag,.tag{background:#f9f0d9!important;border:1px solid ${INK}!important;border-radius:2px 8px 2px 8px!important;box-shadow:1px 1px 0 ${GOLD};font-family:"Noto Serif",serif}
+/* ===== thanh trạng thái trên cùng ===== */
+header{background:linear-gradient(#17120d,#241b13)!important;border:10px solid transparent!important;border-image:${frameGold} 40 / 10px stretch!important;border-radius:0!important;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+header .meta{padding:0 4px}
+header .chip{border:1px solid ${GOLD}!important;border-radius:2px 10px 2px 10px!important}
+.scap{background:${paper},#f7eed6!important;background-blend-mode:multiply,normal;border:8px solid transparent!important;border-image:${uri(frame(INK,GOLD,6))} 40 / 8px stretch!important;border-radius:0!important}
+.owcard{background:${paper},${wash},linear-gradient(#f9f0d9,#efe0bd)!important;background-blend-mode:multiply,multiply,normal;border:16px solid transparent!important;border-image:${frameInk} 40 / 16px stretch!important;border-radius:0!important;box-shadow:0 14px 40px rgba(0,0,0,.5)}
+
+/* ===== hộp con trong cửa sổ ===== */
+#overlay #modal .crbox,#overlay #modal .sec,#overlay #modal .box,#overlay #modal .card{background:${paper},rgba(255,250,236,.55)!important;background-blend-mode:multiply,normal;border:9px solid transparent!important;border-image:${uri(frame('#3a2c14','#c9a850',5))} 40 / 9px stretch!important;border-radius:0!important;padding:4px 8px!important}
+#overlay #modal .btns{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+/* ===== HUD dưới trái / phải ===== */
+#hud8 .pt{border:0!important;background:radial-gradient(circle at 50% 35%,#645a50,#1b1612)!important;box-shadow:0 0 0 3px #1c1712,0 0 0 5px #d6b262,0 0 0 8px #1c1712,0 6px 16px rgba(0,0,0,.6)!important;margin:6px}
+#hud8 .info{background:linear-gradient(#17120d,#241b13)!important;border:10px solid transparent!important;border-image:${frameGold} 40 / 10px stretch!important;border-radius:0!important;padding:3px 8px 5px!important}
+#hud8 .b8{border-radius:2px 9px 2px 9px!important;background:rgba(0,0,0,.55)!important;box-shadow:0 0 0 1px #5d4a26 inset}
+#hud8 .b8 i{border-radius:2px 9px 2px 9px!important;background-image:linear-gradient(rgba(255,255,255,.22),transparent 45%,rgba(0,0,0,.2)),repeating-linear-gradient(100deg,rgba(255,255,255,.05) 0 2px,transparent 2px 6px)}
+#dock8 button{border:0!important;border-radius:46% 54% 50% 50%/52% 46% 54% 48%!important;background:radial-gradient(circle at 50% 28%,#54483c,#15100c 72%)!important;box-shadow:0 0 0 2px #1c1712,0 0 0 4px #c9a850,0 0 0 6px #1c1712,0 6px 14px rgba(0,0,0,.6)!important;margin:6px 3px}
+#dock8 button:hover{filter:brightness(1.18)}
+#dock8 button.hot{box-shadow:0 0 0 2px #1c1712,0 0 0 4px #ff7a5c,0 0 18px #ff7a5c!important}
+#toast8,footer,#tut7,body.h8 footer{background:linear-gradient(#17120d,#241b13)!important;border:10px solid transparent!important;border-image:${frameGold} 40 / 10px stretch!important;border-radius:0!important}
+/* ===== thanh (HP, linh lực...) nét cọ ===== */
+.bar,.hbar,.meter,.hmeter .track,[class*="barwrap"]{border-radius:0!important}
+progress{accent-color:${RED}}
+/* ===== thanh cuộn ===== */
+*{scrollbar-width:thin;scrollbar-color:#6b5530 transparent}
+::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#4a3a20,#8a6f3a);border-radius:6px;border:1px solid #2a2118}::-webkit-scrollbar-track{background:rgba(60,45,25,.12)}
+`;
+const st=document.createElement('style');st.id='v10b-css';st.textContent=css;document.head.appendChild(st);
+try{PATCH_NOTES.unshift(['v10.1 · 07/11/2026 · Giao diện mực nho',[
+ 'Khung cửa sổ, bảng nhân vật, thanh trên cùng, nút bấm, lựa chọn, thẻ chữ đều đổi sang khung nét cọ mực viền vàng, nền giấy dó có vân, nút nét cọ, ấn đỏ cạnh tiêu đề; thay cho các khung vuông bo góc.',
+ 'Thanh cuộn cũng đổi sang màu mực. Phần tranh và khung riêng của từng màn (tạo nhân vật, hội thoại, thẻ sự kiện, túi đồ) giữ nguyên bố cục.']])}catch(e){}
 })();
 
 </script>
