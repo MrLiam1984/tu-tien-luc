@@ -52,6 +52,9 @@ for key,(n,nm) in SH.items():
     img=cv2.imread(P(n));L=nm.split('|')
     for i,name in enumerate(L):
         r,c=divmod(i,4);tiles.append(cell(img,r,c,10 if key in 'AH' else 17));names.append(name)
+img=cv2.imread(P(47))
+for i,name in [(14,'Chân Long Huyết'),(15,'Linh Quả')]:
+    r,c=divmod(i,4);tiles.append(cell(img,r,c,26));names.append(name)
 rows=(len(tiles)+COLS-1)//COLS
 at=Image.new('RGBA',(COLS*S,rows*S),(0,0,0,0))
 for i,t in enumerate(tiles):at.paste(t,((i%COLS)*S,(i//COLS)*S))
