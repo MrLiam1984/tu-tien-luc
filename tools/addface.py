@@ -24,9 +24,11 @@ for spec in sys.argv[2:]:
     sc=(BB-BT)/(Bo-T);W2,H2=round(896*sc),round(1200*sc);im2=im.resize((W2,H2),Image.LANCZOS)
     ox=round(BX-X*sc);oy=round(BT-T*sc)
     can=Image.new('RGB',(896,1200),tuple(int(v) for v in bgc));can.paste(im2,(ox,oy))
+    bk2,al2=B.key(can);al2=np.asarray(al2) if not isinstance(al2,np.ndarray) else al2
+    kal=Image.fromarray(np.asarray(B.rgba(bk2,al2))[...,3]).crop((FX,FY,FX+FW,FY+FH)).filter(ImageFilter.MinFilter(3))
     crop=can.crop((FX,FY,FX+FW,FY+FH)).convert('RGBA')
     m=Image.new('L',(FW*4,FH*4),0);ImageDraw.Draw(m).ellipse((6,10,FW*4-6,FH*4-6),fill=255)
-    m=m.filter(ImageFilter.GaussianBlur(14)).resize((FW,FH),Image.LANCZOS);crop.putalpha(m)
+    m=m.filter(ImageFilter.GaussianBlur(14)).resize((FW,FH),Image.LANCZOS);crop.putalpha(Image.fromarray((np.asarray(m).astype(float)*np.asarray(kal).astype(float)/255).astype('uint8')))
     fn=f'{pose}_face_{oid}.webp';crop.save(os.path.join(OUT,fn),'WEBP',quality=90)
     it={'kind':'face','id':oid,'name':name,'file':fn,'x':FX,'y':FY,'w':FW,'h':FH,'tags':tags.split('/') if tags else []}
     man['items']=[i for i in man['items'] if not(i['kind']=='face' and i['id']==oid)]+[it];print('ok',oid)
