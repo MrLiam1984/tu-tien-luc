@@ -6119,9 +6119,9 @@ function owSize(){const el=OW.el;if(!el)return null;const w=el.clientWidth,h=el.
 function owView(){const sz=owSize();if(!sz)return null;const p=owPos();const c=OW.cam||{x:p[0],y:p[1]};const T=OW.T;return {...sz,T,ox:sz.w/2-(c.x+.5)*T,oy:sz.h/2-(c.y+.5)*T}}
 const OW_ICON={gate:'⛩',thon:'🏘',tran:'🏮',huyen:'🏯',thanh:'🏯',dedo:'👑',tong:'⛰',zone:'🌲',boss:'☠',cave:'🏠',fortune:'📢',portal:'🌀',kn:'✨',q:'📜'};
 function owDraw(){if(!OW.el||!OW.cv)return;const V=owView();if(!V)return;const x=OW.cv.getContext('2d');const {w,h,dpr,T,ox,oy}=V;x.setTransform(dpr,0,0,dpr,0,0);const M=owGen(S.loc);const p=owPos();const R=owRad();
- const PL=window.OWPAL||{bg:'#1e1a15',u0:'#251f19',u1:'#29231c',dim:'rgba(25,20,15,.32)'};x.fillStyle=PL.bg;x.fillRect(0,0,w,h);const sx=Math.max(0,Math.floor(-ox/T)),sy=Math.max(0,Math.floor(-oy/T)),ex=Math.min(M.W-1,Math.ceil((w-ox)/T)),ey=Math.min(M.H-1,Math.ceil((h-oy)/T));const seen=owSeen(S.loc);
- for(let ty=sy;ty<=ey;ty++)for(let tx=sx;tx<=ex;tx++){const px=ox+tx*T,py=oy+ty*T;if(seen[ty*M.W+tx]!=='1'){x.fillStyle=((tx+ty)&1)?PL.u1:PL.u0;x.fillRect(px,py,T+1,T+1);continue}
-  const c=M.t[ty*M.W+tx];x.fillStyle=OWT[c].c;x.fillRect(px,py,T+1,T+1);const hr=hashStr(tx+','+ty+','+S.loc)%100;
+ const PL=window.OWPAL||{bg:'#1e1a15',u0:'#251f19',u1:'#29231c',dim:'rgba(25,20,15,.32)'};x.fillStyle=PL.bg;x.fillRect(0,0,w,h);const INK=window.OWBGON&&window.OWBG&&OWBG.complete&&OWBG.naturalWidth?OWBG:null;if(INK){const mw=M.W*T,mh=M.H*T,iw=INK.naturalWidth,ih=INK.naturalHeight,l=Math.max(0,-ox),t=Math.max(0,-oy),r=Math.min(mw,w-ox),b=Math.min(mh,h-oy);if(r>l&&b>t)x.drawImage(INK,l/mw*iw,t/mh*ih,(r-l)/mw*iw,(b-t)/mh*ih,ox+l,oy+t,r-l,b-t)}const sx=Math.max(0,Math.floor(-ox/T)),sy=Math.max(0,Math.floor(-oy/T)),ex=Math.min(M.W-1,Math.ceil((w-ox)/T)),ey=Math.min(M.H-1,Math.ceil((h-oy)/T));const seen=owSeen(S.loc);
+ for(let ty=sy;ty<=ey;ty++)for(let tx=sx;tx<=ex;tx++){const px=ox+tx*T,py=oy+ty*T;if(seen[ty*M.W+tx]!=='1'){if(INK){x.fillStyle='rgba(214,205,186,.58)'}else x.fillStyle=((tx+ty)&1)?PL.u1:PL.u0;x.fillRect(px,py,T+1,T+1);continue}
+  const c=M.t[ty*M.W+tx];x.globalAlpha=INK?.55:1;x.fillStyle=OWT[c].c;x.fillRect(px,py,T+1,T+1);x.globalAlpha=1;const hr=hashStr(tx+','+ty+','+S.loc)%100;
   if(c===1){x.fillStyle='#3f6a35';for(const [a,b] of [[.3,.55],[.68,.38]]){x.beginPath();x.moveTo(px+a*T,py+(b-.28)*T);x.lineTo(px+(a-.16)*T,py+(b+.14)*T);x.lineTo(px+(a+.16)*T,py+(b+.14)*T);x.fill()}}
   else if(c===2){x.fillStyle='#6d6458';x.beginPath();x.moveTo(px+.5*T,py+.12*T);x.lineTo(px+.1*T,py+.88*T);x.lineTo(px+.9*T,py+.88*T);x.fill();x.fillStyle='#ece6da';x.beginPath();x.moveTo(px+.5*T,py+.12*T);x.lineTo(px+.38*T,py+.36*T);x.lineTo(px+.62*T,py+.36*T);x.fill()}
   else if(c===3||c===12){x.strokeStyle='rgba(255,255,255,.35)';x.lineWidth=1;x.beginPath();x.moveTo(px+.15*T,py+.5*T);x.quadraticCurveTo(px+.35*T,py+.35*T,px+.55*T,py+.5*T);x.stroke()}
@@ -9355,7 +9355,7 @@ body.h8 #toast8.on{display:block;opacity:1;pointer-events:auto}body.free8 #toast
 `;
 document.head.appendChild(css);
 function on(){return document.body.classList.contains('h8')}
-function pal(){window.OWPAL=document.body.classList.contains('h8')?{bg:'#d9d2c0',u0:'#d2cab6',u1:'#d6cebb',dim:'rgba(236,231,220,.42)'}:null}
+function pal(){const h=document.body.classList.contains('h8');window.OWPAL=h?{bg:'#d9d2c0',u0:'#d2cab6',u1:'#d6cebb',dim:'rgba(236,231,220,.42)'}:null;window.OWBGON=h;if(h&&!window.OWBG){const im=new Image();im.onload=()=>{try{owDraw()}catch(e){}};im.src='doll/map_ink.webp';window.OWBG=im}}
 function setMode(v){document.body.classList.toggle('h8',v==='1');pal();set(v);if(v!=='1')document.body.classList.remove('sheet8','free8');try{render()}catch(e){}}
 setMode0();function setMode0(){document.body.classList.toggle('h8',get()==='1');pal()}
 // ---- các phần tử HUD ----
@@ -9412,6 +9412,7 @@ try{PATCH_NOTES.unshift(['v8.4 · 07/11/2026 · Bộ nhân vật nữ làm lại
  'Bộ ảnh nhân vật nữ được vẽ lại trên một dáng gốc sạch (tóc không đè lên ngực), nên mọi tổ hợp khuôn mặt, kiểu tóc và trang phục ghép khít hơn, không còn viền màu thừa.',
  'Giờ có 4 khuôn mặt, 6 kiểu tóc (búi phượng, xõa dài, đuôi ngựa, hai búi hoa đào, bạc tiên, đỏ ma mị) và 9 trang phục (áo trắng, phượng hoàng đỏ-đen, tiên nữ lam, kiếm khách hắc y, tử kim phượng bào, lục ngọc dược sư, đào hoa sa mỏng, bạch ngân tiên bào, hắc kim ma bào).',
  'Có thêm hiệu ứng: ở mục "Sau lưng" chọn rồng vàng bên mình, liên hoa hoặc hào quang tiên nhân; ở mục "Hiệu ứng trước" chọn khói mực kiếm khí. NPC cũng có thể mang hiệu ứng theo thân phận.',
+ 'Bản đồ ở giao diện mới có nền tranh thủy mặc (giấy cổ, núi sương, sông); vùng chưa khám phá phủ một lớp sương giấy.',
  'Phụ kiện, thêm tư thế và nhân vật nam vẫn đang được vẽ, sẽ bổ sung ở các bản sau.']])}catch(e){}
 })();
 
