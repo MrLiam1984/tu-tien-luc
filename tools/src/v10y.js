@@ -10,4 +10,8 @@ const _nm=D.names;D.names=function(L){const o=_nm.apply(this,arguments);try{if(D
 try{PATCH_NOTES.unshift(['v10.28 · 08/11/2026 · Sửa nút đổi trang phục ở các tư thế',[
  'Sửa lỗi: ở các tư thế khác tư thế đầu (nam: khoanh tay, mã bộ, tựa kiếm, vung đao, ngoái nhìn; nữ: hiên ngang, yểu điệu, cầm trượng, ngoái nhìn) bấm ◀ ▶ trang phục không đổi hình vì bị trả về áo mặc định. Nay đổi được bình thường.',
  'Bản đồ ô vuông ở màn chính dùng biểu tượng địa danh vẽ bằng Flow thay cho emoji.']])}catch(e){}
+try{PATCH_NOTES.unshift(['v10.29 · 08/11/2026 · Thêm trang phục và khuôn mặt cho các tư thế nam (vẽ bằng Flow)',[
+ 'Nam: tư thế Tựa kiếm, Vung trọng đao, Ngoái nhìn mỗi dáng thêm 5 trang phục (Long giáp kim bào, Thợ săn da thú, Tinh tú đạo bào, Kiếm tông hắc bạch, Yêu vương lang bì); Khoanh tay và Mã bộ có 15 bộ.',
+ 'Nam: tư thế Khoanh tay vác kiếm và Tựa kiếm nay chọn được 6 khuôn mặt (Hiền hòa, Mạnh mẽ, Gian xảo, Lạnh lùng, U sầu, Cười hiền), mỗi mặt là biểu cảm vẽ riêng bằng Flow.',
+ 'Còn thiếu: khuôn mặt cho nam Mã bộ, Vung đao, Ngoái nhìn, Đứng yên và toàn bộ dáng nữ nu2–nu7; xem HANDOFF.md.']])}catch(e){}
 })();
