@@ -14,4 +14,7 @@ try{PATCH_NOTES.unshift(['v10.29 · 08/11/2026 · Thêm trang phục và khuôn 
  'Nam: tư thế Tựa kiếm, Vung trọng đao, Ngoái nhìn mỗi dáng thêm 5 trang phục (Long giáp kim bào, Thợ săn da thú, Tinh tú đạo bào, Kiếm tông hắc bạch, Yêu vương lang bì); Khoanh tay và Mã bộ có 15 bộ.',
  'Nam: tư thế Khoanh tay vác kiếm và Tựa kiếm nay chọn được 6 khuôn mặt (Hiền hòa, Mạnh mẽ, Gian xảo, Lạnh lùng, U sầu, Cười hiền), mỗi mặt là biểu cảm vẽ riêng bằng Flow.',
  'Còn thiếu: khuôn mặt cho nam Mã bộ, Vung đao, Ngoái nhìn, Đứng yên và toàn bộ dáng nữ nu2–nu7; xem HANDOFF.md.']])}catch(e){}
+try{PATCH_NOTES.unshift(['v10.30 · 08/11/2026 · Sửa icon vật phẩm lệch hàng, bản đồ 3D chạy được khi offline',[
+ 'Icon vật phẩm: bảng icon có 9 hàng (130 món) nhưng game đọc như 8 hàng, khiến icon bị lệch. Đã sửa, mọi món hiện đúng hình.',
+ 'Bản đồ Bát Hoang 3D: thư viện Three.js nay đi kèm game (lib/three.min.js), không cần mạng; nếu thiếu thì tự thử lần lượt 3 nguồn CDN. Hết lỗi "load fail".']])}catch(e){}
 })();

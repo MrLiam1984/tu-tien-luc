@@ -3922,8 +3922,8 @@ CH.strg={
 
 /* ===================== v5.6 · BÁT HOANG ĐỒ 3D (phong cách Okami, Three.js tải khi cần) ===================== */
 const M3={st:0,THREE:null,el:null,R:null,scene:null,cam:null,U:null,raf:0,V:null,goal:null,idle:0,clk:null,col:null,base:null,W9:null,HM:null,ring:null,clouds:[],smoke:[],bolt:null,boltT:4,snowG:null,snowP:null,sel:null,visKey:''};
-const M3_URL='https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js';
-function m3Load(){if(window.THREE)return Promise.resolve(window.THREE);return new Promise((res,rej)=>{const s=document.createElement('script');s.src=M3_URL;s.onload=()=>window.THREE?res(window.THREE):rej(new Error('no THREE'));s.onerror=()=>rej(new Error('load fail'));document.head.appendChild(s);setTimeout(()=>rej(new Error('timeout')),15000)})}
+const M3_URLS=['lib/three.min.js','https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js','https://unpkg.com/three@0.149.0/build/three.min.js','https://cdnjs.cloudflare.com/ajax/libs/three.js/r149/three.min.js'];
+function m3Load(){if(window.THREE)return Promise.resolve(window.THREE);return new Promise((res,rej)=>{let i=0;const done=setTimeout(()=>rej(new Error('timeout')),20000);const nx=()=>{if(window.THREE){clearTimeout(done);res(window.THREE);return}if(i>=M3_URLS.length){clearTimeout(done);rej(new Error('load fail'));return}const s=document.createElement('script');s.src=M3_URLS[i++];s.onload=()=>{if(window.THREE){clearTimeout(done);res(window.THREE)}else nx()};s.onerror=()=>{s.remove();nx()};document.head.appendChild(s)};nx()})}
 function m3GL(){try{const c=document.createElement('canvas');return !!(c.getContext('webgl2')||c.getContext('webgl'))}catch(e){return false}}
 async function openMap(){if(busy||S.dead)return;if(M3.st<0||!m3GL()){openMap2D();return}
  m3Dom();M3.el.classList.add('on');M3.el.querySelector('.m3load').style.display='grid';
@@ -11296,7 +11296,7 @@ try{PATCH_NOTES.unshift(['v10.25 · 08/11/2026 · Bản đồ vẽ lại theo ph
 (function(){
 'use strict';
 const N=["Hồi khí đan", "Phá Khóa đan", "Ngộ Đạo Đan", "Tục Mạch Đan", "Đại Hồi Nguyên đan", "Đột phá đan", "Tẩy Tủy đan", "Diên Thọ đan", "Trúc Cơ Đan", "Kết Tinh Đan", "Ngưng Kim Đan", "Cụ Linh Đan", "Hóa Anh Đan", "Hóa Thần Đan", "Vũ Hóa Đan", "Đăng Tiên Đan", "Lang Huyết", "Mãng Huyết", "Giao Huyết", "Hổ Vương Huyết", "Huyền Vũ Huyết", "Bạch Trạch Huyết", "Kỳ Lân Huyết", "Phượng Huyết", "Định Tâm Đan", "Giải Độc đan", "Nanh thú", "Lang Bì", "Huyền Quy Giáp", "Kỳ Lân Giác", "Hổ Cốt", "Ưng Vũ", "Phượng Linh", "Giao Lân", "Long Cốt", "Hàn Thiết", "Thiết Tinh", "Xích Đồng", "Tử Kim", "Huyền Thiết", "Thiên Ngoại Vẫn Thiết", "Tinh Ngân", "Long Văn Thiết", "Hỗn Độn Thạch", "Hoàng Linh Sa", "Hắc Tinh Sa", "Xích Viêm Sa", "Băng Phách Sa", "Tinh Thần Sa", "Thái Dương Kim Sa", "Thái Âm Ngân Sa", "Hư Không Tinh Sa", "Thanh Linh Ngọc", "Bạch Linh Ngọc", "Huyết Linh Ngọc", "Mặc Linh Ngọc", "Tử Tinh Ngọc", "Côn Luân Ngọc", "Hòa Thị Bích", "Ngũ Sắc Thạch", "Hỗn Nguyên Ngọc", "Ngọc bội cũ", "Ngọc giản di ngôn", "Bản đồ cổ", "Sơn Tuyền Thủy", "Vô Căn Thủy", "Huyền Âm Thủy", "Thiên Nhất Chân Thủy", "Cửu U Hàn Tuyền", "Bích Lạc Linh Dịch", "Tam Quang Thần Thủy", "Nhược Thủy Tinh", "Hỗn Độn Nguyên Dịch", "Linh Chi", "Huyết Sâm", "Băng Tâm Thảo", "Tử Linh Chi", "Hỏa Long Quả", "Cửu Diệp Liên", "Tuyết Liên Ngàn Năm", "Bất Tử Thảo", "Thiên Đạo Quả", "Thanh Mộc", "Thiết Hoa Mộc", "Xích Tùng Chi", "Âm Trầm Mộc", "Long Huyết Mộc", "Phù Tang Chi", "Kiến Mộc Chi", "Ngô Đồng Tâm", "Thế Giới Thụ Diệp", "Tránh Lôi Châu", "Lôi Báo Gân", "Lôi Văn Sa", "Thanh Đồng Đan Lô", "Tử Kim Đan Lô", "Cửu Long Đan Lô", "Thần Hành Phù", "Liệt Hỏa Phù", "Ngũ Lôi Phù", "Độn Không Phù", "Thiên Lôi Phù", "Hộ Mệnh Phù", "Tĩnh Tâm Phù", "Kim Cang Phù", "Thái Thượng Hộ Mệnh Phù", "Thiên Cơ Bàn", "Tụ Linh Trận Bàn", "Hộ Thân Trận Bàn", "Mê Tung Trận", "Bế Quan Trận Bàn", "Chu Thiên Tinh Đấu Trận", "Thế Kiếp Khôi Lỗi", "Định Nhạc Kỳ", "Quỷ Cốc lệnh bài", "Mảnh ấn phong", "Yêu đan", "Yêu đan nhất giai", "Yêu đan nhị giai", "Yêu đan tam giai", "Yêu đan tứ giai", "Yêu đan ngũ giai", "Yêu đan lục giai", "Yêu đan thất giai", "Yêu đan bát giai", "Yêu đan cửu giai", "Linh châu hoàn mỹ", "Linh châu vỡ"];
-const COLS=16,ROWS=8,IDX={};N.forEach((n,i)=>{IDX[n]=i});
+const COLS=16,ROWS=9,IDX={};N.forEach((n,i)=>{IDX[n]=i});
 const ALIAS=[[/^Tụ Linh Trận \(cấp \d\)$/,'Tụ Linh Trận Bàn'],[/^Yêu đan (nhất|nhị|tam|tứ|ngũ|lục|thất|bát|cửu) giai$/,null]];
 function of(k){if(k in IDX)return IDX[k];for(const [re,to] of ALIAS)if(re.test(k)&&to&&to in IDX)return IDX[to];return null}
 function html(k,px,extra){const i=of(k);if(i==null)return '';
@@ -11361,6 +11361,9 @@ try{PATCH_NOTES.unshift(['v10.29 · 08/11/2026 · Thêm trang phục và khuôn 
  'Nam: tư thế Tựa kiếm, Vung trọng đao, Ngoái nhìn mỗi dáng thêm 5 trang phục (Long giáp kim bào, Thợ săn da thú, Tinh tú đạo bào, Kiếm tông hắc bạch, Yêu vương lang bì); Khoanh tay và Mã bộ có 15 bộ.',
  'Nam: tư thế Khoanh tay vác kiếm và Tựa kiếm nay chọn được 6 khuôn mặt (Hiền hòa, Mạnh mẽ, Gian xảo, Lạnh lùng, U sầu, Cười hiền), mỗi mặt là biểu cảm vẽ riêng bằng Flow.',
  'Còn thiếu: khuôn mặt cho nam Mã bộ, Vung đao, Ngoái nhìn, Đứng yên và toàn bộ dáng nữ nu2–nu7; xem HANDOFF.md.']])}catch(e){}
+try{PATCH_NOTES.unshift(['v10.30 · 08/11/2026 · Sửa icon vật phẩm lệch hàng, bản đồ 3D chạy được khi offline',[
+ 'Icon vật phẩm: bảng icon có 9 hàng (130 món) nhưng game đọc như 8 hàng, khiến icon bị lệch. Đã sửa, mọi món hiện đúng hình.',
+ 'Bản đồ Bát Hoang 3D: thư viện Three.js nay đi kèm game (lib/three.min.js), không cần mạng; nếu thiếu thì tự thử lần lượt 3 nguồn CDN. Hết lỗi "load fail".']])}catch(e){}
 })();
 
 </script>
